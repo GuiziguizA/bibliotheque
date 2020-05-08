@@ -4,13 +4,14 @@ package sid.org;
 
 import java.util.ArrayList;
 import java.util.Date;
-
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.jpa.domain.Specification;
 
 import sid.org.classe.Livre;
 import sid.org.classe.Pret;
@@ -23,6 +24,7 @@ import sid.org.service.IDate;
 import sid.org.service.ILivre;
 import sid.org.service.IPret;
 import sid.org.service.IUtilisateur;
+import sid.org.specification.serviceDeRechercheTest;
 
 
 @SpringBootApplication
@@ -46,7 +48,12 @@ public class BiblioAppli implements CommandLineRunner{
     private LivreRepository livreRepository;
     @Autowired
     private IDate dateService;
+    @Autowired
+    private serviceDeRechercheTest rechercheService;
+	
+	
 	@Override
+	
 	public void run(String... args) throws Exception {
 	
 		Roles role1 = rolesRepository.save(new Roles("role1"));
@@ -61,9 +68,9 @@ public class BiblioAppli implements CommandLineRunner{
 		Utilisateur user6= utilisateurService.creerUtilisateur(new Utilisateur( "nom6", "mail6"," adresse6", "motDePasse6", "codePostal6",role3));
 		
 		
-		Livre livre1=livreService.createLivre(new Livre("nom1","type1","section1","emplacement1",3));
-		Livre livre2=livreService.createLivre(new Livre("nom2","type2","section2","emplacement1",4));
-		Livre livre3=livreService.createLivre(new Livre("nom3","type1","section1","emplacement1",5));
+		Livre livre1=livreService.createLivre(new Livre("le bossu","type1","section1","emplacement1",3));
+		Livre livre2=livreService.createLivre(new Livre("la merguez","type2","section2","emplacement1",4));
+		Livre livre3=livreService.createLivre(new Livre("le bossu de notre dame","type1","section1","emplacement1",5));
 		Livre livre4=livreService.createLivre(new Livre("nom4","type1","section1","emplacement1",7));
 		
 		/*
@@ -80,13 +87,14 @@ public class BiblioAppli implements CommandLineRunner{
 		 * Pret pret6 = pretRepository.save(new Pret(new Date(), new Date(), "statut5",
 		 * livre1, user1));
 		 */
-		System.out.println("yolo");
-		Pret pret7 =pretService.creerPret(new Pret(null, null, "statut1", livre4, user4));
-		
-		utilisateurService.modifierUtilisateur(user1.getCodeUtilisateur(), "MPD");
-		 utilisateurService.supprimerUtilisateur(user1.getCodeUtilisateur()); 
-		Map<String, Object>listU=utilisateurService.voirListeUtilisateurs();
-
+		/*
+		 * System.out.println("yolo"); Pret pret7 =pretService.creerPret(new Pret(null,
+		 * null, "statut1", livre4, user4));
+		 * 
+		 * utilisateurService.modifierUtilisateur(user1.getCodeUtilisateur(), "MPD");
+		 * utilisateurService.supprimerUtilisateur(user1.getCodeUtilisateur());
+		 * Map<String, Object>listU=utilisateurService.voirListeUtilisateurs();
+		 */
 		/*
 		 * List<Livre>listLivres=livreService.AfficherListLivres(null, null);
 		 * livreService.ModificationStatutDateDeRetour(livre1.getCodeLivre(),
@@ -122,5 +130,6 @@ public class BiblioAppli implements CommandLineRunner{
 		
 		System.out.println(livres);
 		
+	
 	}
 	}

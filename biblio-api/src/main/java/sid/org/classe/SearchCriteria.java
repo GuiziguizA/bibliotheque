@@ -1,4 +1,4 @@
-package sid.org.specification;
+package sid.org.classe;
 
 public class SearchCriteria {
     private String key;

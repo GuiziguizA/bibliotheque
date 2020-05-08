@@ -15,6 +15,7 @@ public interface ILivre {
 	public Map<String, Object> afficherLivres(String nom, String type);
 	
 	  public Livre modificationNombreExemplaire(Long id) throws Exception;
+	public Map<String, Object> rechercherLivres(String recherche) throws Exception;
 	
 	
 	

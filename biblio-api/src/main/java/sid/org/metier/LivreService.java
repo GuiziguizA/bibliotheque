@@ -5,6 +5,7 @@ package sid.org.metier;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -15,10 +16,9 @@ import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
 import sid.org.classe.Livre;
+import sid.org.classe.SearchCriteria;
 import sid.org.dao.LivreRepository;
 import sid.org.service.ILivre;
-import sid.org.specification.LivreSpecification;
-import sid.org.specification.SearchCriteria;
 
 
 
@@ -124,7 +124,21 @@ public class LivreService implements ILivre{
 	
 		return 	livreRepository.save(livre.get());
 	}
-
-	
-	
+@Override
+	public Map<String, Object> rechercherLivres(String recherche) throws Exception {
+		LivreSpecification spec = new LivreSpecification(new SearchCriteria("nom", ":", recherche));
+		
+		
+		
+		List<Livre> results = livreRepository.findAll(spec);
+		if (results.isEmpty()) {
+			throw new Exception("Aucun resultats");
+		}
+		
+		  Map< String, Object> livres=new HashMap<>();
+			
+			livres.put("results",results);
+		
+		return livres;
+	}
 }

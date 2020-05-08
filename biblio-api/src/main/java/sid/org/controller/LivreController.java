@@ -25,12 +25,12 @@ public class LivreController {
 	
 	
 	
-	  @GetMapping("/books") public Map<String, Object>afficherLivres(@RequestParam(required = false) String nom,@RequestParam(required = false) String type) {
+	  @GetMapping("/books") public Map<String, Object>afficherLivres(@RequestParam(required = false) String search) throws Exception {
 	  
 	  Map<String, Object> livres;
 	  
 	
-		livres = livreService.afficherLivres(nom, type);
+		livres = livreService.rechercherLivres(search);
 		return livres; 
 	
 	  
