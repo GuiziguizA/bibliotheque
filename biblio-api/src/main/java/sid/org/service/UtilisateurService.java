@@ -5,7 +5,7 @@ import java.util.Map;
 
 import sid.org.classe.Utilisateur;
 
-public interface IUtilisateur {
+public interface UtilisateurService {
 	
 	public Utilisateur creerUtilisateur(Utilisateur utilisateur) throws Exception;
 	public	Utilisateur modifierUtilisateur(Long id, String motDePasse) throws Exception;

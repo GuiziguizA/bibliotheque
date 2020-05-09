@@ -16,12 +16,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import sid.org.classe.Livre;
-import sid.org.service.ILivre;
+import sid.org.service.LivreService;
 
 @RestController
 public class LivreController {
 	@Autowired
-	private ILivre livreService;
+	private LivreService livreService;
 	
 	
 	

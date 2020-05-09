@@ -20,11 +20,11 @@ import sid.org.classe.Utilisateur;
 import sid.org.dao.LivreRepository;
 import sid.org.dao.PretRepository;
 import sid.org.dao.RolesRepository;
-import sid.org.service.IDate;
-import sid.org.service.ILivre;
-import sid.org.service.IPret;
-import sid.org.service.IUtilisateur;
-import sid.org.specification.serviceDeRechercheTest;
+import sid.org.service.DateService;
+import sid.org.service.LivreService;
+import sid.org.service.PretService;
+import sid.org.service.UtilisateurService;
+
 
 
 @SpringBootApplication
@@ -37,19 +37,18 @@ public class BiblioAppli implements CommandLineRunner{
     private RolesRepository rolesRepository;
     
     @Autowired
-    private ILivre livreService;
+    private LivreService livreService;
     @Autowired
-    private IUtilisateur utilisateurService;
+    private UtilisateurService utilisateurService;
     @Autowired
-    private IPret pretService;
+    private PretService pretService;
     @Autowired
     private PretRepository pretRepository;
     @Autowired
     private LivreRepository livreRepository;
     @Autowired
-    private IDate dateService;
-    @Autowired
-    private serviceDeRechercheTest rechercheService;
+    private DateService dateService;
+
 	
 	
 	@Override

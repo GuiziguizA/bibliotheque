@@ -12,14 +12,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import sid.org.classe.Utilisateur;
-import sid.org.service.IUtilisateur;
+import sid.org.service.UtilisateurService;
 
 @RestController
 public class UtilisateurControleur {
 	
 
 	@Autowired
-	private IUtilisateur utilisateurService;
+	private UtilisateurService utilisateurService;
 	
 	@GetMapping("/users/{id}")
  public Map<String, Object>afficherUtilisateurs(@PathVariable Long id) throws Exception {

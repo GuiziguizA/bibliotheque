@@ -1,4 +1,4 @@
-package sid.org.metier;
+package sid.org.service;
 
 
 import java.util.Date;
@@ -13,15 +13,13 @@ import org.springframework.stereotype.Service;
 import sid.org.classe.Pret;
 import sid.org.classe.Utilisateur;
 import sid.org.dao.PretRepository;
-import sid.org.service.IDate;
-import sid.org.service.IPret;
 
 @Service
-public class PretService implements IPret{
+public class PretServiceImpl implements PretService{
 	@Autowired
 	private PretRepository pretRepository;
 	@Autowired
-	private IDate dateService;
+	private DateService dateService;
 	
 	@Override
 	public Pret creerPret(Pret pret) throws Exception {

@@ -1,12 +1,10 @@
-package sid.org.metier;
+package sid.org.service;
 
 import java.util.Date;
 
 import org.springframework.stereotype.Service;
-
-import sid.org.service.IDate;
 @Service
-public class DateService implements IDate{
+public class DateServiceImpl implements DateService{
 
 	@SuppressWarnings("deprecation")
 	@Override

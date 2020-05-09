@@ -1,4 +1,4 @@
-package sid.org.metier;
+package sid.org.service;
 
 
 
@@ -18,12 +18,11 @@ import org.springframework.stereotype.Service;
 import sid.org.classe.Livre;
 import sid.org.classe.SearchCriteria;
 import sid.org.dao.LivreRepository;
-import sid.org.service.ILivre;
 
 
 
 @Service
-public class LivreService implements ILivre{
+public class LivreServiceImpl implements LivreService{
 	@Autowired
 	private LivreRepository livreRepository;
 	
@@ -126,7 +125,7 @@ public class LivreService implements ILivre{
 	}
 @Override
 	public Map<String, Object> rechercherLivres(String recherche) throws Exception {
-		LivreSpecification spec = new LivreSpecification(new SearchCriteria("nom", ":", recherche));
+		LivreSpecificationImpl spec = new LivreSpecificationImpl(new SearchCriteria("nom", ":", recherche));
 		
 		
 		

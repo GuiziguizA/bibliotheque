@@ -1,4 +1,4 @@
-package sid.org.metier;
+package sid.org.service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,10 +15,9 @@ import sid.org.classe.Pret;
 import sid.org.classe.Utilisateur;
 import sid.org.dao.PretRepository;
 import sid.org.dao.UtilisateurRepository;
-import sid.org.service.IUtilisateur;
 
 @Service
-public class UtilisateurService implements IUtilisateur {
+public class UtilisateurServiceImpl implements UtilisateurService {
 	@Autowired
 	private UtilisateurRepository utilisateurRepository;
 

@@ -1,4 +1,4 @@
-package sid.org.metier;
+package sid.org.service;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -11,17 +11,17 @@ import org.springframework.data.jpa.domain.Specification;
 import sid.org.classe.Livre;
 import sid.org.classe.SearchCriteria;
 
-public class LivreSpecification implements Specification<Livre> {
-
+public class LivreSpecificationImpl implements Specification<Livre> {
+	
 	@Autowired
 	private SearchCriteria criteria;
 	
 	
-	public LivreSpecification(SearchCriteria criteria) {
+	public LivreSpecificationImpl(SearchCriteria criteria) {
 		super();
 		this.criteria = criteria;
 	}
-	public LivreSpecification() {
+	public LivreSpecificationImpl() {
 		super();
 		// TODO Auto-generated constructor stub
 	}

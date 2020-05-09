@@ -16,15 +16,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import sid.org.classe.Pret;
-import sid.org.service.ILivre;
-import sid.org.service.IPret;
+import sid.org.service.LivreService;
+import sid.org.service.PretService;
 
 @RestController
 public class PretController {
 @Autowired
-	 private IPret pretService;
+	 private PretService pretService;
 @Autowired
-	private ILivre livreService;
+	private LivreService livreService;
 
 
 

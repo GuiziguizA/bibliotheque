@@ -8,7 +8,7 @@ import java.util.Map;
 
 import sid.org.classe.Livre;
 
-public interface ILivre {
+public interface LivreService {
 
 	public Livre createLivre(Livre livre);
 	public Map<String, Object> afficheUnLivre( Long id) throws Exception;

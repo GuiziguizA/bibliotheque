@@ -6,7 +6,7 @@ import java.util.Map;
 import sid.org.classe.Pret;
 import sid.org.classe.Utilisateur;
 
-public interface IPret {
+public interface PretService {
 
 	
 	public Pret creerPret(Pret pret) throws Exception ;
