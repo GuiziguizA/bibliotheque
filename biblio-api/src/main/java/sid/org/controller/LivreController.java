@@ -25,7 +25,7 @@ public class LivreController {
 	
 	
 	
-	  @GetMapping("/books") public Map<String, Object>afficherLivres(@RequestParam(required = false) String search) throws Exception {
+	  @GetMapping("api/books") public Map<String, Object>afficherLivres(@RequestParam(required = false) String search) throws Exception {
 	  
 	  Map<String, Object> livres;
 	  
@@ -38,7 +38,7 @@ public class LivreController {
 	  }
 	  
 	  
-	  @GetMapping("/books/{id}")
+	  @GetMapping("api/books/{id}")
 public  Map<String, Object>afficheUnLivre(@PathVariable Long id) throws Exception{
 		  Map<String, Object> livre;
 		
@@ -50,7 +50,7 @@ public  Map<String, Object>afficheUnLivre(@PathVariable Long id) throws Exceptio
 	  }
 	  
 	  
-	  @PostMapping("/books")
+	  @PostMapping("api/books")
 	  Livre ajouterLivre( Livre livre) { 
 		  
 		  return livreService.createLivre(livre);

@@ -29,7 +29,7 @@ public class PretController {
 
 
 
-@GetMapping("/prets/{id}")
+@GetMapping("api/prets/{id}")
 public Map<String,Object>  afficherUnPret(@PathVariable Long id) throws Exception{
  
 
@@ -44,7 +44,7 @@ public Map<String,Object>  afficherUnPret(@PathVariable Long id) throws Exceptio
 
 
 		@Transactional
-	  @PostMapping("/prets")
+	  @PostMapping("api/prets")
 	  public  Pret creerUnPret(@RequestBody Pret pret) throws Exception{
 	 		Pret pret1=pretService.creerPret(pret);
            livreService.modificationNombreExemplaire(pret1.getLivre().getCodeLivre());
@@ -55,14 +55,14 @@ public Map<String,Object>  afficherUnPret(@PathVariable Long id) throws Exceptio
 	  	  
 	  	  }
 	  
-@DeleteMapping("/prets")
+@DeleteMapping("api/prets")
 public  void supprimerUnPret(@PathVariable Long id) throws Exception {
 
 		pretService.supprimerPret(id);
 	
 	
 }
-	@PutMapping("/prets/{id}")  
+	@PutMapping("api/prets/{id}")  
 public  Pret modifierUnPret(@PathVariable Long id) throws Exception{
 		  	
 		

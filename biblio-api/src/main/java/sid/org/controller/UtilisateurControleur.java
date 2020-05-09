@@ -21,7 +21,7 @@ public class UtilisateurControleur {
 	@Autowired
 	private UtilisateurService utilisateurService;
 	
-	@GetMapping("/users/{id}")
+	@GetMapping("api/users/{id}")
  public Map<String, Object>afficherUtilisateurs(@PathVariable Long id) throws Exception {
 	  
 	  Map<String, Object> user;
@@ -31,7 +31,7 @@ public class UtilisateurControleur {
 	
 
 }
-	@GetMapping("/users")
+	@GetMapping("api/users")
 	 public Map<String, Object>afficherUtilisateurs() throws Exception {
 		  
 		  Map<String, Object> users;
@@ -41,7 +41,7 @@ public class UtilisateurControleur {
 			
 
 	}
-	@PostMapping("/users")
+	@PostMapping("api/users")
 	public Utilisateur creerUtilisateur(@RequestBody Utilisateur utilisateur) throws Exception{
 
 		Utilisateur user =	utilisateurService.creerUtilisateur(utilisateur);
@@ -50,7 +50,7 @@ public class UtilisateurControleur {
 
 	}
 	
-	@PutMapping("/users/{id}")
+	@PutMapping("api/users/{id}")
 	public Utilisateur modifierUtilisateur(@PathVariable Long id ,@RequestBody String motDePasse) throws Exception{
 		
 		Utilisateur user =	utilisateurService.modifierUtilisateur(id, motDePasse);
@@ -60,7 +60,7 @@ public class UtilisateurControleur {
 	}
 	
 	
-	@DeleteMapping("/users/{id}")
+	@DeleteMapping("api/users/{id}")
 	public void supprimerUtilisateur(@PathVariable Long id) throws Exception{
 		
 		
