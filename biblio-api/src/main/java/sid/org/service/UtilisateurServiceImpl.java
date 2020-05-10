@@ -5,10 +5,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import sid.org.classe.Pret;
@@ -20,9 +23,12 @@ import sid.org.dao.UtilisateurRepository;
 public class UtilisateurServiceImpl implements UtilisateurService {
 	@Autowired
 	private UtilisateurRepository utilisateurRepository;
-
+	@Autowired
+private MailService mailService;
 	@Autowired
 	private PretRepository pretRepository;
+	@Autowired
+	PasswordEncoder passwordEncoder;
 	
 	@Override
 	public Utilisateur creerUtilisateur(Utilisateur utilisateur) throws Exception {
@@ -30,6 +36,9 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		if(user.isPresent()) {
 			throw new Exception("le mail est deja utilise");
 		}
+		
+		mailService.verifierUnMail(utilisateur.getMail());
+		utilisateur.setMotDePasse(passwordEncoder.encode(utilisateur.getMotDePasse()));
 		return utilisateurRepository.save(utilisateur);
 	}
 
@@ -40,7 +49,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		if(!user.isPresent()) {
 			throw new Exception("Utilisateur introuvable");
 		}
-		user.get().setMotDePasse(motDePasse);
+		user.get().setMotDePasse(passwordEncoder.encode(motDePasse));
 		
 		return utilisateurRepository.save(user.get());
 	}

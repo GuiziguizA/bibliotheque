@@ -23,6 +23,7 @@ import sid.org.dao.PretRepository;
 import sid.org.dao.RolesRepository;
 import sid.org.service.DateService;
 import sid.org.service.LivreService;
+import sid.org.service.MailService;
 import sid.org.service.PretService;
 import sid.org.service.UtilisateurService;
 
@@ -50,7 +51,8 @@ public class BiblioAppli implements CommandLineRunner{
     private LivreRepository livreRepository;
     @Autowired
     private DateService dateService;
-
+    @Autowired
+    private MailService mailService;
 	
 	
 	@Override
@@ -61,12 +63,12 @@ public class BiblioAppli implements CommandLineRunner{
 		Roles role2 = rolesRepository.save(new Roles("role2"));
 		Roles role3 = rolesRepository.save(new Roles("role3"));
 		
-		Utilisateur user1= utilisateurService.creerUtilisateur(new Utilisateur( "nom1", "mail1"," adresse1", "motDePasse1", "codePostal1", role1));
-		Utilisateur user2= utilisateurService.creerUtilisateur(new Utilisateur( "nom2", "mail2"," adresse2", "motDePasse2", "codePostal2", role1));
-		Utilisateur user3= utilisateurService.creerUtilisateur(new Utilisateur("nom3", "mail3"," adresse3", "motDePasse3", "codePostal3", role2));
-		Utilisateur user4= utilisateurService.creerUtilisateur(new Utilisateur( "nom4", "mail4"," adresse4", "motDePasse4", "codePostal4", role2));
-		Utilisateur user5= utilisateurService.creerUtilisateur(new Utilisateur("nom5", "mail5"," adresse5", "motDePasse5", "codePostal5",  role3));
-		Utilisateur user6= utilisateurService.creerUtilisateur(new Utilisateur( "nom6", "mail6"," adresse6", "motDePasse6", "codePostal6",role3));
+		Utilisateur user1= utilisateurService.creerUtilisateur(new Utilisateur( "nom1", "gualisse@gmail.com"," adresse1", "motDePasse1", "codePostal1", role1));
+		Utilisateur user2= utilisateurService.creerUtilisateur(new Utilisateur( "nom2","guzalfisse@gmail.com"," adresse2", "motDePasse2", "codePostal2", role1));
+		Utilisateur user3= utilisateurService.creerUtilisateur(new Utilisateur("nom3", "gfusalisse@gmail.com"," adresse3", "motDePasse3", "codePostal3", role2));
+		Utilisateur user4= utilisateurService.creerUtilisateur(new Utilisateur( "nom4", "gusalissfe@gmail.com"," adresse4", "motDePasse4", "codePostal4", role2));
+		Utilisateur user5= utilisateurService.creerUtilisateur(new Utilisateur("nom5", "gwalfisse@gmail.com"," adresse5", "motDePasse5", "codePostal5",  role3));
+		Utilisateur user6= utilisateurService.creerUtilisateur(new Utilisateur( "nom6", "guxavlisse@gmail.com"," adresse6", "motDePasse6", "codePostal6",role3));
 		
 		
 		Livre livre1=livreService.createLivre(new Livre("le bossu","type1","section1","emplacement1",3));
@@ -130,7 +132,7 @@ public class BiblioAppli implements CommandLineRunner{
 		System.out.println(listLivres.get(2).getNom());
 		
 		System.out.println(livres);
-		
-	
+	String mail=mailService.verifierUnMail(user1.getMail());
+	System.out.println(mail);
 	}
 	}
