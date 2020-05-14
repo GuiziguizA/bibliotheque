@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import sid.org.classe.Pret;
@@ -45,9 +46,9 @@ public Map<String,Object>  afficherUnPret(@PathVariable Long id) throws Exceptio
 
 		@Transactional
 	  @PostMapping("prets")
-	  public  Pret creerUnPret(@RequestBody Pret pret) throws Exception{
+	  public  Pret creerUnPret(@RequestBody Pret pret,@RequestParam(required=false) int nombre) throws Exception{
 	 		Pret pret1=pretService.creerPret(pret);
-           livreService.modificationNombreExemplaire(pret1.getLivre().getCodeLivre());
+           livreService.modificationNombreExemplaire(pret1.getLivre().getCodeLivre(),nombre);
 			return pret1 ;
 	
 	  

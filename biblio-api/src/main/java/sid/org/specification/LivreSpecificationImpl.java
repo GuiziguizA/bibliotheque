@@ -1,4 +1,4 @@
-package sid.org.service;
+package sid.org.specification;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 
 import sid.org.classe.Livre;
-import sid.org.classe.SearchCriteria;
 
 public class LivreSpecificationImpl implements Specification<Livre> {
 	
@@ -29,15 +28,15 @@ public class LivreSpecificationImpl implements Specification<Livre> {
 	@Override
 	public Predicate toPredicate(Root<Livre> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
 		
-		  if (criteria.getOperation().equalsIgnoreCase(":")) {
+		  
 	            if (root.get(criteria.getKey()).getJavaType() == String.class) {
 	                return builder.like(
 	                  root.<String>get(criteria.getKey()), "%" + criteria.getValue() + "%");
 	            } else {
 	                return builder.equal(root.get(criteria.getKey()), criteria.getValue());
 	            }
-		 }
-		return null;
+		 
+	
 	}
 
 	

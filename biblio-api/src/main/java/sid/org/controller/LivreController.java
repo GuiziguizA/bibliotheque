@@ -28,7 +28,7 @@ public class LivreController {
 		  Page<Livre> livres;
 	  
 	
-		livres = livreService.searchrLivres(search);
+		livres = livreService.searchLivres(search);
 		return livres; 
 	
 	  
@@ -49,7 +49,7 @@ public  Map<String, Object>afficheUnLivre(@PathVariable Long id) throws Exceptio
 	  
 	  
 	  @PostMapping("books")
-	  Livre ajouterLivre( Livre livre) { 
+	  Livre ajouterLivre( Livre livre) throws Exception { 
 		  
 		  return livreService.createLivre(livre);
 		  

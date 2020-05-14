@@ -1,16 +1,14 @@
-package sid.org.classe;
+package sid.org.specification;
 
 public class SearchCriteria {
     private String key;
-    private String operation;
     private Object value;
     
     
     
-	public SearchCriteria(String key, String operation, Object value) {
+	public SearchCriteria(String key, Object value) {
 		super();
 		this.key = key;
-		this.operation = operation;
 		this.value = value;
 	}
 	public SearchCriteria() {
@@ -23,12 +21,7 @@ public class SearchCriteria {
 	public void setKey(String key) {
 		this.key = key;
 	}
-	public String getOperation() {
-		return operation;
-	}
-	public void setOperation(String operation) {
-		this.operation = operation;
-	}
+
 	public Object getValue() {
 		return value;
 	}

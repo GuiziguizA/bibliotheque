@@ -19,8 +19,9 @@ import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
 import sid.org.classe.Livre;
-import sid.org.classe.SearchCriteria;
 import sid.org.dao.LivreRepository;
+import sid.org.specification.LivreSpecificationImpl;
+import sid.org.specification.SearchCriteria;
 import springfox.documentation.builders.RequestHandlerSelectors;
 
 
@@ -33,7 +34,14 @@ public class LivreServiceImpl implements LivreService{
 	
 
 	@Override
-	public Livre createLivre(Livre livre) {
+	public Livre createLivre(Livre livre) throws Exception {
+		List<Livre>livreNom=livreRepository.findByNom(livre.getNom());
+		List<Livre>livreAuteur=livreRepository.findByAuteur(livre.getAuteur());
+		
+		if(!livreNom.isEmpty() && !livreAuteur.isEmpty() ) {
+			throw new Exception();
+		}
+		
 		return 	livreRepository.save(livre);
 	}
 
@@ -112,7 +120,13 @@ public class LivreServiceImpl implements LivreService{
   
   
 	@Override
-	public Livre modificationNombreExemplaire(Long id) throws Exception {
+	
+	public Livre modificationNombreExemplaire(Long id,@Nullable int nombre) throws Exception {
+		
+	if(nombre==(Integer)null) {
+		nombre=1;
+	}
+		
 		
 		Optional<Livre> livre=livreRepository.findById(id);
 		if (!livre.isPresent()) {
@@ -122,14 +136,14 @@ public class LivreServiceImpl implements LivreService{
 			throw new Exception("Le livre n'est pas disponible");
 		}
 		
-		livre.get().setNombreExemplaire(livre.get().getNombreExemplaire()-1);
+		livre.get().setNombreExemplaire(livre.get().getNombreExemplaire()-nombre);
 	
 	
-		return 	livreRepository.save(livre.get());
+		return 	livreRepository.saveAndFlush(livre.get());
 	}
 @Override
 	public Map<String, Object> rechercherLivres(String recherche) throws Exception {
-		LivreSpecificationImpl spec = new LivreSpecificationImpl(new SearchCriteria("nom", ":", recherche));
+		LivreSpecificationImpl spec = new LivreSpecificationImpl(new SearchCriteria("nom", recherche));
 		
 		
 		
@@ -146,8 +160,8 @@ public class LivreServiceImpl implements LivreService{
 	}
 
 @Override
-public Page<Livre> searchrLivres(String recherche) throws Exception {
-	LivreSpecificationImpl spec = new LivreSpecificationImpl(new SearchCriteria("nom", ":", recherche));
+public Page<Livre> searchLivres(String recherche) throws Exception {
+	LivreSpecificationImpl spec = new LivreSpecificationImpl(new SearchCriteria("nom",  recherche));
 	
 	Pageable pageable=PageRequest.of(0, 2);
 	

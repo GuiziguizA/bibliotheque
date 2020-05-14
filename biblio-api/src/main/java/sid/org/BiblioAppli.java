@@ -71,10 +71,10 @@ public class BiblioAppli implements CommandLineRunner{
 		Utilisateur user6= utilisateurService.creerUtilisateur(new Utilisateur( "nom6", "guxavlisse@gmail.com"," adresse6", "motDePasse6", "codePostal6",role3));
 		
 		
-		Livre livre1=livreService.createLivre(new Livre("le bossu","type1","section1","emplacement1",3));
-		Livre livre2=livreService.createLivre(new Livre("la merguez","type2","section2","emplacement1",4));
-		Livre livre3=livreService.createLivre(new Livre("le bossu de notre dame","type1","section1","emplacement1",5));
-		Livre livre4=livreService.createLivre(new Livre("nom4","type1","section1","emplacement1",7));
+		Livre livre1=livreService.createLivre(new Livre("le bossu","auteur1","type1","section1","emplacement1",3));
+		Livre livre2=livreService.createLivre(new Livre("la merguez","auteur2","type2","section2","emplacement1",4));
+		Livre livre3=livreService.createLivre(new Livre("le bossu de notre dame","auteur1","type1","section1","emplacement1",5));
+		Livre livre4=livreService.createLivre(new Livre("nom4","auteur4","type1","section1","emplacement1",7));
 		
 		/*
 		 * Pret pret = pretRepository.save(new Pret(new Date(), new Date(), "statut1",
@@ -134,6 +134,6 @@ public class BiblioAppli implements CommandLineRunner{
 		System.out.println(livres);
 	String mail=mailService.verifierUnMail(user1.getMail());
 	System.out.println(mail);
-	livreService.searchrLivres("le");
+	livreService.searchLivres("le");
 	}
 	}

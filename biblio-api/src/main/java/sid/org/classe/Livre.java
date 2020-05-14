@@ -19,6 +19,7 @@ public class Livre {
 	@Id  @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long codeLivre;
 	private String nom;
+	private String auteur;
 	private String type;
 	private String section;
 	private String emplacement;
@@ -32,9 +33,10 @@ public class Livre {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Livre(String nom, String type, String section, String emplacement, int nombreExemplaire) {
+	public Livre(String nom, String auteur,String type, String section, String emplacement, int nombreExemplaire) {
 		super();
 		this.nom = nom;
+		this.auteur = auteur;
 		this.type = type;
 		this.section = section;
 		this.emplacement = emplacement;
@@ -48,6 +50,14 @@ public class Livre {
 
 	public void setNom(String nom) {
 		this.nom = nom;
+	}
+
+	public String getAuteur() {
+		return auteur;
+	}
+
+	public void setAuteur(String auteur) {
+		this.auteur = auteur;
 	}
 
 	public String getType() {
