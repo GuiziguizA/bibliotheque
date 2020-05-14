@@ -12,12 +12,16 @@ import java.util.Optional;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
 import sid.org.classe.Livre;
 import sid.org.classe.SearchCriteria;
 import sid.org.dao.LivreRepository;
+import springfox.documentation.builders.RequestHandlerSelectors;
 
 
 
@@ -140,4 +144,21 @@ public class LivreServiceImpl implements LivreService{
 		
 		return livres;
 	}
+
+@Override
+public Page<Livre> searchrLivres(String recherche) throws Exception {
+	LivreSpecificationImpl spec = new LivreSpecificationImpl(new SearchCriteria("nom", ":", recherche));
+	
+	Pageable pageable=PageRequest.of(0, 2);
+	
+	Page<Livre> results = livreRepository.findAll(spec,pageable);
+	if (results.isEmpty()) {
+		throw new Exception("Aucun resultats");
+	}
+	
+	
+	
+	return results;
+}
+
 }

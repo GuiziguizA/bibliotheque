@@ -6,9 +6,7 @@ package sid.org.controller;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
-
-
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,12 +23,12 @@ public class LivreController {
 	
 	
 	
-	  @GetMapping("books") public Map<String, Object>afficherLivres(@RequestParam(required = false) String search) throws Exception {
+	  @GetMapping("books") public Page<Livre>afficherLivres(@RequestParam(required = false) String search) throws Exception {
 	  
-	  Map<String, Object> livres;
+		  Page<Livre> livres;
 	  
 	
-		livres = livreService.rechercherLivres(search);
+		livres = livreService.searchrLivres(search);
 		return livres; 
 	
 	  

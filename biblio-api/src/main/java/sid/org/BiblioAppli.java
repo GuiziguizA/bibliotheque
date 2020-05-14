@@ -134,5 +134,6 @@ public class BiblioAppli implements CommandLineRunner{
 		System.out.println(livres);
 	String mail=mailService.verifierUnMail(user1.getMail());
 	System.out.println(mail);
+	livreService.searchrLivres("le");
 	}
 	}
