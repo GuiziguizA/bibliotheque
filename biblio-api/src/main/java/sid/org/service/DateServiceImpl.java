@@ -3,14 +3,16 @@ package sid.org.service;
 import java.util.Date;
 
 import org.springframework.stereotype.Service;
+
+import sid.org.exception.MauvaiseDemandeException;
 @Service
 public class DateServiceImpl implements DateService{
 
 	@SuppressWarnings("deprecation")
 	@Override
-	public Date modifierDate(Date date,int mois) throws Exception {
+	public Date modifierDate(Date date,int mois) throws MauvaiseDemandeException {
 		if (mois>12) {
-			throw new Exception("le chifre du mois dois etre strictement inferieur a 12 ");
+			throw new MauvaiseDemandeException("le chifre du mois dois etre strictement inferieur a 12 ");
 		}
 		
 		Date date1 = null;

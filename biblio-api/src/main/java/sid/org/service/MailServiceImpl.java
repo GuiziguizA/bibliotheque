@@ -4,11 +4,13 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.springframework.stereotype.Service;
+
+import sid.org.exception.FormeMailException;
 @Service
 public class MailServiceImpl implements MailService{
 	
 	@Override
-	public String verifierUnMail(String mail) throws Exception {
+	public String verifierUnMail(String mail) throws FormeMailException {
 		
 		String regex = "^(.+)@(.+)$";
 		 
@@ -16,7 +18,7 @@ public class MailServiceImpl implements MailService{
 		  Matcher matcher = pattern.matcher(mail);
 		  if(!matcher.matches()) {
 			  
-			  throw new Exception("l'adresse mail n'est pas valide");
+			  throw new FormeMailException("l'adresse mail n'est pas valide");
 		  }
 		 
 		return mail;

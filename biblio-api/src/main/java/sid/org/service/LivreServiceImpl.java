@@ -20,6 +20,12 @@ import org.springframework.stereotype.Service;
 
 import sid.org.classe.Livre;
 import sid.org.dao.LivreRepository;
+import sid.org.exception.BibliothequeException;
+import sid.org.exception.DemandeUtilisateurIncorrectException;
+import sid.org.exception.EntityAlreadyExistException;
+
+import sid.org.exception.LivreIndisponibleException;
+import sid.org.exception.ResultNotFoundException;
 import sid.org.specification.LivreSpecificationImpl;
 import sid.org.specification.SearchCriteria;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -34,12 +40,12 @@ public class LivreServiceImpl implements LivreService{
 	
 
 	@Override
-	public Livre createLivre(Livre livre) throws Exception {
+	public Livre createLivre(Livre livre) throws EntityAlreadyExistException {
 		List<Livre>livreNom=livreRepository.findByNom(livre.getNom());
 		List<Livre>livreAuteur=livreRepository.findByAuteur(livre.getAuteur());
 		
 		if(!livreNom.isEmpty() && !livreAuteur.isEmpty() ) {
-			throw new Exception();
+			throw new  EntityAlreadyExistException();
 		}
 		
 		return 	livreRepository.save(livre);
@@ -80,10 +86,10 @@ public class LivreServiceImpl implements LivreService{
 	
 	
 	@Override
-	public Map<String, Object> afficheUnLivre( Long id) throws Exception {
+	public Map<String, Object> afficheUnLivre( Long id) throws DemandeUtilisateurIncorrectException {
 		Optional<Livre> book=livreRepository.findByCodeLivre(id);
 		if(!book.isPresent()) {
-			throw new Exception("le livre existe pas");
+			throw new DemandeUtilisateurIncorrectException("le livre existe pas");
 		}
 		
 		  
@@ -96,32 +102,10 @@ public class LivreServiceImpl implements LivreService{
 		}
 
 
-	@Override
-	  public Map<String, Object> afficherLivres(@Nullable String nom, @Nullable String type)  {
-			  
-
-		 
-		 ArrayList<Livre>listLivres=livreRepository.findByNomAndtype(nom, type);
-		 
-	
-	
-			  Map<String, Object> livres=new HashMap<>();
-				
-				livres.put("listLivres",listLivres );
-					
-			  
-					  return livres;
-		  }
-		
-		
-
-  
-  
-  
   
 	@Override
 	
-	public Livre modificationNombreExemplaire(Long id,@Nullable int nombre) throws Exception {
+	public Livre modificationNombreExemplaire(Long id,@Nullable int nombre) throws BibliothequeException {
 		
 	if(nombre==(Integer)null) {
 		nombre=1;
@@ -130,10 +114,10 @@ public class LivreServiceImpl implements LivreService{
 		
 		Optional<Livre> livre=livreRepository.findById(id);
 		if (!livre.isPresent()) {
-			throw new Exception("Le livre n'existe pas");
+			throw new DemandeUtilisateurIncorrectException("Le livre n'existe pas");
 		}
 		if(livre.get().getNombreExemplaire()<1) {
-			throw new Exception("Le livre n'est pas disponible");
+			throw new LivreIndisponibleException("Le livre n'est pas disponible");
 		}
 		
 		livre.get().setNombreExemplaire(livre.get().getNombreExemplaire()-nombre);
@@ -141,35 +125,30 @@ public class LivreServiceImpl implements LivreService{
 	
 		return 	livreRepository.saveAndFlush(livre.get());
 	}
-@Override
-	public Map<String, Object> rechercherLivres(String recherche) throws Exception {
-		LivreSpecificationImpl spec = new LivreSpecificationImpl(new SearchCriteria("nom", recherche));
-		
-		
-		
-		List<Livre> results = livreRepository.findAll(spec);
-		if (results.isEmpty()) {
-			throw new Exception("Aucun resultats");
-		}
-		
-		  Map< String, Object> livres=new HashMap<>();
-			
-			livres.put("results",results);
-		
-		return livres;
-	}
+	/*
+	 * @Override public Map<String, Object> rechercherLivres(String recherche)
+	 * throws ResultNotFoundException{ LivreSpecificationImpl spec = new
+	 * LivreSpecificationImpl(new SearchCriteria("nom", recherche));
+	 * 
+	 * 
+	 * 
+	 * List<Livre> results = livreRepository.findAll(spec); if (results.isEmpty()) {
+	 * throw new ResultNotFoundException("Aucun resultats"); }
+	 * 
+	 * Map< String, Object> livres=new HashMap<>();
+	 * 
+	 * livres.put("results",results);
+	 * 
+	 * return livres; }
+	 */
 
 @Override
-public Page<Livre> searchLivres(String recherche) throws Exception {
+public Page<Livre> searchLivres(String recherche) {
 	LivreSpecificationImpl spec = new LivreSpecificationImpl(new SearchCriteria("nom",  recherche));
 	
 	Pageable pageable=PageRequest.of(0, 2);
 	
 	Page<Livre> results = livreRepository.findAll(spec,pageable);
-	if (results.isEmpty()) {
-		throw new Exception("Aucun resultats");
-	}
-	
 	
 	
 	return results;

@@ -2,9 +2,10 @@ package sid.org.controller;
 
 
 
-import java.util.Map;
 
 import javax.transaction.Transactional;
+import javax.validation.Valid;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -30,11 +31,11 @@ public class PretController {
 
 
 
-@GetMapping("prets/{id}")
-public Map<String,Object>  afficherUnPret(@PathVariable Long id) throws Exception{
+@GetMapping("/prets/{id}")
+public Pret afficherUnPret(@PathVariable Long id) throws Exception{
  
 
-	 Map<String,Object> pret = pretService.afficherPret(id);
+	 Pret pret = pretService.afficherPret(id);
 	return pret;
 
 
@@ -45,8 +46,8 @@ public Map<String,Object>  afficherUnPret(@PathVariable Long id) throws Exceptio
 
 
 		@Transactional
-	  @PostMapping("prets")
-	  public  Pret creerUnPret(@RequestBody Pret pret,@RequestParam(required=false) int nombre) throws Exception{
+	  @PostMapping("/prets")
+	  public  Pret creerUnPret(@Valid @RequestBody Pret pret,@RequestParam(required=false) int nombre) throws Exception{
 	 		Pret pret1=pretService.creerPret(pret);
            livreService.modificationNombreExemplaire(pret1.getLivre().getCodeLivre(),nombre);
 			return pret1 ;
@@ -56,14 +57,14 @@ public Map<String,Object>  afficherUnPret(@PathVariable Long id) throws Exceptio
 	  	  
 	  	  }
 	  
-@DeleteMapping("prets")
+@DeleteMapping("/prets")
 public  void supprimerUnPret(@PathVariable Long id) throws Exception {
 
 		pretService.supprimerPret(id);
 	
 	
 }
-	@PutMapping("prets/{id}")  
+	@PutMapping("/prets/{id}")  
 public  Pret modifierUnPret(@PathVariable Long id) throws Exception{
 		  	
 		

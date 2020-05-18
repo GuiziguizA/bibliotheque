@@ -5,11 +5,14 @@ package sid.org.controller;
 
 import java.util.Map;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,7 +26,7 @@ public class LivreController {
 	
 	
 	
-	  @GetMapping("books") public Page<Livre>afficherLivres(@RequestParam(required = false) String search) throws Exception {
+	  @GetMapping("/books") public Page<Livre>afficherLivres(@RequestParam(required = false) String search) throws Exception {
 	  
 		  Page<Livre> livres;
 	  
@@ -36,7 +39,7 @@ public class LivreController {
 	  }
 	  
 	  
-	  @GetMapping("books/{id}")
+	  @GetMapping("/books/{id}")
 public  Map<String, Object>afficheUnLivre(@PathVariable Long id) throws Exception{
 		  Map<String, Object> livre;
 		
@@ -48,8 +51,8 @@ public  Map<String, Object>afficheUnLivre(@PathVariable Long id) throws Exceptio
 	  }
 	  
 	  
-	  @PostMapping("books")
-	  Livre ajouterLivre( Livre livre) throws Exception { 
+	  @PostMapping("/books")
+	  Livre ajouterLivre(@Valid @RequestBody Livre livre) throws Exception { 
 		  
 		  return livreService.createLivre(livre);
 		  

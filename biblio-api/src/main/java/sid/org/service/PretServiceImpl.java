@@ -8,11 +8,17 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import sid.org.classe.Pret;
 import sid.org.classe.Utilisateur;
 import sid.org.dao.PretRepository;
+import sid.org.exception.BibliothequeException;
+import sid.org.exception.DemandeUtilisateurIncorrectException;
+import sid.org.exception.LivreIndisponibleException;
 
 @Service
 public class PretServiceImpl implements PretService{
@@ -22,10 +28,10 @@ public class PretServiceImpl implements PretService{
 	private DateService dateService;
 	
 	@Override
-	public Pret creerPret(Pret pret) throws Exception {
+	public Pret creerPret(Pret pret) throws BibliothequeException {
 
 		if(pret.getLivre().getNombreExemplaire()<1) {
-			throw new Exception("ce livre n'est pas disponible");
+			throw new LivreIndisponibleException("ce livre n'est pas disponible");
 		}
 		Date date1=new Date();
 		
@@ -38,11 +44,11 @@ public class PretServiceImpl implements PretService{
 	}
 
 	@Override
-	public Pret modifierPret(Long id) throws Exception {
+	public Pret modifierPret(Long id) throws DemandeUtilisateurIncorrectException {
 		Optional<Pret> pret=pretRepository.findById(id);
 		
 		if(!pret.isPresent()) {
-			throw new Exception ("ce pret n'existe pas");
+			throw new DemandeUtilisateurIncorrectException ("ce pret n'existe pas");
 		}
 		
 		pret.get().setStatut("2 periode");
@@ -52,11 +58,11 @@ public class PretServiceImpl implements PretService{
 	}
 
 	@Override
-	public void supprimerPret(Long id) throws Exception {
+	public void supprimerPret(Long id) throws DemandeUtilisateurIncorrectException {
 		Optional<Pret> pret=pretRepository.findById(id);
 		
 		if(!pret.isPresent()) {
-			throw new Exception ("ce pret n'existe pas");
+			throw new DemandeUtilisateurIncorrectException ("ce pret n'existe pas");
 		}
 		
 		pretRepository.delete(pret.get());
@@ -68,37 +74,32 @@ public class PretServiceImpl implements PretService{
 	
 	
 	@Override
-	public List<Pret> afficherPrets(Utilisateur utilisateur) throws Exception {
-		List<Pret>listPretUtilisateur=pretRepository.findByUtilisateur(utilisateur);
-		if(listPretUtilisateur.isEmpty()) {
-			throw new Exception("Pas de pret en cours pour cette utilisateur");
-		}
+	public Page<Pret> afficherPrets(Utilisateur utilisateur,int page,int size)  {
+		Pageable pageable=PageRequest.of(page, size);
+		Page<Pret>listPretUtilisateur=pretRepository.findByUtilisateur(utilisateur,pageable);
+
 		
 		return listPretUtilisateur;
 	}
 	
 	@Override
-	public   Map< String, Object> afficherPret(Long id) throws Exception {
+	public   Pret afficherPret(Long id) throws DemandeUtilisateurIncorrectException {
 		Optional<Pret> pret=pretRepository.findById(id);
 		
-		if(!pret.isPresent()) {
-			throw new Exception ("ce pret n'existe pas");
-		}
-		
-		  Map< String, Object> prets=new HashMap<>();
-			
-			prets.put("livre",pret);
+	if (!pret.isPresent()) {
+		throw new DemandeUtilisateurIncorrectException("le pret n'existe pas");
+	}
 	
 	
-			return prets;
+			return pret.get();
 		
 	}
 
 	@Override
-	public Pret afficherUnPret(Long id)throws Exception{
+	public Pret afficherUnPret(Long id)throws DemandeUtilisateurIncorrectException{
 		Optional<Pret> pret=pretRepository.findById(id);
 		if(!pret.isPresent()) {
-			throw new Exception ("ce pret n'existe pas");
+			throw new DemandeUtilisateurIncorrectException ("ce pret n'existe pas");
 		}
 		return pret.get();
 	}

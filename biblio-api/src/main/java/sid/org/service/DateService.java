@@ -2,9 +2,11 @@ package sid.org.service;
 
 import java.util.Date;
 
+import sid.org.exception.MauvaiseDemandeException;
+
 public interface DateService {
 	
 
-	public Date modifierDate(Date date, int mois) throws Exception;
+	public Date modifierDate(Date date, int mois) throws MauvaiseDemandeException;
 
 }

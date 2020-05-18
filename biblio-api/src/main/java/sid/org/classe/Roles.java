@@ -9,12 +9,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotBlank;
 
 
 @Entity
 public class Roles {
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long codeRole;
+	@NotBlank(message = "le champ nom ne peut pas etre vide")
 	private String nom;
 	@OneToMany(mappedBy="roles",fetch=FetchType.LAZY)	
 	private Collection<Utilisateur>utilisateurs;

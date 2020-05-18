@@ -1,5 +1,6 @@
 package sid.org.service;
 
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -11,13 +12,20 @@ import java.util.regex.Pattern;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import sid.org.classe.Livre;
 import sid.org.classe.Pret;
 import sid.org.classe.Utilisateur;
 import sid.org.dao.PretRepository;
 import sid.org.dao.UtilisateurRepository;
+import sid.org.exception.BibliothequeException;
+import sid.org.exception.DemandeUtilisateurIncorrectException;
+import sid.org.exception.UtilisateurMailExistException;
 
 @Service
 public class UtilisateurServiceImpl implements UtilisateurService {
@@ -31,10 +39,10 @@ private MailService mailService;
 	PasswordEncoder passwordEncoder;
 	
 	@Override
-	public Utilisateur creerUtilisateur(Utilisateur utilisateur) throws Exception {
+	public Utilisateur creerUtilisateur(Utilisateur utilisateur) throws BibliothequeException{
 		Optional<Utilisateur> user =utilisateurRepository.findByMail(utilisateur.getMail());
 		if(user.isPresent()) {
-			throw new Exception("le mail est deja utilise");
+			throw new UtilisateurMailExistException("le mail est deja utilise");
 		}
 		
 		mailService.verifierUnMail(utilisateur.getMail());
@@ -43,11 +51,11 @@ private MailService mailService;
 	}
 
 	@Override
-	public Utilisateur modifierUtilisateur(Long id, String motDePasse) throws Exception {
+	public Utilisateur modifierUtilisateur(Long id, String motDePasse) throws DemandeUtilisateurIncorrectException {
 		Optional<Utilisateur> user =utilisateurRepository.findById(id);
 		
 		if(!user.isPresent()) {
-			throw new Exception("Utilisateur introuvable");
+			throw new DemandeUtilisateurIncorrectException("Utilisateur introuvable");
 		}
 		user.get().setMotDePasse(passwordEncoder.encode(motDePasse));
 		
@@ -56,11 +64,12 @@ private MailService mailService;
 
 	@Override
 	@Transactional
-	public void supprimerUtilisateur(Long id) throws Exception {
+	public void supprimerUtilisateur(Long id) throws DemandeUtilisateurIncorrectException {
 Optional<Utilisateur> user =utilisateurRepository.findById(id);
-List<Pret>listPretUtilisateur=pretRepository.findByUtilisateur(user.get());		
+Pageable pageable=PageRequest.of(2, 5);
+Page<Pret>listPretUtilisateur=pretRepository.findByUtilisateur(user.get(),pageable);		
 		if(!user.isPresent()) {
-			throw new Exception("Utilisateur introuvable");
+			throw new DemandeUtilisateurIncorrectException("Utilisateur introuvable");
 		}
 	
 		utilisateurRepository.delete(user.get());
@@ -69,13 +78,13 @@ List<Pret>listPretUtilisateur=pretRepository.findByUtilisateur(user.get());
 	}
 	
 	@Override
-	public Map<String, Object> voirUtilisateur(Long id) throws Exception {
+	public Map<String, Object> voirUtilisateur(Long id) throws DemandeUtilisateurIncorrectException {
 		
 
 		  Map<String, Object> utilisateur=new HashMap<>();
 		Optional<Utilisateur>user= utilisateurRepository.findById(id);
 		if(!user.isPresent()) {
-			throw new Exception("Utilisateur introuvable");
+			throw new DemandeUtilisateurIncorrectException("Utilisateur introuvable");
 		}
 		
 		
@@ -85,17 +94,16 @@ List<Pret>listPretUtilisateur=pretRepository.findByUtilisateur(user.get());
 	}
 
 	@Override
-	public Map<String, Object> voirListeUtilisateurs() throws Exception {
+	public Page<Utilisateur> voirListeUtilisateurs(int page, int size){
 		
-
-		  Map<String, Object> utilisateurs=new HashMap<>();
-		  ArrayList<Utilisateur>listeUtilisateurs=(ArrayList<Utilisateur>) utilisateurRepository.findAll();
-		  if(!listeUtilisateurs.isEmpty()) {
-				throw new Exception("Il n'y a pas encore d'utilisateurs");
-			}
-		  utilisateurs.put("utilisateurs",listeUtilisateurs );
+Pageable pageable =PageRequest.of(page,size );
+		  Page<Utilisateur> utilisateurs=utilisateurRepository.findAll(pageable);
+		  
+		
 	
 	return utilisateurs;
 	}
+
+	
 
 }

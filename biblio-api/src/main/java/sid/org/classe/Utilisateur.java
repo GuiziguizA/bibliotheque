@@ -11,17 +11,26 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 
 @Entity
 public class Utilisateur {
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long codeUtilisateur;
+	@NotBlank(message = "le champ nom ne peut pas etre vide")
 	private String nom;
 	@Column(unique =true )
+	@Email
+	@NotBlank(message = "le champ nail ne peut pas etre vide")
 	private String mail;
+	@NotBlank(message = "le champ adresse ne peut pas etre vide")
 	private String adresse;
+	@NotBlank(message = "le champ mot de passe ne peut pas etre vide")
 	private String motDePasse;
+	@NotBlank(message = "le champ code postal ne peut pas etre vide")
 	private String codePostal;
 	@OneToMany(mappedBy="utilisateur",fetch=FetchType.LAZY)	
 	private Collection<Pret>prets;

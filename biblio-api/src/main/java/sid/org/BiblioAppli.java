@@ -124,14 +124,13 @@ public class BiblioAppli implements CommandLineRunner{
 	Date date1=dateService.modifierDate(new Date(),8);
 		System.out.println(date1);
 		ArrayList<Livre>listLivres=livreRepository.findByNomAndtype(null, null);
-		Map<String, Object> livres=livreService.afficherLivres(null, null);
+		
 
 		System.out.println("hello");
 		System.out.println(listLivres.get(0).getNom());
 		System.out.println(listLivres.get(0).getType());
 		System.out.println(listLivres.get(2).getNom());
 		
-		System.out.println(livres);
 	String mail=mailService.verifierUnMail(user1.getMail());
 	System.out.println(mail);
 	livreService.searchLivres("le");
