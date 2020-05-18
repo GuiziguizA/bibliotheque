@@ -23,7 +23,7 @@ import sid.org.dao.PretRepository;
 import sid.org.dao.RolesRepository;
 import sid.org.service.DateService;
 import sid.org.service.LivreService;
-import sid.org.service.MailService;
+
 import sid.org.service.PretService;
 import sid.org.service.UtilisateurService;
 
@@ -51,17 +51,15 @@ public class BiblioAppli implements CommandLineRunner{
     private LivreRepository livreRepository;
     @Autowired
     private DateService dateService;
-    @Autowired
-    private MailService mailService;
-	
+  
 	
 	@Override
 	
 	public void run(String... args) throws Exception {
 	
-		Roles role1 = rolesRepository.save(new Roles("role1"));
-		Roles role2 = rolesRepository.save(new Roles("role2"));
-		Roles role3 = rolesRepository.save(new Roles("role3"));
+		Roles role1 = rolesRepository.save(new Roles("user"));
+		Roles role2 = rolesRepository.save(new Roles("employe"));
+		Roles role3 = rolesRepository.save(new Roles("admin"));
 		
 		Utilisateur user1= utilisateurService.creerUtilisateur(new Utilisateur( "nom1", "gualisse@gmail.com"," adresse1", "motDePasse1", "codePostal1", role1));
 		Utilisateur user2= utilisateurService.creerUtilisateur(new Utilisateur( "nom2","guzalfisse@gmail.com"," adresse2", "motDePasse2", "codePostal2", role1));
@@ -131,8 +129,7 @@ public class BiblioAppli implements CommandLineRunner{
 		System.out.println(listLivres.get(0).getType());
 		System.out.println(listLivres.get(2).getNom());
 		
-	String mail=mailService.verifierUnMail(user1.getMail());
-	System.out.println(mail);
-	livreService.searchLivres("le");
+	
+	
 	}
 	}

@@ -23,8 +23,8 @@ public class Utilisateur {
 	@NotBlank(message = "le champ nom ne peut pas etre vide")
 	private String nom;
 	@Column(unique =true )
-	@Email
-	@NotBlank(message = "le champ nail ne peut pas etre vide")
+	@Email(message="L'adresse mail saisie n'est pas valide")
+	@NotBlank(message = "le champ mail ne peut pas etre vide")
 	private String mail;
 	@NotBlank(message = "le champ adresse ne peut pas etre vide")
 	private String adresse;

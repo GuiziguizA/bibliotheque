@@ -8,6 +8,7 @@ import javax.validation.Valid;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -46,6 +47,7 @@ public Pret afficherUnPret(@PathVariable Long id) throws Exception{
 
 
 		@Transactional
+	@Secured(value= {"ROLE_admin","ROLE_employe"})
 	  @PostMapping("/prets")
 	  public  Pret creerUnPret(@Valid @RequestBody Pret pret,@RequestParam(required=false) int nombre) throws Exception{
 	 		Pret pret1=pretService.creerPret(pret);
@@ -56,7 +58,7 @@ public Pret afficherUnPret(@PathVariable Long id) throws Exception{
 	
 	  	  
 	  	  }
-	  
+ @Secured(value= {"ROLE_admin","ROLE_employe"})	  
 @DeleteMapping("/prets")
 public  void supprimerUnPret(@PathVariable Long id) throws Exception {
 
@@ -64,6 +66,7 @@ public  void supprimerUnPret(@PathVariable Long id) throws Exception {
 	
 	
 }
+ 	@Secured(value= {"ROLE_admin","ROLE_employe"})
 	@PutMapping("/prets/{id}")  
 public  Pret modifierUnPret(@PathVariable Long id) throws Exception{
 		  	

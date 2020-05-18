@@ -34,8 +34,9 @@ package sid.org.config;
 			  .csrf().disable()
 		  .authorizeRequests()
 		  .antMatchers("/css/**", "/js/**", "/webjars/**", "/books","/books/**", "/prets/**","/users", "/users/**" ).permitAll()
-		  .anyRequest().authenticated() ;
-		  
+		  .anyRequest().authenticated() 
+		
+				;
 		  
 		  }
 		  

@@ -25,14 +25,14 @@ import sid.org.dao.PretRepository;
 import sid.org.dao.UtilisateurRepository;
 import sid.org.exception.BibliothequeException;
 import sid.org.exception.DemandeUtilisateurIncorrectException;
+import sid.org.exception.MauvaiseDemandeException;
 import sid.org.exception.UtilisateurMailExistException;
 
 @Service
 public class UtilisateurServiceImpl implements UtilisateurService {
 	@Autowired
 	private UtilisateurRepository utilisateurRepository;
-	@Autowired
-private MailService mailService;
+
 	@Autowired
 	private PretRepository pretRepository;
 	@Autowired
@@ -45,7 +45,7 @@ private MailService mailService;
 			throw new UtilisateurMailExistException("le mail est deja utilise");
 		}
 		
-		mailService.verifierUnMail(utilisateur.getMail());
+	
 		utilisateur.setMotDePasse(passwordEncoder.encode(utilisateur.getMotDePasse()));
 		return utilisateurRepository.save(utilisateur);
 	}
@@ -66,6 +66,7 @@ private MailService mailService;
 	@Transactional
 	public void supprimerUtilisateur(Long id) throws DemandeUtilisateurIncorrectException {
 Optional<Utilisateur> user =utilisateurRepository.findById(id);
+
 Pageable pageable=PageRequest.of(2, 5);
 Page<Pret>listPretUtilisateur=pretRepository.findByUtilisateur(user.get(),pageable);		
 		if(!user.isPresent()) {
@@ -78,24 +79,25 @@ Page<Pret>listPretUtilisateur=pretRepository.findByUtilisateur(user.get(),pageab
 	}
 	
 	@Override
-	public Map<String, Object> voirUtilisateur(Long id) throws DemandeUtilisateurIncorrectException {
+	public Utilisateur voirUtilisateur(Long id) throws DemandeUtilisateurIncorrectException {
 		
 
-		  Map<String, Object> utilisateur=new HashMap<>();
+		
 		Optional<Utilisateur>user= utilisateurRepository.findById(id);
 		if(!user.isPresent()) {
 			throw new DemandeUtilisateurIncorrectException("Utilisateur introuvable");
 		}
 		
-		
-		  utilisateur.put("utilisateur",user );
 	
-	return utilisateur;
+	
+	return user.get();
 	}
 
 	@Override
-	public Page<Utilisateur> voirListeUtilisateurs(int page, int size){
-		
+	public Page<Utilisateur> voirListeUtilisateurs(int page, int size) throws MauvaiseDemandeException{
+		if(size==0) {
+			throw new MauvaiseDemandeException();
+		}
 Pageable pageable =PageRequest.of(page,size );
 		  Page<Utilisateur> utilisateurs=utilisateurRepository.findAll(pageable);
 		  

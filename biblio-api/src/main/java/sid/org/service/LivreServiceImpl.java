@@ -25,6 +25,7 @@ import sid.org.exception.DemandeUtilisateurIncorrectException;
 import sid.org.exception.EntityAlreadyExistException;
 
 import sid.org.exception.LivreIndisponibleException;
+import sid.org.exception.MauvaiseDemandeException;
 import sid.org.exception.ResultNotFoundException;
 import sid.org.specification.LivreSpecificationImpl;
 import sid.org.specification.SearchCriteria;
@@ -52,53 +53,28 @@ public class LivreServiceImpl implements LivreService{
 	}
 
 	
-
-	/*
-	 * @Override public EntityModel<Livre> afficheUnLivre( Long id) {
-	 * 
-	 * Optional<Livre> livre = livreRepository.findById(id);
-	 * 
-	 * return new EntityModel<>(livre.get(),
-	 * linkTo(methodOn(LivreService.class).afficheUnLivre(id)).withSelfRel(),
-	 * linkTo(methodOn(LivreService.class).afficherLivres(null,null)).withRel(
-	 * "livres")); }
-	 * 
-	 */
-	/*
-	 * @Override public CollectionModel<EntityModel<Livre>> afficherLivres(String
-	 * nom, String type) {
-	 * 
-	 * List<EntityModel<Livre>>livres = livreRepository.findByNomAndtype(nom,
-	 * type).stream() .map(livre -> { return new EntityModel<>(livre,
-	 * linkTo(methodOn(LivreController.class).afficheUnLivre(livre.getCodeLivre())).
-	 * withSelfRel(), linkTo(methodOn(LivreController.class).afficherLivres( nom,
-	 * type)).withRel("livres"));
-	 * 
-	 * }) .collect(Collectors.toList());
-	 * 
-	 * 
-	 * return new CollectionModel<>(livres,
-	 * linkTo(methodOn(LivreService.class).afficherLivres(nom,
-	 * type)).withSelfRel()); }
-	 * 
-	 */
+@Override
+	public void supprimerLivre(Long id)throws BibliothequeException{
+		
+		Optional<Livre>livre=livreRepository.findById(id);
+		if(!livre.isPresent()) {
+			throw new DemandeUtilisateurIncorrectException();
+		}
+		livreRepository.delete(livre.get());
+	}
 	
 	
 	
 	@Override
-	public Map<String, Object> afficheUnLivre( Long id) throws DemandeUtilisateurIncorrectException {
+	public Livre  afficheUnLivre( Long id) throws DemandeUtilisateurIncorrectException {
 		Optional<Livre> book=livreRepository.findByCodeLivre(id);
 		if(!book.isPresent()) {
 			throw new DemandeUtilisateurIncorrectException("le livre existe pas");
 		}
 		
-		  
-		  Map< String, Object> livre=new HashMap<>();
-			
-			livre.put("livre",book.get());
+		 
 	
-	
-			return livre;
+			return book.get();
 		}
 
 
@@ -143,10 +119,14 @@ public class LivreServiceImpl implements LivreService{
 	 */
 
 @Override
-public Page<Livre> searchLivres(String recherche) {
+public Page<Livre> searchLivres(String recherche,int page ,int size) throws MauvaiseDemandeException {
 	LivreSpecificationImpl spec = new LivreSpecificationImpl(new SearchCriteria("nom",  recherche));
 	
-	Pageable pageable=PageRequest.of(0, 2);
+	if(size==0) {
+		throw new MauvaiseDemandeException();
+	}
+	
+	Pageable pageable=PageRequest.of(page,size );
 	
 	Page<Livre> results = livreRepository.findAll(spec,pageable);
 	

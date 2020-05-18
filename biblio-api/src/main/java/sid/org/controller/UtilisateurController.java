@@ -6,15 +6,19 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import sid.org.classe.Utilisateur;
+import sid.org.exception.BibliothequeException;
 import sid.org.service.UtilisateurService;
 
 @RestController
@@ -23,19 +27,18 @@ public class UtilisateurController {
 
 	@Autowired
 	private UtilisateurService utilisateurService;
+
 	
 	@GetMapping("/users/{id}")
- public Map<String, Object>afficherUtilisateurs(@PathVariable Long id) throws Exception {
+ public Utilisateur afficherUtilisateurs(@PathVariable Long id) throws BibliothequeException {
 	  
-	  Map<String, Object> user;
-	  
-		user=utilisateurService.voirUtilisateur(id);
+	Utilisateur user=utilisateurService.voirUtilisateur(id);
 		return user;
 	
 
 }
 	@GetMapping("/users")
-	 public   Page<Utilisateur> afficherUtilisateurs(int page,int size) throws Exception {
+	 public   Page<Utilisateur> afficherUtilisateurs(@RequestParam int page, @RequestParam int size) throws BibliothequeException{
 		  
 		  Page<Utilisateur> users;
 		 
@@ -45,7 +48,7 @@ public class UtilisateurController {
 
 	}
 	@PostMapping("/users")
-	public Utilisateur creerUtilisateur(@Valid @RequestBody Utilisateur utilisateur) throws Exception{
+	public Utilisateur creerUtilisateur(@Valid @RequestBody Utilisateur utilisateur) throws BibliothequeException{
 
 		Utilisateur user =	utilisateurService.creerUtilisateur(utilisateur);
 		return user;
@@ -54,7 +57,8 @@ public class UtilisateurController {
 	}
 	
 	@PutMapping("/users/{id}")
-	public Utilisateur modifierUtilisateur(@PathVariable Long id , @Valid @RequestBody String motDePasse) throws Exception{
+	 @Secured(value= {"ROLE_admin"})
+	public Utilisateur modifierUtilisateur(@PathVariable Long id , @Valid @RequestBody String motDePasse) throws BibliothequeException{
 		
 		Utilisateur user =	utilisateurService.modifierUtilisateur(id, motDePasse);
 		return user;
@@ -62,9 +66,9 @@ public class UtilisateurController {
 
 	}
 	
-	
-	@DeleteMapping("users/{id}")
-	public void supprimerUtilisateur(@PathVariable Long id) throws Exception{
+	 @Secured(value= {"ROLE_admin"})
+	@DeleteMapping("/users/{id}")
+	public void supprimerUtilisateur(@PathVariable Long id) throws BibliothequeException	{
 		
 		
 
@@ -72,6 +76,7 @@ public class UtilisateurController {
 	
 	
 	}
-	
+	 
+
 	
 }

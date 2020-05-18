@@ -19,6 +19,7 @@ import sid.org.dao.PretRepository;
 import sid.org.exception.BibliothequeException;
 import sid.org.exception.DemandeUtilisateurIncorrectException;
 import sid.org.exception.LivreIndisponibleException;
+import sid.org.exception.MauvaiseDemandeException;
 
 @Service
 public class PretServiceImpl implements PretService{
@@ -74,7 +75,10 @@ public class PretServiceImpl implements PretService{
 	
 	
 	@Override
-	public Page<Pret> afficherPrets(Utilisateur utilisateur,int page,int size)  {
+	public Page<Pret> afficherPrets(Utilisateur utilisateur,int page,int size) throws MauvaiseDemandeException  {
+		if(size==0) {
+			throw new MauvaiseDemandeException();
+		}
 		Pageable pageable=PageRequest.of(page, size);
 		Page<Pret>listPretUtilisateur=pretRepository.findByUtilisateur(utilisateur,pageable);
 

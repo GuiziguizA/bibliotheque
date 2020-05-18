@@ -3,12 +3,12 @@ package sid.org.controller;
 
 
 
-import java.util.Map;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import sid.org.classe.Livre;
+import sid.org.exception.BibliothequeException;
 import sid.org.service.LivreService;
 
 @RestController
@@ -26,12 +27,12 @@ public class LivreController {
 	
 	
 	
-	  @GetMapping("/books") public Page<Livre>afficherLivres(@RequestParam(required = false) String search) throws Exception {
+	  @GetMapping("/books") public Page<Livre>afficherLivres(@RequestParam String search,@RequestParam int page ,@RequestParam int size) throws Exception {
 	  
 		  Page<Livre> livres;
 	  
 	
-		livres = livreService.searchLivres(search);
+		livres = livreService.searchLivres(search,page ,size);
 		return livres; 
 	
 	  
@@ -40,10 +41,10 @@ public class LivreController {
 	  
 	  
 	  @GetMapping("/books/{id}")
-public  Map<String, Object>afficheUnLivre(@PathVariable Long id) throws Exception{
-		  Map<String, Object> livre;
+public  Livre afficheUnLivre(@PathVariable Long id) throws BibliothequeException{
+		 
 		
-	  livre=livreService.afficheUnLivre(id);
+	  Livre livre=livreService.afficheUnLivre(id);
 	  return livre;
 	
 	 
@@ -52,12 +53,17 @@ public  Map<String, Object>afficheUnLivre(@PathVariable Long id) throws Exceptio
 	  
 	  
 	  @PostMapping("/books")
-	  Livre ajouterLivre(@Valid @RequestBody Livre livre) throws Exception { 
+	  @Secured(value= {"ROLE_admin","ROLE_employe"})
+	public  Livre ajouterLivre(@Valid @RequestBody Livre livre) throws BibliothequeException { 
 		  
 		  return livreService.createLivre(livre);
 		  
 	  }
 	 
-	
+	  public void  supprimerUnLivre(@PathVariable Long id) throws BibliothequeException{
+		  
+		  livreService.supprimerLivre(id);
+		  
+	  }
 		
 }
