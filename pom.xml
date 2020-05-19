@@ -22,6 +22,8 @@
 	</properties>
 	
 	
+	
+	
   <modules>
   	<module>biblio-api</module>
 
