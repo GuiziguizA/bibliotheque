@@ -12,6 +12,7 @@ import sid.org.classe.Utilisateur;
 public interface PretRepository extends JpaRepository<Pret, Long>{
 	
 	 public Page<Pret>findByUtilisateur(Utilisateur utilisateur,Pageable pageable);
-	
+	 public List<Pret>findByStatut(String statut);
+		
 
 }

@@ -98,7 +98,27 @@ public class PretServiceImpl implements PretService{
 			return pret.get();
 		
 	}
+	
+	@Override
+	public  List<Pret> afficherPrets() throws DemandeUtilisateurIncorrectException {
+		List<Pret> prets=pretRepository.findAll();
+		
 
+	
+			return prets;
+		
+	}
+
+	@Override
+	public  List<Pret> afficherPrets(String statut) throws DemandeUtilisateurIncorrectException {
+		List<Pret> prets=pretRepository.findByStatut(statut);
+		
+
+	
+			return prets;
+		
+	}
+	
 	@Override
 	public Pret afficherUnPret(Long id)throws DemandeUtilisateurIncorrectException{
 		Optional<Pret> pret=pretRepository.findById(id);

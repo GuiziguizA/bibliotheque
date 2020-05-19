@@ -1,4 +1,4 @@
-package sig.org.metier;
+package sid.org.service;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.mail.SimpleMailMessage;
@@ -30,9 +30,9 @@ public class MailService{
 	    @Bean
 	    public SimpleMailMessage templateMessage() {
 	        SimpleMailMessage mailMessage = new SimpleMailMessage();
-	        mailMessage.setTo("gualisse@gmail.com");
+	        mailMessage.setTo("gu@gmail.com");
 	        mailMessage.setSubject("Job Status");
-	        mailMessage.setFrom("gualisse@gmail.com");
+	        mailMessage.setFrom("guale@gmail.com");
 	        mailMessage.setText("envoie du mail");
 	        return mailMessage;
 	    }

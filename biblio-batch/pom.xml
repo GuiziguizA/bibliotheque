@@ -10,7 +10,7 @@
   	<dependencies>
 
 <dependency>
-<groupId>sid.org</groupId>
+	<groupId>sid.org</groupId>
 	<artifactId>biblio-api</artifactId>
 	<version>1.0-SNAPSHOT</version>
 </dependency>

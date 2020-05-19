@@ -20,7 +20,9 @@ public interface PretService {
 
 	public Page<Pret> afficherPrets(Utilisateur utilisateur, int page, int size) throws MauvaiseDemandeException;
 	public Pret afficherUnPret(Long id) throws Exception;
-	Pret afficherPret(Long id) throws DemandeUtilisateurIncorrectException;
+	public Pret afficherPret(Long id) throws DemandeUtilisateurIncorrectException;
+	public List<Pret> afficherPrets() throws DemandeUtilisateurIncorrectException;
+	public List<Pret> afficherPrets(String statut) throws DemandeUtilisateurIncorrectException;
 	
 	
 	
