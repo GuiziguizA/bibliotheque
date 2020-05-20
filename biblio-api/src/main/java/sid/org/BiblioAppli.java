@@ -74,20 +74,14 @@ public class BiblioAppli implements CommandLineRunner{
 		Livre livre3=livreService.createLivre(new Livre("le bossu de notre dame","auteur1","type1","section1","emplacement1",5));
 		Livre livre4=livreService.createLivre(new Livre("nom4","auteur4","type1","section1","emplacement1",7));
 		
-		/*
-		 * Pret pret = pretRepository.save(new Pret(new Date(), new Date(), "statut1",
-		 * livre1, user4)); Pret pret1= pretRepository.save(new Pret(new Date(), new
-		 * Date(), "statut1", livre1, user4)); Pret pret2= pretRepository.save(new
-		 * Pret(new Date(), new Date(), "statut1", livre2, user4)); Pret pret3=
-		 * pretRepository.save(new Pret( new Date(), new Date(), "statut1", livre3,
-		 * user3));
-		 * 
-		 * Pret pret5 = pretRepository.save(new Pret(new Date(), new Date(), "statut4",
-		 * livre1, user1));
-		 * 
-		 * Pret pret6 = pretRepository.save(new Pret(new Date(), new Date(), "statut5",
-		 * livre1, user1));
-		 */
+		
+		  Pret pret = pretRepository.save(new Pret(new Date(), new Date(), "statut1", livre1, user4)); 
+		  Pret pret1= pretRepository.save(new Pret(new Date(), new Date(), "statut1", livre1, user4)); 
+		  Pret pret2= pretRepository.save(new Pret(new Date(), new Date(), "statut1", livre2, user4)); 
+		  Pret pret3=pretRepository.save(new Pret( new Date(), new Date(), "statut1", livre3, user3));
+		  Pret pret5 = pretRepository.save(new Pret(new Date(), new Date(), "deuxiemeTemps",livre1, user1));
+		   Pret pret6 = pretRepository.save(new Pret(new Date(), new Date(), "deuxiemeTemps", livre1, user1));
+		 
 		/*
 		 * System.out.println("yolo"); Pret pret7 =pretService.creerPret(new Pret(null,
 		 * null, "statut1", livre4, user4));
