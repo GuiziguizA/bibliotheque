@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 
 import sid.org.classe.Livre;
 import sid.org.dao.LivreRepository;
+import sid.org.dto.LivreDto;
 import sid.org.exception.BibliothequeException;
 import sid.org.exception.DemandeUtilisateurIncorrectException;
 import sid.org.exception.EntityAlreadyExistException;
@@ -27,6 +28,7 @@ import sid.org.exception.EntityAlreadyExistException;
 import sid.org.exception.LivreIndisponibleException;
 import sid.org.exception.MauvaiseDemandeException;
 import sid.org.exception.ResultNotFoundException;
+import sid.org.specification.LivreCriteria;
 import sid.org.specification.LivreSpecificationImpl;
 import sid.org.specification.SearchCriteria;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -41,13 +43,15 @@ public class LivreServiceImpl implements LivreService{
 	
 
 	@Override
-	public Livre createLivre(Livre livre) throws EntityAlreadyExistException {
-		List<Livre>livreNom=livreRepository.findByNom(livre.getNom());
-		List<Livre>livreAuteur=livreRepository.findByAuteur(livre.getAuteur());
+	public Livre createLivre(LivreDto livreDto) throws EntityAlreadyExistException {
+		List<Livre>livreNom=livreRepository.findByNom(livreDto.getNom());
+		List<Livre>livreAuteur=livreRepository.findByAuteur(livreDto.getAuteur());
 		
 		if(!livreNom.isEmpty() && !livreAuteur.isEmpty() ) {
 			throw new  EntityAlreadyExistException();
 		}
+		
+		Livre livre= convertoToEntity(livreDto);
 		
 		return 	livreRepository.save(livre);
 	}
@@ -119,8 +123,8 @@ public class LivreServiceImpl implements LivreService{
 	 */
 
 @Override
-public Page<Livre> searchLivres(String recherche,int page ,int size) throws MauvaiseDemandeException {
-	LivreSpecificationImpl spec = new LivreSpecificationImpl(new SearchCriteria("nom",  recherche));
+public Page<Livre> searchLivres(LivreCriteria livreCriteria,int page ,int size) throws MauvaiseDemandeException {
+	LivreSpecificationImpl spec = new LivreSpecificationImpl(livreCriteria);
 	
 	if(size==0) {
 		throw new MauvaiseDemandeException();
@@ -132,6 +136,21 @@ public Page<Livre> searchLivres(String recherche,int page ,int size) throws Mauv
 	
 	
 	return results;
+}
+
+
+private Livre convertoToEntity(LivreDto livreDto) {
+	
+	Livre livre=new Livre();
+	
+	livre.setAuteur(livreDto.getAuteur());
+	livre.setEmplacement(livreDto.getEmplacement());
+	livre.setNom(livreDto.getNom());
+	livre.setNombreExemplaire(livreDto.getNombreExemplaire());
+	livre.setSection(livreDto.getSection());
+	livre.setType(livreDto.getType());
+	return livre;
+	
 }
 
 }

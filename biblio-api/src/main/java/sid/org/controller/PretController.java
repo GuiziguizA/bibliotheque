@@ -3,6 +3,8 @@ package sid.org.controller;
 
 
 
+import java.security.Principal;
+
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import sid.org.classe.Pret;
+import sid.org.dto.PretDto;
 import sid.org.service.LivreService;
 import sid.org.service.PretService;
 
@@ -46,12 +49,11 @@ public Pret afficherUnPret(@PathVariable Long id) throws Exception{
 
 
 
-		@Transactional
+
 	@Secured(value= {"ROLE_admin","ROLE_employe"})
 	  @PostMapping("/prets")
-	  public  Pret creerUnPret(@Valid @RequestBody Pret pret,@RequestParam(required=false) int nombre) throws Exception{
-	 		Pret pret1=pretService.creerPret(pret);
-           livreService.modificationNombreExemplaire(pret1.getLivre().getCodeLivre(),nombre);
+	  public  Pret creerUnPret(@Valid @RequestBody PretDto  pretDto,Principal principal) throws Exception{
+	 		Pret pret1=pretService.creerPret(pretDto,principal);
 			return pret1 ;
 	
 	  

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import sid.org.classe.Utilisateur;
+import sid.org.dto.UtilisateurDto;
 import sid.org.exception.BibliothequeException;
 import sid.org.service.UtilisateurService;
 
@@ -48,9 +49,9 @@ public class UtilisateurController {
 
 	}
 	@PostMapping("/users")
-	public Utilisateur creerUtilisateur(@Valid @RequestBody Utilisateur utilisateur) throws BibliothequeException{
+	public Utilisateur creerUtilisateur(@Valid @RequestBody UtilisateurDto utilisateurDto) throws BibliothequeException{
 
-		Utilisateur user =	utilisateurService.creerUtilisateur(utilisateur);
+		Utilisateur user =	utilisateurService.creerUtilisateur(utilisateurDto);
 		return user;
 		
 

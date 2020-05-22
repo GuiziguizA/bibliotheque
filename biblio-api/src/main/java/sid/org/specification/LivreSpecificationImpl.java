@@ -13,10 +13,10 @@ import sid.org.classe.Livre;
 public class LivreSpecificationImpl implements Specification<Livre> {
 	
 	@Autowired
-	private SearchCriteria criteria;
+	private LivreCriteria criteria;
 	
 	
-	public LivreSpecificationImpl(SearchCriteria criteria) {
+	public LivreSpecificationImpl(LivreCriteria criteria) {
 		super();
 		this.criteria = criteria;
 	}
@@ -27,14 +27,16 @@ public class LivreSpecificationImpl implements Specification<Livre> {
 	
 	@Override
 	public Predicate toPredicate(Root<Livre> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
+		Predicate predicate = builder.conjunction();
+		if (criteria.getCodeLivre()!=null) {
+			predicate.getExpressions().add(builder.equal(root.get("codeLivre"),criteria.getCodeLivre()));
+		}
+		if (criteria.getNom()!=null) {
+			predicate.getExpressions().add(builder.like(root.get("nom"),"%"+criteria.getNom()+"%"));
+		}
+		return builder.and(predicate);
 		
-		  
-	            if (root.get(criteria.getKey()).getJavaType() == String.class) {
-	                return builder.like(
-	                  root.<String>get(criteria.getKey()), "%" + criteria.getValue() + "%");
-	            } else {
-	                return builder.equal(root.get(criteria.getKey()), criteria.getValue());
-	            }
+	           
 		 
 	
 	}

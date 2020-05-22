@@ -28,6 +28,9 @@ import org.springframework.security.web.authentication.Http403ForbiddenEntryPoin
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuccessHandler;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
   
   
   
@@ -60,15 +63,17 @@ import org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuc
 		  @Override protected void configure(HttpSecurity http) throws Exception {
 			  http
 			  .csrf().disable();
-			  // All requests send to the Web Server request must be authenticated
+			
 		        http.authorizeRequests().anyRequest().authenticated();
 		 
-		        // Use AuthenticationEntryPoint to authenticate user/password
+		        
 		        http.httpBasic().authenticationEntryPoint(authEntryPoint);
               
 		  
 		  }
 		  
+		  
+		
 		
 		  }
 		 

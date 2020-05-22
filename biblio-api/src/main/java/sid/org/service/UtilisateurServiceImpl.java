@@ -1,13 +1,8 @@
 package sid.org.service;
 
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+
 import java.util.Optional;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.transaction.Transactional;
 
@@ -20,9 +15,12 @@ import org.springframework.stereotype.Service;
 
 import sid.org.classe.Livre;
 import sid.org.classe.Pret;
+import sid.org.classe.Roles;
 import sid.org.classe.Utilisateur;
 import sid.org.dao.PretRepository;
+import sid.org.dao.RolesRepository;
 import sid.org.dao.UtilisateurRepository;
+import sid.org.dto.UtilisateurDto;
 import sid.org.exception.BibliothequeException;
 import sid.org.exception.DemandeUtilisateurIncorrectException;
 import sid.org.exception.MauvaiseDemandeException;
@@ -36,17 +34,22 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	@Autowired
 	private PretRepository pretRepository;
 	@Autowired
-	PasswordEncoder passwordEncoder;
+	private PasswordEncoder passwordEncoder;
+	@Autowired
+	private RolesRepository rolesRepository;
 	
 	@Override
-	public Utilisateur creerUtilisateur(Utilisateur utilisateur) throws BibliothequeException{
-		Optional<Utilisateur> user =utilisateurRepository.findByMail(utilisateur.getMail());
+	public Utilisateur creerUtilisateur(UtilisateurDto utilisateurDto) throws BibliothequeException{
+		Optional<Utilisateur> user =utilisateurRepository.findByMail(utilisateurDto.getMail());
 		if(user.isPresent()) {
 			throw new UtilisateurMailExistException("le mail est deja utilise");
 		}
 		
 	
-		utilisateur.setMotDePasse(passwordEncoder.encode(utilisateur.getMotDePasse()));
+		utilisateurDto.setMotDePasse(passwordEncoder.encode(utilisateurDto.getMotDePasse()));
+		Utilisateur utilisateur= convertToUtilisateur(utilisateurDto);
+		Optional<Roles> roles=rolesRepository.findByNom("user");
+		utilisateur.setRoles(roles.get());
 		return utilisateurRepository.save(utilisateur);
 	}
 
@@ -105,7 +108,17 @@ Pageable pageable =PageRequest.of(page,size );
 	
 	return utilisateurs;
 	}
-
+private Utilisateur convertToUtilisateur(UtilisateurDto utilisateurDto) {
+	Utilisateur utilisateur = new Utilisateur();
+	utilisateur.setAdresse(utilisateurDto.getAdresse());
+	utilisateur.setCodePostal(utilisateurDto.getCodePostal());
+	utilisateur.setMail(utilisateurDto.getMail());
+	utilisateur.setMotDePasse(utilisateurDto.getMotDePasse());
+	utilisateur.setNom(utilisateurDto.getNom());
+	return utilisateur;
 	
+	
+	
+}
 
 }

@@ -21,6 +21,8 @@ import sid.org.classe.Utilisateur;
 import sid.org.dao.LivreRepository;
 import sid.org.dao.PretRepository;
 import sid.org.dao.RolesRepository;
+import sid.org.dto.LivreDto;
+import sid.org.dto.UtilisateurDto;
 import sid.org.service.DateService;
 import sid.org.service.LivreService;
 
@@ -61,26 +63,26 @@ public class BiblioAppli implements CommandLineRunner{
 		Roles role2 = rolesRepository.save(new Roles("employe"));
 		Roles role3 = rolesRepository.save(new Roles("admin"));
 		
-		Utilisateur user1= utilisateurService.creerUtilisateur(new Utilisateur( "nom1", "gualisse@gmail.com"," adresse1", "motDePasse1", "codePostal1", role1));
-		Utilisateur user2= utilisateurService.creerUtilisateur(new Utilisateur( "nom2","guzalfisse@gmail.com"," adresse2", "motDePasse2", "codePostal2", role1));
-		Utilisateur user3= utilisateurService.creerUtilisateur(new Utilisateur("nom3", "gfusalisse@gmail.com"," adresse3", "motDePasse3", "codePostal3", role2));
-		Utilisateur user4= utilisateurService.creerUtilisateur(new Utilisateur( "nom4", "gusalissfe@gmail.com"," adresse4", "motDePasse4", "codePostal4", role2));
-		Utilisateur user5= utilisateurService.creerUtilisateur(new Utilisateur("nom5", "gwalfisse@gmail.com"," adresse5", "motDePasse5", "codePostal5",  role3));
-		Utilisateur user6= utilisateurService.creerUtilisateur(new Utilisateur( "nom6", "guxavlisse@gmail.com"," adresse6", "motDePasse6", "codePostal6",role3));
+		Utilisateur user1= utilisateurService.creerUtilisateur(new UtilisateurDto( "nom1", "gualisse@gmail.com"," adresse1", "motDePasse1", "codePostal1"));
+		Utilisateur user2= utilisateurService.creerUtilisateur(new UtilisateurDto( "nom2","guzalfisse@gmail.com"," adresse2", "motDePasse2", "codePostal2"));
+		Utilisateur user3= utilisateurService.creerUtilisateur(new UtilisateurDto("nom3", "gfusalisse@gmail.com"," adresse3", "motDePasse3", "codePostal3"));
+		Utilisateur user4= utilisateurService.creerUtilisateur(new UtilisateurDto( "nom4", "gusalissfe@gmail.com"," adresse4", "motDePasse4", "codePostal4"));
+		Utilisateur user5= utilisateurService.creerUtilisateur(new UtilisateurDto("nom5", "gwalfisse@gmail.com"," adresse5", "motDePasse5", "codePostal5"));
+		Utilisateur user6= utilisateurService.creerUtilisateur(new UtilisateurDto( "nom6", "guxavlisse@gmail.com"," adresse6", "motDePasse6", "codePostal6"));
 		
 		
-		Livre livre1=livreService.createLivre(new Livre("le bossu","auteur1","type1","section1","emplacement1",3));
-		Livre livre2=livreService.createLivre(new Livre("la merguez","auteur2","type2","section2","emplacement1",4));
-		Livre livre3=livreService.createLivre(new Livre("le bossu de notre dame","auteur1","type1","section1","emplacement1",5));
-		Livre livre4=livreService.createLivre(new Livre("nom4","auteur4","type1","section1","emplacement1",7));
+		Livre livre1=livreService.createLivre(new LivreDto("le bossu","auteur1","type1","section1","emplacement1",3));
+		Livre livre2=livreService.createLivre(new LivreDto("la merguez","auteur2","type2","section2","emplacement1",4));
+		Livre livre3=livreService.createLivre(new LivreDto("le bossu de notre dame","auteur1","type1","section1","emplacement1",5));
+		Livre livre4=livreService.createLivre(new LivreDto("nom4","auteur4","type1","section1","emplacement1",7));
 		
 		
-		  Pret pret = pretRepository.save(new Pret(new Date(), new Date(), "statut1", livre1, user4)); 
-		  Pret pret1= pretRepository.save(new Pret(new Date(), new Date(), "statut1", livre1, user4)); 
-		  Pret pret2= pretRepository.save(new Pret(new Date(), new Date(), "statut1", livre2, user4)); 
-		  Pret pret3=pretRepository.save(new Pret( new Date(), new Date(), "statut1", livre3, user3));
-		  Pret pret5 = pretRepository.save(new Pret(new Date(), new Date(), "deuxiemeTemps",livre1, user1));
-		   Pret pret6 = pretRepository.save(new Pret(new Date(), new Date(), "deuxiemeTemps", livre1, user1));
+		  Pret pret = pretRepository.save(new Pret(new Date(), new Date(), "premierTemps",1, livre1, user4)); 
+		  Pret pret1= pretRepository.save(new Pret(new Date(), new Date(), "premierTemps", 1,livre1, user4)); 
+		  Pret pret2= pretRepository.save(new Pret(new Date(), new Date(), "premierTemps", 1,livre2, user4)); 
+		  Pret pret3=pretRepository.save(new Pret( new Date(), new Date(), "premierTemps", 1,livre3, user3));
+		  Pret pret5 = pretRepository.save(new Pret(new Date(), new Date(), "depasse",1,livre1, user1));
+		   Pret pret6 = pretRepository.save(new Pret(new Date(), new Date(), "deuxiemeTemps",1, livre1, user1));
 		 
 		/*
 		 * System.out.println("yolo"); Pret pret7 =pretService.creerPret(new Pret(null,

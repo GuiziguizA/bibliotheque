@@ -22,6 +22,7 @@ private Long codePret;
 private Date dateDeDebut;
 private Date dateDeFin;
 private String statut;
+private int nombreLivres;
 @ManyToOne
 @JoinColumn(name = "ID_Livre")
 private Livre livre;
@@ -38,14 +39,30 @@ public Pret() {
 
 
 
-public Pret(Date dateDeDebut, Date dateDeFin, String statut, Livre livre, Utilisateur utilisateur) {
+public Pret(Date dateDeDebut, Date dateDeFin, String statut, int nombreLivres, Livre livre,
+		Utilisateur utilisateur) {
 	super();
-
 	this.dateDeDebut = dateDeDebut;
 	this.dateDeFin = dateDeFin;
 	this.statut = statut;
+	this.nombreLivres = nombreLivres;
 	this.livre = livre;
 	this.utilisateur = utilisateur;
+}
+
+
+
+
+
+public int getNombreLivres() {
+	return nombreLivres;
+}
+
+
+
+
+public void setNombreLivres(int nombreLivres) {
+	this.nombreLivres = nombreLivres;
 }
 
 

@@ -1,12 +1,16 @@
 package sid.org.service;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Map;
+
+import javax.validation.Valid;
 
 import org.springframework.data.domain.Page;
 
 import sid.org.classe.Pret;
 import sid.org.classe.Utilisateur;
+import sid.org.dto.PretDto;
 import sid.org.exception.BibliothequeException;
 import sid.org.exception.DemandeUtilisateurIncorrectException;
 import sid.org.exception.MauvaiseDemandeException;
@@ -14,7 +18,7 @@ import sid.org.exception.MauvaiseDemandeException;
 public interface PretService {
 
 	
-	public Pret creerPret(Pret pret) throws BibliothequeException ;
+	public Pret creerPret(PretDto pretDto, Principal principal) throws BibliothequeException;
 	public Pret modifierPret(Long id) throws DemandeUtilisateurIncorrectException;
 	public void supprimerPret(Long id) throws DemandeUtilisateurIncorrectException;
 
@@ -23,6 +27,9 @@ public interface PretService {
 	public Pret afficherPret(Long id) throws DemandeUtilisateurIncorrectException;
 	public List<Pret> afficherPrets() throws DemandeUtilisateurIncorrectException;
 	public List<Pret> afficherPrets(String statut) throws DemandeUtilisateurIncorrectException;
+	public void modifierStatut(Long id) throws Exception;
+	public void modifierStatutsPrets() throws Exception;
+	
 	
 	
 	
