@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>sid.org</groupId>
   <artifactId>bibliotheque-app</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.0</version>
   <packaging>pom</packaging>
  
   
@@ -26,8 +26,8 @@
 	
   <modules>
   	<module>biblio-api</module>
-
   	<module>biblio-batch</module>
+    <module>biblio-front</module>
   </modules>
   
 <dependencies>

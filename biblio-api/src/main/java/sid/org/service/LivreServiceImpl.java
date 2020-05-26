@@ -27,11 +27,9 @@ import sid.org.exception.EntityAlreadyExistException;
 
 import sid.org.exception.LivreIndisponibleException;
 import sid.org.exception.MauvaiseDemandeException;
-import sid.org.exception.ResultNotFoundException;
 import sid.org.specification.LivreCriteria;
 import sid.org.specification.LivreSpecificationImpl;
-import sid.org.specification.SearchCriteria;
-import springfox.documentation.builders.RequestHandlerSelectors;
+
 
 
 

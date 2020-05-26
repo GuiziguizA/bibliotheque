@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>sid.org</groupId>
 		<artifactId>bibliotheque-app</artifactId>
-		<version>1.0-SNAPSHOT</version>
+		<version>1.0</version>
 	</parent>
 	<artifactId>biblio-api</artifactId>
 	<packaging>jar</packaging>

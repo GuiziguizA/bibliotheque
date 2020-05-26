@@ -34,6 +34,12 @@ public class LivreSpecificationImpl implements Specification<Livre> {
 		if (criteria.getNom()!=null) {
 			predicate.getExpressions().add(builder.like(root.get("nom"),"%"+criteria.getNom()+"%"));
 		}
+		if (criteria.getAuteur()!=null) {
+			predicate.getExpressions().add(builder.like(root.get("auteur"),"%"+criteria.getAuteur()+"%"));
+		}
+		if (criteria.getType()!=null) {
+			predicate.getExpressions().add(builder.like(root.get("type"),"%"+criteria.getType()+"%"));
+		}
 		return builder.and(predicate);
 		
 	           
