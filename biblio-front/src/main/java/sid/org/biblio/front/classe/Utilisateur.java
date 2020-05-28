@@ -16,21 +16,17 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 
-@Entity
 public class Utilisateur {
-	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
+	
 	private Long codeUtilisateur;
 	private String nom;
-	@Column(unique =true )
+	
 	private String mail;
 	private String adresse;
 	private String motDePasse;
 	private String codePostal;
-	@OneToMany(mappedBy="utilisateur",fetch=FetchType.LAZY)	
-	private Collection<Pret>prets;
-	@ManyToOne
-	@JoinColumn(name = "ID_ROLES")
-	private Roles roles;
+	
+
 	
 	
 	public Utilisateur() {
@@ -39,14 +35,14 @@ public class Utilisateur {
 	}
 
 
-	public Utilisateur(String nom, String mail, String adresse, String motDePasse, String codePostal, Roles roles) {
+	public Utilisateur(String nom, String mail, String adresse, String motDePasse, String codePostal) {
 		super();
 		this.nom = nom;
 		this.mail = mail;
 		this.adresse = adresse;
 		this.motDePasse = motDePasse;
 		this.codePostal = codePostal;
-		this.roles = roles;
+	
 	}
 
 
@@ -100,14 +96,6 @@ public class Utilisateur {
 	}
 
 
-	public Roles getRoles() {
-		return roles;
-	}
-
-
-	public void setRoles(Roles roles) {
-		this.roles = roles;
-	}
 
 
 	public Long getCodeUtilisateur() {

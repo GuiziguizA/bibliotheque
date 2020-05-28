@@ -10,7 +10,7 @@ import javax.validation.Valid;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.annotation.Secured;
+
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,12 +20,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import sid.org.classe.Pret;
 import sid.org.dto.PretDto;
 import sid.org.service.LivreService;
 import sid.org.service.PretService;
 
 @RestController
+@Api(value="Api Prets",description = "Api Prets")
 public class PretController {
 @Autowired
 	 private PretService pretService;
@@ -36,6 +40,7 @@ public class PretController {
 
 
 @GetMapping("/prets/{id}")
+@ApiOperation(value="affiche un pret en fonction de son id",response = PretController.class)
 public Pret afficherUnPret(@PathVariable Long id) throws Exception{
  
 
@@ -50,9 +55,11 @@ public Pret afficherUnPret(@PathVariable Long id) throws Exception{
 
 
 
-	@Secured(value= {"ROLE_admin","ROLE_employe"})
+	/* @Secured(value= {"ROLE_admin","ROLE_employe"}) */
 	  @PostMapping("/prets")
-	  public  Pret creerUnPret(@Valid @RequestBody PretDto  pretDto,Principal principal) throws Exception{
+	@ApiOperation(value="ajout d'un nouveau pret et decrementation le stock du livre",response = PretController.class)
+	  public  Pret creerUnPret(
+			  @ApiParam(value="Ajouter PretDto dans le body" , required=true)@Valid @RequestBody PretDto  pretDto,Principal principal) throws Exception{
 	 		Pret pret1=pretService.creerPret(pretDto,principal);
 			return pret1 ;
 	
@@ -60,26 +67,17 @@ public Pret afficherUnPret(@PathVariable Long id) throws Exception{
 	
 	  	  
 	  	  }
- @Secured(value= {"ROLE_admin","ROLE_employe"})	  
+
+	/* @Secured(value= {"ROLE_admin","ROLE_employe"}) */
 @DeleteMapping("/prets")
+ @ApiOperation(value="supprime le pret et reincremente le stock du livre",response = PretController.class)
 public  void supprimerUnPret(@PathVariable Long id) throws Exception {
 
 		pretService.supprimerPret(id);
 	
 	
 }
- 	@Secured(value= {"ROLE_admin","ROLE_employe"})
-	@PutMapping("/prets/{id}")  
-public  Pret modifierUnPret(@PathVariable Long id) throws Exception{
-		  	
-		
-	
-		return  pretService.modifierPret(id);
-		
-
-  	  
-  	  }
-
+ 	
 	
 	
 	

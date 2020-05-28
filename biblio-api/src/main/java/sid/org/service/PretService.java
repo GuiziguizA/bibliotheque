@@ -19,7 +19,7 @@ public interface PretService {
 
 	
 	public Pret creerPret(PretDto pretDto, Principal principal) throws BibliothequeException;
-	public Pret modifierPret(Long id) throws DemandeUtilisateurIncorrectException;
+
 	public void supprimerPret(Long id) throws DemandeUtilisateurIncorrectException;
 
 	public Page<Pret> afficherPrets(Utilisateur utilisateur, int page, int size) throws MauvaiseDemandeException;

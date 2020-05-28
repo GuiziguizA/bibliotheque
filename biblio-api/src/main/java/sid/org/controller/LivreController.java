@@ -7,8 +7,9 @@ package sid.org.controller;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Required;
 import org.springframework.data.domain.Page;
-import org.springframework.security.access.annotation.Secured;
+
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,6 +18,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import sid.org.classe.Livre;
 import sid.org.dto.LivreDto;
 import sid.org.exception.BibliothequeException;
@@ -24,13 +28,19 @@ import sid.org.service.LivreService;
 import sid.org.specification.LivreCriteria;
 
 @RestController
+@Api(value="Api Livres",description = "Api Livres")
 public class LivreController {
 	@Autowired
 	private LivreService livreService;
 	
 	
 	
-	  @GetMapping("/books") public Page<Livre>afficherLivres(@RequestBody LivreCriteria livreSearch,@RequestParam int page ,@RequestParam int size) throws Exception {
+	  @GetMapping("/books") 
+	  @ApiOperation(value="afficher une page contenant les différent livre de la recherche",response = LivreController.class)
+	  public Page<Livre>afficherLivres(
+			  @ApiParam(value="Ajouter un LivreCriteria dans le body" , required=true)@RequestBody LivreCriteria livreSearch,
+			  @ApiParam(value="noter la page" , required=true)@RequestParam int page ,
+			  @ApiParam(value="noter la size" , required=true)  @RequestParam int size) throws Exception {
 	  
 		  Page<Livre> livres;
 	  
@@ -44,6 +54,7 @@ public class LivreController {
 	  
 	  
 	  @GetMapping("/books/{id}")
+	  @ApiOperation(value="afficher un livre en fonction de son id",response = LivreController.class)
 public  Livre afficheUnLivre(@PathVariable Long id) throws BibliothequeException{
 		 
 		
@@ -56,15 +67,18 @@ public  Livre afficheUnLivre(@PathVariable Long id) throws BibliothequeException
 	  
 	  
 	  @PostMapping("/books")
-	  @Secured(value= {"ROLE_admin","ROLE_employe"})
-	public  Livre ajouterLivre(@Valid @RequestBody LivreDto livre) throws BibliothequeException { 
+	/* @Secured(value= {"ROLE_admin","ROLE_employe"}) */
+	  @ApiOperation(value="ajout d'un nouveau livre",response = LivreController.class)
+	public  Livre ajouterLivre(
+			  @ApiParam(value="LivreDto dans le body" , required=true)@Valid @RequestBody LivreDto livre) throws BibliothequeException { 
 		  
 		  return livreService.createLivre(livre);
 		  
 	  }
 	 
-	  @Secured(value= {"ROLE_admin"})
+	/* @Secured(value= {"ROLE_admin"}) */
 	  @DeleteMapping("/books/{id}")
+	  @ApiOperation(value="supprimer un livre",response = LivreController.class)
 	  public  void supprimerUnLivre1(@PathVariable Long id) throws BibliothequeException{
 	  		 
 	  		

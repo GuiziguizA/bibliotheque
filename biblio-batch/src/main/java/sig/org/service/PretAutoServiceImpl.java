@@ -10,6 +10,7 @@ import sid.org.service.PretService;
 
 @Service
 public class PretAutoServiceImpl implements PretAutoService{
+	
 	@Autowired
 	private PretService pretService;
 	@Autowired

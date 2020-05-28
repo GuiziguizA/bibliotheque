@@ -2,20 +2,25 @@ package sid.org.biblio.front.controller;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import sid.org.biblio.front.classe.Livre;
-import sid.org.biblio.front.config.UriConstants;
+
 import sid.org.biblio.front.service.BookService;
-import sid.org.biblio.front.service.BooksServiceImpl;
+
 
 
 @Controller
-@RequestMapping(UriConstants.CONTROLEUR_LAMBDA)
+
+@RequestMapping("/bibliotheque")
 public class LivreController {
 	@Autowired
 	private BookService bookService;
@@ -27,4 +32,20 @@ public class LivreController {
     	model.addAttribute("book",book);
         return "book";
     }
+    
+    @GetMapping(value = "/books/add")
+    public String Book(Livre livre,Model model) {
+     
+        return "formulaireLivre";
+    }
+    
+    @PostMapping(value = "/books")
+    public String createBook(Livre livre) {
+      
+    	bookService.createLivre(livre);
+    	
+      return "home"  ;
+    }
+    
+    
 }

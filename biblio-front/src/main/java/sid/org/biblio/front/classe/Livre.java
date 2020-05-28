@@ -1,36 +1,19 @@
 package sid.org.biblio.front.classe;
 
-import java.util.Collection;
 
 
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.xml.bind.annotation.XmlRootElement;
-
-
-
-@XmlRootElement
-@Entity
 
 public class Livre {
-	@Id  @GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Long codeLivre;
+
 	private String nom;
 	private String auteur;
 	private String type;
 	private String section;
 	private String emplacement;
 	private int nombreExemplaire;
-	@OneToMany(mappedBy="livre",fetch=FetchType.LAZY)	
-	private Collection<Pret>prets;
 	
+
 	public Livre() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -95,9 +78,7 @@ public class Livre {
 		this.nombreExemplaire = nombreExemplaire;
 	}
 
-	public Long getCodeLivre() {
-		return codeLivre;
-	}
+
 	
 	
 

@@ -65,19 +65,7 @@ public class PretServiceImpl implements PretService{
 		return pretRepository.saveAndFlush(pret);
 	}
 
-	@Override
-	public Pret modifierPret(Long id) throws DemandeUtilisateurIncorrectException {
-		Optional<Pret> pret=pretRepository.findById(id);
-		
-		if(!pret.isPresent()) {
-			throw new DemandeUtilisateurIncorrectException ("ce pret n'existe pas");
-		}
-		
-		pret.get().setStatut("2 periode");
-		
-		
-		return pretRepository.save(pret.get());
-	}
+	
 	@Transactional
 	@Override
 	public void supprimerPret(Long id) throws DemandeUtilisateurIncorrectException {

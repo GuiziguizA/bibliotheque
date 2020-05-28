@@ -54,13 +54,15 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	}
 
 	@Override
-	public Utilisateur modifierUtilisateur(Long id, String motDePasse) throws DemandeUtilisateurIncorrectException {
+	public Utilisateur modifierUtilisateur(Long id, String statut) throws DemandeUtilisateurIncorrectException {
 		Optional<Utilisateur> user =utilisateurRepository.findById(id);
 		
 		if(!user.isPresent()) {
 			throw new DemandeUtilisateurIncorrectException("Utilisateur introuvable");
 		}
-		user.get().setMotDePasse(passwordEncoder.encode(motDePasse));
+		Roles role = new Roles();
+		role.setNom(statut);
+		user.get().setRoles(role);
 		
 		return utilisateurRepository.save(user.get());
 	}
