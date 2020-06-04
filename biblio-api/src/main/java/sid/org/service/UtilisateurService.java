@@ -7,17 +7,17 @@ import org.springframework.data.domain.Page;
 
 import sid.org.classe.Utilisateur;
 import sid.org.dto.UtilisateurDto;
-import sid.org.exception.BibliothequeException;
-import sid.org.exception.DemandeUtilisateurIncorrectException;
-import sid.org.exception.MauvaiseDemandeException;
+
+import sid.org.exception.EntityAlreadyExistException;
+import sid.org.exception.ResultNotFoundException;
 
 public interface UtilisateurService {
 	
-	public Utilisateur creerUtilisateur(UtilisateurDto utilisateurDto) throws BibliothequeException;
-	public	Utilisateur modifierUtilisateur(Long id, String motDePasse) throws DemandeUtilisateurIncorrectException;
-	public void supprimerUtilisateur(Long id) throws DemandeUtilisateurIncorrectException;
-	public Page<Utilisateur> voirListeUtilisateurs(int page, int size) throws MauvaiseDemandeException;
-	public Utilisateur voirUtilisateur(Long id) throws DemandeUtilisateurIncorrectException ;
+	public Utilisateur creerUtilisateur(UtilisateurDto utilisateurDto) throws EntityAlreadyExistException;
+	public	Utilisateur modifierUtilisateur(Long id, String motDePasse) throws ResultNotFoundException;
+	public void supprimerUtilisateur(Long id) throws ResultNotFoundException;
+	public Page<Utilisateur> voirListeUtilisateurs(int page, int size) throws  ResultNotFoundException;
+	public Utilisateur voirUtilisateur(Long id) throws ResultNotFoundException ;
 	
 	
 	

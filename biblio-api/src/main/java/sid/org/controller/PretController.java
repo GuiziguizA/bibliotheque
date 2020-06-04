@@ -10,7 +10,7 @@ import javax.validation.Valid;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -56,7 +56,7 @@ public Pret afficherUnPret(@PathVariable Long id) throws Exception{
 
 
 	/* @Secured(value= {"ROLE_admin","ROLE_employe"}) */
-	  @PostMapping("/prets")
+	  @PostMapping("/pret")
 	@ApiOperation(value="ajout d'un nouveau pret et decrementation le stock du livre",response = PretController.class)
 	  public  Pret creerUnPret(
 			  @ApiParam(value="Ajouter PretDto dans le body" , required=true)@Valid @RequestBody PretDto  pretDto,Principal principal) throws Exception{
@@ -69,7 +69,7 @@ public Pret afficherUnPret(@PathVariable Long id) throws Exception{
 	  	  }
 
 	/* @Secured(value= {"ROLE_admin","ROLE_employe"}) */
-@DeleteMapping("/prets")
+@DeleteMapping("/prets/{id}")
  @ApiOperation(value="supprime le pret et reincremente le stock du livre",response = PretController.class)
 public  void supprimerUnPret(@PathVariable Long id) throws Exception {
 
@@ -79,6 +79,16 @@ public  void supprimerUnPret(@PathVariable Long id) throws Exception {
 }
  	
 	
+@GetMapping("/prets")
+@ApiOperation(value="affiche Les pret d'un utilisateur",response = PretController.class)
+public Page<Pret> afficherPretUtilisateur(@RequestParam String mail, @RequestParam int page, @RequestParam int size) throws Exception{
+ 
+Page<Pret>prets=pretService.afficherPrets(mail, page, size);
 	
+	return prets;
+
+
+  
+  	}
 	
 }

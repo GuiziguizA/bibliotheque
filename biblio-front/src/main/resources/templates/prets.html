@@ -1,0 +1,80 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://ultraq.net.nz/thymleaf/layout"
+	layout:decorator="template1">
+ 
+<head>
+	<meta charset="utf-8"/>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+ 
+<body>
+	<div layout:fragment="content">
+	<div class="container pt-3">
+ <div class="form-group">
+ <div class="jumbotron text-center">
+ 
+
+</div>
+	<!-- <table border="1">
+    <thead>
+    	<tr>
+				<th scope="col">Livre</th>
+				<th scope="col">DateFin</th>
+				<th scope="col">Statut</th>
+		</tr>
+				
+    </thead>
+    <tbody>
+        <tr th:each="pret, iStat : ${prets}"
+            th:style="${iStat.odd}? 'font-weight: bold;'"
+            th:alt-title="${iStat.even}? 'even' : 'odd'">
+         	<td th:text="${pret.livre.nom}"></td>
+				<td th:text="${pret.statut}"></td>
+				<td th:text="${pret.dateDeFin}" ></td>
+				
+        </tr>
+    </tbody>
+</table>
+<div th:if="${prets.totalPages > 0}" class="pagination"
+    th:each="pageNumber : ${pageNumbers}">
+    <a th:href="@{/prets(size=${prets.size}, page=${pageNumber})}"
+        th:text=${pageNumber}
+        th:class="${pageNumber==bookPage.number + 1} ? active"></a>
+</div>
+	</div>
+
+				</div>
+				</div>	 -->	
+				
+				
+				
+					<div>
+	<table  class="table table-striped">
+		<tr>
+					<th scope="col">Livre</th>
+				<th scope="col">DateFin</th>
+				<th scope="col">Statut</th>
+		</tr>
+	
+			<tr th:each="pret:${prets}" >
+				<td th:text="${pret.livre.nom}"></td>
+				<td th:text="${pret.statut}"></td>
+				<td th:text="${pret.dateDeFin}" ></td>
+			</tr>
+	
+	</table>
+				<div th:if="${prets.totalPages > 0}" class="pagination"
+    th:each="pageNumber : ${pageNumbers}">
+    <a th:href="@{/prets(size=${prets.size}, page=${pageNumber})}"
+        th:text=${pageNumber}
+        th:class="${pageNumber==prets.number + 1} ? active"></a>
+</div>
+				
+	</div>
+			</div>		
+					</div>
+</div>	

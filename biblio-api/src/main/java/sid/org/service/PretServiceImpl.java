@@ -25,9 +25,8 @@ import sid.org.dao.PretRepository;
 import sid.org.dao.UtilisateurRepository;
 import sid.org.dto.PretDto;
 import sid.org.exception.BibliothequeException;
-import sid.org.exception.DemandeUtilisateurIncorrectException;
 import sid.org.exception.LivreIndisponibleException;
-import sid.org.exception.MauvaiseDemandeException;
+import sid.org.exception.ResultNotFoundException;
 
 @Service
 public class PretServiceImpl implements PretService{
@@ -68,11 +67,11 @@ public class PretServiceImpl implements PretService{
 	
 	@Transactional
 	@Override
-	public void supprimerPret(Long id) throws DemandeUtilisateurIncorrectException {
+	public void supprimerPret(Long id) throws ResultNotFoundException {
 		Optional<Pret> pret=pretRepository.findById(id);
 		
 		if(!pret.isPresent()) {
-			throw new DemandeUtilisateurIncorrectException ("ce pret n'existe pas");
+			throw new ResultNotFoundException("ce pret n'existe pas");
 		}
 		Optional<Livre> livre=livreRepository.findById(pret.get().getLivre().getCodeLivre());
 		livre.get().setNombreExemplaire(livre.get().getNombreExemplaire()+pret.get().getNombreLivres());
@@ -87,23 +86,28 @@ public class PretServiceImpl implements PretService{
 	
 	
 	@Override
-	public Page<Pret> afficherPrets(Utilisateur utilisateur,int page,int size) throws MauvaiseDemandeException  {
+	public Page<Pret> afficherPrets(String mail,int page,int size) throws ResultNotFoundException  {
 		if(size==0) {
-			throw new MauvaiseDemandeException();
+			throw new ResultNotFoundException();
 		}
+		Optional<Utilisateur> utilisateur=utilisateurRepository.findByMail(mail);
+		if(!utilisateur.isPresent()) {
+			throw new ResultNotFoundException("l'utilisateur est introuvable");
+		}
+		
 		Pageable pageable=PageRequest.of(page, size);
-		Page<Pret>listPretUtilisateur=pretRepository.findByUtilisateur(utilisateur,pageable);
+		Page<Pret>listPretUtilisateur=pretRepository.findByUtilisateur(utilisateur.get(),pageable);
 
 		
 		return listPretUtilisateur;
 	}
 	
 	@Override
-	public   Pret afficherPret(Long id) throws DemandeUtilisateurIncorrectException {
+	public   Pret afficherPret(Long id) throws ResultNotFoundException{
 		Optional<Pret> pret=pretRepository.findById(id);
 		
 	if (!pret.isPresent()) {
-		throw new DemandeUtilisateurIncorrectException("le pret n'existe pas");
+		throw new ResultNotFoundException("le pret n'existe pas");
 	}
 	
 	
@@ -112,7 +116,7 @@ public class PretServiceImpl implements PretService{
 	}
 	
 	@Override
-	public  List<Pret> afficherPrets() throws DemandeUtilisateurIncorrectException {
+	public  List<Pret> afficherPrets() throws ResultNotFoundException{
 		List<Pret> prets=pretRepository.findAll();
 		
 
@@ -122,7 +126,7 @@ public class PretServiceImpl implements PretService{
 	}
 
 	@Override
-	public  List<Pret> afficherPrets(String statut) throws DemandeUtilisateurIncorrectException {
+	public  List<Pret> afficherPrets(String statut) throws ResultNotFoundException{
 		List<Pret> prets=pretRepository.findByStatut(statut);
 		
 
@@ -132,10 +136,10 @@ public class PretServiceImpl implements PretService{
 	}
 	
 	@Override
-	public Pret afficherUnPret(Long id)throws DemandeUtilisateurIncorrectException{
+	public Pret afficherUnPret(Long id)throws ResultNotFoundException{
 		Optional<Pret> pret=pretRepository.findById(id);
 		if(!pret.isPresent()) {
-			throw new DemandeUtilisateurIncorrectException ("ce pret n'existe pas");
+			throw new ResultNotFoundException("ce pret n'existe pas");
 		}
 		return pret.get();
 	}
@@ -149,7 +153,7 @@ public class PretServiceImpl implements PretService{
 	}
 	
 	@Override
-	 public void modifierStatut(Long id) throws Exception {
+	 public void modifierStatut(Long id) throws ResultNotFoundException {
 	 	 Date aujourdhui = new Date(); 
 	 	 Optional<Pret> pret =pretRepository.findById(id);
 	 	 if(pret.get().getDateDeFin().compareTo(aujourdhui)>0 && pret.get().getStatut()=="deuxiemeTemps") {
@@ -165,7 +169,7 @@ public class PretServiceImpl implements PretService{
 	
 	 
 @Override
-public void modifierStatutsPrets() throws Exception {
+public void modifierStatutsPrets() throws ResultNotFoundException {
 	
 	ArrayList<Pret>prets=(ArrayList<Pret>)afficherPrets();
 	for(int i = 0; i <prets.size(); i++) {

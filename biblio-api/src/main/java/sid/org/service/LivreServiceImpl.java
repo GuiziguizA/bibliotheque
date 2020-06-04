@@ -22,11 +22,11 @@ import sid.org.classe.Livre;
 import sid.org.dao.LivreRepository;
 import sid.org.dto.LivreDto;
 import sid.org.exception.BibliothequeException;
-import sid.org.exception.DemandeUtilisateurIncorrectException;
+
 import sid.org.exception.EntityAlreadyExistException;
 
 import sid.org.exception.LivreIndisponibleException;
-import sid.org.exception.MauvaiseDemandeException;
+import sid.org.exception.ResultNotFoundException;
 import sid.org.specification.LivreCriteria;
 import sid.org.specification.LivreSpecificationImpl;
 
@@ -56,11 +56,11 @@ public class LivreServiceImpl implements LivreService{
 
 	
 @Override
-	public void supprimerLivre(Long id)throws BibliothequeException{
+	public void supprimerLivre(Long id)throws ResultNotFoundException{
 		
 		Optional<Livre>livre=livreRepository.findById(id);
 		if(!livre.isPresent()) {
-			throw new DemandeUtilisateurIncorrectException();
+			throw new ResultNotFoundException();
 		}
 		livreRepository.delete(livre.get());
 	}
@@ -68,10 +68,10 @@ public class LivreServiceImpl implements LivreService{
 	
 	
 	@Override
-	public Livre  afficheUnLivre( Long id) throws DemandeUtilisateurIncorrectException {
+	public Livre  afficheUnLivre( Long id) throws ResultNotFoundException{
 		Optional<Livre> book=livreRepository.findByCodeLivre(id);
 		if(!book.isPresent()) {
-			throw new DemandeUtilisateurIncorrectException("le livre existe pas");
+			throw new ResultNotFoundException("le livre existe pas");
 		}
 		
 		 
@@ -83,7 +83,7 @@ public class LivreServiceImpl implements LivreService{
   
 	@Override
 	
-	public Livre modificationNombreExemplaire(Long id,@Nullable int nombre) throws BibliothequeException {
+	public Livre modificationNombreExemplaire(Long id,@Nullable int nombre) throws ResultNotFoundException,LivreIndisponibleException{
 		
 	if(nombre==(Integer)null) {
 		nombre=1;
@@ -92,7 +92,7 @@ public class LivreServiceImpl implements LivreService{
 		
 		Optional<Livre> livre=livreRepository.findById(id);
 		if (!livre.isPresent()) {
-			throw new DemandeUtilisateurIncorrectException("Le livre n'existe pas");
+			throw new ResultNotFoundException("Le livre n'existe pas");
 		}
 		if(livre.get().getNombreExemplaire()<1) {
 			throw new LivreIndisponibleException("Le livre n'est pas disponible");
@@ -121,11 +121,11 @@ public class LivreServiceImpl implements LivreService{
 	 */
 
 @Override
-public Page<Livre> searchLivres(LivreCriteria livreCriteria,int page ,int size) throws MauvaiseDemandeException {
+public Page<Livre> searchLivres(LivreCriteria livreCriteria,int page ,int size) throws ResultNotFoundException {
 	LivreSpecificationImpl spec = new LivreSpecificationImpl(livreCriteria);
 	
 	if(size==0) {
-		throw new MauvaiseDemandeException();
+		throw new ResultNotFoundException();
 	}
 	
 	Pageable pageable=PageRequest.of(page,size );

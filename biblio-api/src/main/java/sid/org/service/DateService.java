@@ -2,11 +2,12 @@ package sid.org.service;
 
 import java.util.Date;
 
-import sid.org.exception.MauvaiseDemandeException;
+
+import sid.org.exception.ResultNotFoundException;
 
 public interface DateService {
 	
 
-	public Date modifierDate(Date date, int mois) throws MauvaiseDemandeException;
+	public Date modifierDate(Date date, int mois) throws ResultNotFoundException;
 
 }

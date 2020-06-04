@@ -12,7 +12,9 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Import;
+import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
+
 
 import sid.org.classe.Livre;
 import sid.org.classe.Pret;
@@ -53,7 +55,7 @@ public class BiblioAppli implements CommandLineRunner{
     private LivreRepository livreRepository;
     @Autowired
     private DateService dateService;
-  
+ 
 	
 	@Override
 	
@@ -79,11 +81,14 @@ public class BiblioAppli implements CommandLineRunner{
 		
 		  Pret pret = pretRepository.save(new Pret(new Date(), new Date(), "premierTemps",1, livre1, user4)); 
 		  Pret pret1= pretRepository.save(new Pret(new Date(), new Date(), "premierTemps", 1,livre1, user4)); 
-		  Pret pret2= pretRepository.save(new Pret(new Date(), new Date(), "premierTemps", 1,livre2, user4)); 
-		  Pret pret3=pretRepository.save(new Pret( new Date(), new Date(), "premierTemps", 1,livre3, user3));
+		  Pret pret2= pretRepository.save(new Pret(new Date(), new Date(), "premierTemps", 1,livre2, user1)); 
+		  Pret pret3=pretRepository.save(new Pret( new Date(), new Date(), "premierTemps", 1,livre3, user1));
 		  Pret pret5 = pretRepository.save(new Pret(new Date(), new Date(), "depasse",1,livre1, user1));
 		   Pret pret6 = pretRepository.save(new Pret(new Date(), new Date(), "deuxiemeTemps",1, livre1, user1));
 		 
+		   
+		 
+		   
 		/*
 		 * System.out.println("yolo"); Pret pret7 =pretService.creerPret(new Pret(null,
 		 * null, "statut1", livre4, user4));
@@ -115,17 +120,28 @@ public class BiblioAppli implements CommandLineRunner{
 			 * System.out.println("clé: "+mapentry.getKey() + " | valeur: " +
 			 * mapentry.getValue()); }
 			 */
-	Date date1=dateService.modifierDate(new Date(),8);
-		System.out.println(date1);
-		ArrayList<Livre>listLivres=livreRepository.findByNomAndtype(null, null);
-		
-
-		System.out.println("hello");
-		System.out.println(listLivres.get(0).getNom());
-		System.out.println(listLivres.get(0).getType());
-		System.out.println(listLivres.get(2).getNom());
-		
-	
-	
+		/*
+		 * Date date1=dateService.modifierDate(new Date(),8); System.out.println(date1);
+		 * ArrayList<Livre>listLivres=livreRepository.findByNomAndtype(null, null);
+		 * 
+		 * 
+		 * System.out.println("hello"); System.out.println(listLivres.get(0).getNom());
+		 * System.out.println(listLivres.get(0).getType());
+		 * System.out.println(listLivres.get(2).getNom());
+		 */
+		/*
+		 * sid.org.specification.LivreCriteria critere=new
+		 * sid.org.specification.LivreCriteria(); critere.setNom("le");
+		 * 
+		 * Page<Livre>livres=livreService.searchLivres(critere, 1, 2);
+		 * livres.getTotalPages();
+		 */
+		   
+		   sid.org.specification.LivreCriteria critere=new sid.org.specification.LivreCriteria(); 
+		   critere.setNom("le");
+					 
+				int size=	livreService.searchLivres(critere, 1, 2).getSize();
+				System.out.println(size);
+		/* pretService.afficherPrets(user1.getMail(), 1, 1); */
 	}
 	}

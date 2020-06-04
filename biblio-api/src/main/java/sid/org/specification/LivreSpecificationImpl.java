@@ -12,6 +12,10 @@ import sid.org.classe.Livre;
 
 public class LivreSpecificationImpl implements Specification<Livre> {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@Autowired
 	private LivreCriteria criteria;
 	

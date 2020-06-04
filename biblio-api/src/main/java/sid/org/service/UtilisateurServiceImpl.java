@@ -13,7 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import sid.org.classe.Livre;
+
 import sid.org.classe.Pret;
 import sid.org.classe.Roles;
 import sid.org.classe.Utilisateur;
@@ -22,9 +22,9 @@ import sid.org.dao.RolesRepository;
 import sid.org.dao.UtilisateurRepository;
 import sid.org.dto.UtilisateurDto;
 import sid.org.exception.BibliothequeException;
-import sid.org.exception.DemandeUtilisateurIncorrectException;
-import sid.org.exception.MauvaiseDemandeException;
-import sid.org.exception.UtilisateurMailExistException;
+import sid.org.exception.EntityAlreadyExistException;
+import sid.org.exception.ResultNotFoundException;
+
 
 @Service
 public class UtilisateurServiceImpl implements UtilisateurService {
@@ -39,10 +39,10 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	private RolesRepository rolesRepository;
 	
 	@Override
-	public Utilisateur creerUtilisateur(UtilisateurDto utilisateurDto) throws BibliothequeException{
+	public Utilisateur creerUtilisateur(UtilisateurDto utilisateurDto) throws EntityAlreadyExistException{
 		Optional<Utilisateur> user =utilisateurRepository.findByMail(utilisateurDto.getMail());
 		if(user.isPresent()) {
-			throw new UtilisateurMailExistException("le mail est deja utilise");
+			throw new EntityAlreadyExistException("le mail est deja utilise");
 		}
 		
 	
@@ -54,11 +54,11 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	}
 
 	@Override
-	public Utilisateur modifierUtilisateur(Long id, String statut) throws DemandeUtilisateurIncorrectException {
+	public Utilisateur modifierUtilisateur(Long id, String statut) throws ResultNotFoundException{
 		Optional<Utilisateur> user =utilisateurRepository.findById(id);
 		
 		if(!user.isPresent()) {
-			throw new DemandeUtilisateurIncorrectException("Utilisateur introuvable");
+			throw new ResultNotFoundException("Utilisateur introuvable");
 		}
 		Roles role = new Roles();
 		role.setNom(statut);
@@ -69,13 +69,13 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 	@Override
 	@Transactional
-	public void supprimerUtilisateur(Long id) throws DemandeUtilisateurIncorrectException {
+	public void supprimerUtilisateur(Long id) throws ResultNotFoundException {
 Optional<Utilisateur> user =utilisateurRepository.findById(id);
 
 Pageable pageable=PageRequest.of(2, 5);
 Page<Pret>listPretUtilisateur=pretRepository.findByUtilisateur(user.get(),pageable);		
 		if(!user.isPresent()) {
-			throw new DemandeUtilisateurIncorrectException("Utilisateur introuvable");
+			throw new ResultNotFoundException("Utilisateur introuvable");
 		}
 	
 		utilisateurRepository.delete(user.get());
@@ -84,13 +84,13 @@ Page<Pret>listPretUtilisateur=pretRepository.findByUtilisateur(user.get(),pageab
 	}
 	
 	@Override
-	public Utilisateur voirUtilisateur(Long id) throws DemandeUtilisateurIncorrectException {
+	public Utilisateur voirUtilisateur(Long id) throws ResultNotFoundException{
 		
 
 		
 		Optional<Utilisateur>user= utilisateurRepository.findById(id);
 		if(!user.isPresent()) {
-			throw new DemandeUtilisateurIncorrectException("Utilisateur introuvable");
+			throw new ResultNotFoundException("Utilisateur introuvable");
 		}
 		
 	
@@ -99,9 +99,9 @@ Page<Pret>listPretUtilisateur=pretRepository.findByUtilisateur(user.get(),pageab
 	}
 
 	@Override
-	public Page<Utilisateur> voirListeUtilisateurs(int page, int size) throws MauvaiseDemandeException{
+	public Page<Utilisateur> voirListeUtilisateurs(int page, int size) throws ResultNotFoundException{
 		if(size==0) {
-			throw new MauvaiseDemandeException();
+			throw new ResultNotFoundException();
 		}
 Pageable pageable =PageRequest.of(page,size );
 		  Page<Utilisateur> utilisateurs=utilisateurRepository.findAll(pageable);

@@ -4,15 +4,15 @@ import java.util.Date;
 
 import org.springframework.stereotype.Service;
 
-import sid.org.exception.MauvaiseDemandeException;
+import sid.org.exception.ResultNotFoundException;
 @Service
 public class DateServiceImpl implements DateService{
 
 	@SuppressWarnings("deprecation")
 	@Override
-	public Date modifierDate(Date date,int mois) throws MauvaiseDemandeException {
+	public Date modifierDate(Date date,int mois) throws ResultNotFoundException {
 		if (mois>12) {
-			throw new MauvaiseDemandeException("le chifre du mois dois etre strictement inferieur a 12 ");
+			throw new ResultNotFoundException("le chifre du mois dois etre strictement inferieur a 12 ");
 		}
 		
 		Date date1 = null;

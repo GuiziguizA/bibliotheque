@@ -16,81 +16,60 @@
 	<div class="container pt-3">
  <div class="form-group">
  <div class="jumbotron text-center">
-		<h1>Liste des sites d'escalade</h1>
-		  
-	</div>
-		<br>
-		<div>
-			<a th:href="@{/siteForm}"><input type="button" class="btn btn-primary"value="+Ajouter" /></a>
-		</div>
-		
-		<br>
-		
-		<div>	
-		<form th:action="@{/consulterSiteCritere}"  th:object="${siteEscalade}" method="post">
-		
+					<div>
+	<table  class="table table-striped">
+		<tr>
+			<th scope="col">Nom</th>
+				<th scope="col">Auteur</th>
+				<th scope="col">Type</th>
+				<th scope="col">Section</th>
+				<th scope="col">Emplacement</th>
+				<th scope="col">Nombre d'exemplaire</th>
+		</tr>
+		<tr th:each="book:${bookPage}" >
+				<td th:text="${book.nom}"></td>
+				<td th:text="${book.auteur}"></td>
+				<td th:text="${book.type}" ></td>
+				<td th:text="${book.section}"></td>	
+				<td th:text="${book.emplacement}"></td>	
+				<td th:text="${book.nombreExemplaire}"></td>	
+			</tr>
 	
-   	
-   	  <label for="nom">Region</label>
-   	  
-   	<select th:field="*{region}">
-   		<option th:text="null " th:value=null></option>
-   		<option th:each="o:${listRegion}"  th:text="${o.nom}" th:value= "${o.codeRegion}"></option>
-   	</select >
-   	
-   	 <label for="nom">Nombre de voies</label>
-   	 
-   		<select th:field="*{nombreDeVoie}">
-   			
-   		<option th:each="o:${listnbreVoies}"  th:text="${o.nom}" th:value= "${o.nom}"></option>
-   	</select>
- 
-   		 <label for="nom">Nombre de secteurs</label>
-   		 		
-   		<select th:field="*{nombreDeSecteur}">
-   	
-   		<option th:each="o:${listnbreSecteur}"  th:text="${o.nom}" th:value= "${o.nom}"></option>
-   	</select>
-   	
-  <label for="nom">Longueur Max</label>
-   		<select th:field="*{longueurMax}">
-   			
-   		<option th:each="o:${listLongueurs}"  th:text="${o.nom}" th:value= "${o.nom}"></option>
-   	</select>
-   	
-  <label for="nom">Cotation Max</label>
-   		<select th:field="*{cotationMax}">
-   		
-   		<option th:each="o:${listCotation}"  th:text="${o.nom}" th:value= "${o.nom}"></option>
-   	</select>
- 
-   		 <input type="submit"  class="btn btn-primary" value="Rechercher">  
-	</form>	
+	</table>
 	</div>
-	<br>
-	<div  class="list-group" th:if ="${listSiteCritere}">
-		<table class="table table-striped">
-			<tr>
+	</div>
+	<!-- <table border="1">
+    <thead>
+    	<tr>
 				<th scope="col">Nom</th>
-				<th scope="col">Region</th>
-				<th scope="col">Nombre de Voies</th>
-				<th scope="col">Nombre de decteurs</th>
-				<th scope="col">Longueur Max</th>
-				<th scope="col">Cotation Max</th>
-				<th scope="col"></th>
-			</tr>
-			<tr th:each="o:${listSiteCritere}" >
-				<td th:text="${o.nom}" ></td>
-				<td th:text="${o.region.nom}" ></td>
-				<td th:text="${o.nombreDeVoie}"></td>
-				<td th:text="${o.nombreDeSecteur}"></td>
-				<td th:text="${o.longueurMax}"></td>
-				<td th:text="${o.cotationMax}"></td>
-				<td><a th:href="@{/consulterSiteDetails/{id}(id=${o.codeSiteEscalade})}"><input type="button"  id="${o.codeSiteEscalade}" class="btn btn-primary" value="Consulter" /></a></td>
+				<th scope="col">Auteur</th>
+				<th scope="col">Type</th>
+				<th scope="col">Section</th>
+				<th scope="col">Emplacement</th>
+				<th scope="col">Nombre d'exemplaire</th>
+		</tr>
 				
-			</tr>
-		</table>
-	</div>
+    </thead>
+    <tbody>
+        <tr th:each="book, iStat : ${bookPage}"
+            th:style="${iStat.odd}? 'font-weight: bold;'"
+            th:alt-title="${iStat.even}? 'even' : 'odd'">
+         	<td th:text="${book.nom}"></td>
+				<td th:text="${book.auteur}"></td>
+				<td th:text="${book.type}" ></td>
+				<td th:text="${book.section}"></td>	
+				<td th:text="${book.emplacement}"></td>	
+				<td th:text="${book.nombreExemplaire}"></td>	
+        </tr>
+    </tbody>
+</table>
+<div th:if="${bookPage.totalPages > 0}" class="pagination"
+    th:each="pageNumber : ${pageNumbers}">
+    <a th:href="@{/listBooks(size=${bookPage.size}, page=${pageNumber})}"
+        th:text=${pageNumber}
+        th:class="${pageNumber==bookPage.number + 1} ? active"></a>
+</div>
+	</div> -->
 
 				</div>
 				</div>		

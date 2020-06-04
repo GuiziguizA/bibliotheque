@@ -4,10 +4,11 @@ package sid.org.controller;
 
 
 
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Required;
+
 import org.springframework.data.domain.Page;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -21,9 +22,13 @@ import org.springframework.web.bind.annotation.RestController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import sid.org.classe.Livre;
 import sid.org.dto.LivreDto;
 import sid.org.exception.BibliothequeException;
+import sid.org.exception.EntityAlreadyExistException;
+import sid.org.exception.ResultNotFoundException;
 import sid.org.service.LivreService;
 import sid.org.specification.LivreCriteria;
 
@@ -37,10 +42,14 @@ public class LivreController {
 	
 	  @GetMapping("/books") 
 	  @ApiOperation(value="afficher une page contenant les différent livre de la recherche",response = LivreController.class)
+	  @ApiResponses(value = {
+	  @ApiResponse(code=200,message="affichage de la recherche")
+	  }
+		)
 	  public Page<Livre>afficherLivres(
 			  @ApiParam(value="Ajouter un LivreCriteria dans le body" , required=true)@RequestBody LivreCriteria livreSearch,
 			  @ApiParam(value="noter la page" , required=true)@RequestParam int page ,
-			  @ApiParam(value="noter la size" , required=true)  @RequestParam int size) throws Exception {
+			  @ApiParam(value="noter la size" , required=true)  @RequestParam int size) throws ResultNotFoundException {
 	  
 		  Page<Livre> livres;
 	  
@@ -55,7 +64,7 @@ public class LivreController {
 	  
 	  @GetMapping("/books/{id}")
 	  @ApiOperation(value="afficher un livre en fonction de son id",response = LivreController.class)
-public  Livre afficheUnLivre(@PathVariable Long id) throws BibliothequeException{
+public  Livre afficheUnLivre(@PathVariable Long id) throws ResultNotFoundException{
 		 
 		
 	  Livre livre=livreService.afficheUnLivre(id);
@@ -70,7 +79,7 @@ public  Livre afficheUnLivre(@PathVariable Long id) throws BibliothequeException
 	/* @Secured(value= {"ROLE_admin","ROLE_employe"}) */
 	  @ApiOperation(value="ajout d'un nouveau livre",response = LivreController.class)
 	public  Livre ajouterLivre(
-			  @ApiParam(value="LivreDto dans le body" , required=true)@Valid @RequestBody LivreDto livre) throws BibliothequeException { 
+			  @ApiParam(value="LivreDto dans le body" , required=true)@Valid @RequestBody LivreDto livre) throws EntityAlreadyExistException { 
 		  
 		  return livreService.createLivre(livre);
 		  
@@ -79,7 +88,7 @@ public  Livre afficheUnLivre(@PathVariable Long id) throws BibliothequeException
 	/* @Secured(value= {"ROLE_admin"}) */
 	  @DeleteMapping("/books/{id}")
 	  @ApiOperation(value="supprimer un livre",response = LivreController.class)
-	  public  void supprimerUnLivre1(@PathVariable Long id) throws BibliothequeException{
+	  public  void supprimerUnLivre1(@PathVariable Long id) throws ResultNotFoundException{
 	  		 
 	  		
 	  	 livreService.supprimerLivre(id);
@@ -87,4 +96,18 @@ public  Livre afficheUnLivre(@PathVariable Long id) throws BibliothequeException
 	  	 
 	  	  
 	  	  }
+	  
+	  
+	  @GetMapping("/bo")
+	  @ApiOperation(value="afficher un livre en fonction de son id",response = LivreController.class)
+public  LivreCriteria affichLivre() throws ResultNotFoundException{
+		 
+		
+	LivreCriteria livre= new LivreCriteria();
+	livre.setNom("le");
+	  return livre;
+	
+	 
+	  
+	  }
 }
