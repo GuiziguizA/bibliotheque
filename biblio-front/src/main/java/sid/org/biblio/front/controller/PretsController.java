@@ -32,10 +32,10 @@ public class PretsController {
 			Page<Pret>prets=pretService.pretsUtilisateur(mail, currentPage, pageSize);
 			model.addAttribute("prets", prets);
 			
-			  int totalPages = prets.getTotalPages(); if (totalPages > 0) { List<Integer>
-			  pageNumbers = IntStream.rangeClosed(1, totalPages) .boxed()
-			  .collect(Collectors.toList()); model.addAttribute("pageNumbers",
-			  pageNumbers); }
+			  int totalPages = prets.getTotalPages();
+			  if (totalPages > 0) {
+				  List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages) .boxed()
+			  .collect(Collectors.toList()); model.addAttribute("pageNumbers",pageNumbers); }
 			 
 			
 		} catch (Exception e) {

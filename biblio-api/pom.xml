@@ -38,6 +38,12 @@
 	<artifactId>spring-boot-starter-hateoas</artifactId>
 </dependency> -->
 		
+<!-- https://mvnrepository.com/artifact/com.github.kevinsawicki/http-request -->
+<dependency>
+    <groupId>com.github.kevinsawicki</groupId>
+    <artifactId>http-request</artifactId>
+    <version>6.0</version>
+</dependency>
 
 	
 <dependency>

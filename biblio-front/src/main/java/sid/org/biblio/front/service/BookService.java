@@ -16,6 +16,12 @@ public interface BookService {
 	public Page<Livre> listLivre(LivreCriteria livreCriteria, int size, int page) throws Exception;
 
 
+
+	public Page<Livre> callApi(String type, String recherche, int size, int page);
+
+
+
+	
 	
 
 	

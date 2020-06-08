@@ -4,6 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 
 import sid.org.biblio.front.classe.Livre;
 import sid.org.biblio.front.classe.LivreCriteria;
@@ -31,10 +34,13 @@ public class Application implements CommandLineRunner {
 
 		
 		/* bookService.listLivre(critere, 1,1); */
-		  
-		  
-		  
-		 
+			LivreCriteria criteres=new LivreCriteria();
+        	criteres.setNom("le");
+		 HttpHeaders headers = new HttpHeaders();
+		 headers.setContentType(MediaType.APPLICATION_JSON);
+		  HttpEntity<LivreCriteria> entity = new HttpEntity<>(criteres,headers);
+		  System.out.println(entity.getBody());
+		  		 
 		/*
 		 * pretService.pretsUtilisateur("gualisse@gmail.com", 1, 1);
 		 */	}

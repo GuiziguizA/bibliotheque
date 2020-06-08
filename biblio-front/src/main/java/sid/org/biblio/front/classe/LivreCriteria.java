@@ -15,6 +15,23 @@ public class LivreCriteria {
 	
 	private int nombreExemplaire;
 
+	public LivreCriteria(Long codeLivre, String nom, String auteur, String type, String section, String emplacement,
+			int nombreExemplaire) {
+		super();
+		this.codeLivre = codeLivre;
+		this.nom = nom;
+		this.auteur = auteur;
+		this.type = type;
+		this.section = section;
+		this.emplacement = emplacement;
+		this.nombreExemplaire = nombreExemplaire;
+	}
+
+	public LivreCriteria() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	public Long getCodeLivre() {
 		return codeLivre;
 	}

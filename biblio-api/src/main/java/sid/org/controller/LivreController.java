@@ -40,7 +40,7 @@ public class LivreController {
 	
 	
 	
-	  @GetMapping("/books") 
+	  @GetMapping(value="/books", consumes = "application/json",produces = "application/json") 
 	  @ApiOperation(value="afficher une page contenant les différent livre de la recherche",response = LivreController.class)
 	  @ApiResponses(value = {
 	  @ApiResponse(code=200,message="affichage de la recherche")
@@ -99,7 +99,6 @@ public  Livre afficheUnLivre(@PathVariable Long id) throws ResultNotFoundExcepti
 	  
 	  
 	  @GetMapping("/bo")
-	  @ApiOperation(value="afficher un livre en fonction de son id",response = LivreController.class)
 public  LivreCriteria affichLivre() throws ResultNotFoundException{
 		 
 		

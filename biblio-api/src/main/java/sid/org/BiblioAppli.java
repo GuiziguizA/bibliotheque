@@ -140,7 +140,7 @@ public class BiblioAppli implements CommandLineRunner{
 		   sid.org.specification.LivreCriteria critere=new sid.org.specification.LivreCriteria(); 
 		   critere.setNom("le");
 					 
-				int size=	livreService.searchLivres(critere, 1, 2).getSize();
+				int size=	livreService.searchLivres(critere, 0, 2).getSize();
 				System.out.println(size);
 		/* pretService.afficherPrets(user1.getMail(), 1, 1); */
 	}

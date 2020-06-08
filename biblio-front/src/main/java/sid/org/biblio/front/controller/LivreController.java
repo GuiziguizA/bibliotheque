@@ -6,6 +6,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Controller;
@@ -20,14 +21,19 @@ import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
+
+
 import sid.org.biblio.front.classe.Livre;
 import sid.org.biblio.front.classe.LivreCriteria;
+import sid.org.biblio.front.config.RequestFactory;
 import sid.org.biblio.front.service.BookService;
 import sid.org.biblio.front.service.RestReponsePage;
 
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
 
@@ -36,12 +42,17 @@ import org.springframework.http.ResponseEntity;
 public class LivreController {
 	@Autowired
 	private BookService bookService;
+	
+	
 
     @GetMapping(value = "/books/{id}")
     public String Book(Model model,@PathVariable("id")String id) {
       
     	
+    	
+    	
 		RestTemplate rt = new RestTemplate();
+		
 		final String uri = "http://localhost:8081/books/"+id;
 		try{
 			ResponseEntity<Livre> livre = rt.getForEntity(uri, Livre.class);
@@ -83,57 +94,36 @@ public class LivreController {
       return "formulaireLivre"  ;
     }
    
+    
+    
+    
+    
+    
+    
      
         @GetMapping(value = "/books")
         public String listBooks(
           Model model, 
           @RequestParam("page") Optional<Integer> page, 
-          @RequestParam("size") Optional<Integer> size) {
-            int currentPage = page.orElse(1);
-            int pageSize = size.orElse(5);
-        	String page1 = Integer.toString(currentPage); 
-    	    String size1 = Integer.toString( pageSize ); 
-            Page<Livre> bookPage;
-			try {
-				RestTemplate rt = new RestTemplate();
-				
-				final String uri = "http://localhost:8081/books?page="+page1+"&size="+size1;
-				LivreCriteria criteres=new LivreCriteria();
-	        	criteres.setNom("le");
-				
-			/*
-			 * HttpAuthentication httpAuthentication = new
-			 * HttpBasicAuthentication("username", "password"); HttpHeaders requestHeaders =
-			 * new HttpHeaders(); requestHeaders.setAuthorization(httpAuthentication);
-			 */
-				
-				  HttpEntity<LivreCriteria> entity = new HttpEntity<>(criteres);
-				ParameterizedTypeReference<RestReponsePage<Livre>> responseType = new ParameterizedTypeReference<RestReponsePage<Livre>>() { };
+          @RequestParam("size") Optional<Integer> size,   @RequestParam(required=false) String type ,   @RequestParam(required=false) String recherche) {
+try {
+	 Page<Livre>bookPage=bookService.callApi(type,recherche,page.get(),size.get());
+     model.addAttribute("bookPage",bookPage);
+	  int totalPages = bookPage.getTotalPages();
+	  if (totalPages > 0) {
+		  List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages) .boxed()
+	  .collect(Collectors.toList()); model.addAttribute("pageNumbers",pageNumbers); }
+	  return "books";
+	 
+} catch (Exception e) {
+	
+	model.addAttribute("error", e);
+	return "error";
+}
 
-				ResponseEntity<RestReponsePage<Livre>> result = rt.exchange(uri, HttpMethod.GET, entity, responseType);
-				
-				bookPage=result.getBody();
-				
-			    model.addAttribute("bookPage", bookPage);
-			     
-	            int totalPages = bookPage.getTotalPages();
-	            if (totalPages > 0) {
-	                List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
-	                    .boxed()
-	                    .collect(Collectors.toList());
-	                model.addAttribute("pageNumbers", pageNumbers);
-	            }
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-     
-        
-     
-            return "books";
         }
     
     
-    
+  
     
 }
