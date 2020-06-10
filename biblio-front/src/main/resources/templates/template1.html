@@ -16,11 +16,9 @@
 <div class="navbar navbar-inverse" >
 <div class="container-fluid" >
 <ul class="nav navbar-nav">
-<li ><a th:href="@{/consulterHome}">Home</a></li>     
-<li ><a th:href="@{/consulterListSite}" >Site d'escalade</a></li>
-<li ><a th:href="@{/consulterTopos}"  >Topos</a></li>
-<li ><a th:href="@{/consulterReservation}"  >Reservations</a></li>
-<li sec:authorize="hasRole('ROLE_admin')"><a th:href="@{/consulterListeUtilisateur}"  >La liste des Utilisateurs</a></li>
+<li ><a th:href="@{/home}">Home</a></li>     
+<li ><a th:href="@{/books?page=&size=&type=&recherche=}" >Livres</a></li>
+<li ><a th:href="@{/prets}"  >prets</a></li>
 </ul>
 
 <form th:action="@{/logout}" method="post">

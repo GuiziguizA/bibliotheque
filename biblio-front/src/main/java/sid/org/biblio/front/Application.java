@@ -10,6 +10,7 @@ import org.springframework.http.MediaType;
 
 import sid.org.biblio.front.classe.Livre;
 import sid.org.biblio.front.classe.LivreCriteria;
+import sid.org.biblio.front.classe.Pret;
 import sid.org.biblio.front.classe.Utilisateur;
 import sid.org.biblio.front.service.BookService;
 import sid.org.biblio.front.service.PretService;
@@ -40,6 +41,11 @@ public class Application implements CommandLineRunner {
 		 headers.setContentType(MediaType.APPLICATION_JSON);
 		  HttpEntity<LivreCriteria> entity = new HttpEntity<>(criteres,headers);
 		  System.out.println(entity.getBody());
+		  		 Pret pret=new Pret();
+		  		 Long id= (long) 2;
+		  		 pret.setId(id);
+		  		 
+		  		 pretService.creerPret(pret);
 		  		 
 		/*
 		 * pretService.pretsUtilisateur("gualisse@gmail.com", 1, 1);

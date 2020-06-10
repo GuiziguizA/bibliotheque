@@ -40,26 +40,32 @@ public class PretServiceImpl implements PretService{
 	private LivreRepository livreRepository;
 	@Override
 	@Transactional
-	public Pret creerPret(PretDto pretDto,Principal principal) throws BibliothequeException {
-		Optional<Utilisateur> utilisateur = utilisateurRepository.findByMail(principal.getName());
-		Optional<Livre>livre=livreRepository.findByCodeLivre(pretDto.getLivre().getCodeLivre());
-		if(livre.get().getNombreExemplaire()< pretDto.getLivre().getNombreExemplaire()) {
-			throw new LivreIndisponibleException("ce livre n'est pas disponible");
+	public Pret creerPret(Long idLivre,String mail) throws ResultNotFoundException,LivreIndisponibleException {
+		
+		Optional<Utilisateur> utilisateur = utilisateurRepository.findByMail(mail);
+		Optional<Livre>livre=livreRepository.findByCodeLivre(idLivre);
+		if(!utilisateur.isPresent()) {
+			throw new ResultNotFoundException("l'utilisateur n'existe pas");
 		}
-		if(livre.get().getNombreExemplaire()< pretDto.getLivre().getNombreExemplaire()) {
-			throw new LivreIndisponibleException("ce livre n'est pas disponible pour "+pretDto.getLivre().getNombreExemplaire()+" exemplaires");
+		if(!livre.isPresent()) {
+			throw new ResultNotFoundException("le livre n'existe pas");
+		}
+
+		if(livre.get().getNombreExemplaire()< 1) {
+			throw new LivreIndisponibleException("ce livre n'est pas disponible pour "+livre.get().getNombreExemplaire()+" exemplaires");
 		}
 		
 		
 		Date date1=new Date();
 		
-		Pret pret = convertToPret(pretDto);
-
+		Pret pret = new Pret();
+		pret.setLivre(livre.get());
 		pret.setDateDeDebut(date1);
 		pret.setDateDeFin(dateService.modifierDate(date1, 2 ));
 		pret.setUtilisateur(utilisateur.get());
-		pret.setNombreLivres(pretDto.getNombreLivres());
-		livre.get().setNombreExemplaire(livre.get().getNombreExemplaire()-pretDto.getLivre().getNombreExemplaire());
+		pret.setNombreLivres(1);
+		pret.setStatut("premierTemps");
+		livre.get().setNombreExemplaire(livre.get().getNombreExemplaire()-1);
 		livreRepository.saveAndFlush(livre.get());
 		return pretRepository.saveAndFlush(pret);
 	}
@@ -144,13 +150,6 @@ public class PretServiceImpl implements PretService{
 		return pret.get();
 	}
 
-	private Pret convertToPret(PretDto pretDto) {
-		Pret pret = new Pret();
-		pret.setLivre(pretDto.getLivre());
-		pret.setNombreLivres(pretDto.getNombreLivres());
-		return pret;
-		
-	}
 	
 	@Override
 	 public void modifierStatut(Long id) throws ResultNotFoundException {

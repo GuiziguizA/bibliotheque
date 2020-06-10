@@ -25,8 +25,10 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import sid.org.classe.Pret;
 import sid.org.dto.PretDto;
+import sid.org.exception.ResultNotFoundException;
 import sid.org.service.LivreService;
 import sid.org.service.PretService;
+import sid.org.specification.LivreCriteria;
 
 @RestController
 @Api(value="Api Prets",description = "Api Prets")
@@ -56,11 +58,13 @@ public Pret afficherUnPret(@PathVariable Long id) throws Exception{
 
 
 	/* @Secured(value= {"ROLE_admin","ROLE_employe"}) */
-	  @PostMapping("/pret")
+	  @PostMapping(value="/prets")	
 	@ApiOperation(value="ajout d'un nouveau pret et decrementation le stock du livre",response = PretController.class)
 	  public  Pret creerUnPret(
-			  @ApiParam(value="Ajouter PretDto dans le body" , required=true)@Valid @RequestBody PretDto  pretDto,Principal principal) throws Exception{
-	 		Pret pret1=pretService.creerPret(pretDto,principal);
+			  @ApiParam(value="Ajouter int idLivre dans le body" , required=true) @RequestBody PretDto pretDto,Principal principal) throws Exception{
+		  
+		  String name = principal.getName();
+	 		Pret pret1=pretService.creerPret(pretDto.getId(),name);
 			return pret1 ;
 	
 	  
@@ -91,4 +95,19 @@ Page<Pret>prets=pretService.afficherPrets(mail, page, size);
   
   	}
 	
+
+@GetMapping("/pr")
+public  PretDto  affichPretDto() {
+	 
+	
+PretDto pret=new PretDto();
+Long id = (long) 1;
+pret.setId(id);
+return pret;
+
+
+
+}
+
+
 }

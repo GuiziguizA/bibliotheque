@@ -25,6 +25,7 @@ import org.springframework.web.client.RestTemplate;
 
 import sid.org.biblio.front.classe.Livre;
 import sid.org.biblio.front.classe.LivreCriteria;
+import sid.org.biblio.front.classe.Pret;
 import sid.org.biblio.front.config.RequestFactory;
 import sid.org.biblio.front.service.BookService;
 import sid.org.biblio.front.service.RestReponsePage;
@@ -79,7 +80,7 @@ public class LivreController {
     }
     
     @PostMapping("/books")
-    public String createBook(Livre livre,BindingResult result,Model model) {
+    public String createBook(Pret pret,Livre livre,BindingResult result,Model model) {
 		
     	
     	RestTemplate rt = new RestTemplate();
@@ -102,17 +103,22 @@ public class LivreController {
     
      
         @GetMapping(value = "/books")
-        public String listBooks(
-          Model model, 
-          @RequestParam("page") Optional<Integer> page, 
-          @RequestParam("size") Optional<Integer> size,   @RequestParam(required=false) String type ,   @RequestParam(required=false) String recherche) {
+        public String listBooks(Model model, 
+          @RequestParam(required=false) Optional<Integer> page, 
+          @RequestParam(required=false) Optional<Integer> size,   @RequestParam(required=false) Optional<String> type ,   @RequestParam(required=false) Optional<String> recherche) {
+        	
+        	   int currentPage = page.orElse(1);
+               int pageSize = size.orElse(2);
 try {
-	 Page<Livre>bookPage=bookService.callApi(type,recherche,page.get(),size.get());
-     model.addAttribute("bookPage",bookPage);
+	 Page<Livre>bookPage=bookService.livresRecherche(type,recherche,currentPage,pageSize);
+     	model.addAttribute("bookPage",bookPage);
 	  int totalPages = bookPage.getTotalPages();
 	  if (totalPages > 0) {
 		  List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages) .boxed()
-	  .collect(Collectors.toList()); model.addAttribute("pageNumbers",pageNumbers); }
+	  .collect(Collectors.toList()); 
+		model.addAttribute("pageNumbers",pageNumbers); }
+	  	model.addAttribute("type",type.get());
+	  	model.addAttribute("recherche",recherche.get());
 	  return "books";
 	 
 } catch (Exception e) {

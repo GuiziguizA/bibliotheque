@@ -7,13 +7,19 @@ import java.util.stream.IntStream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
 
-import sid.org.biblio.front.classe.Livre;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.client.HttpStatusCodeException;
+
 import sid.org.biblio.front.classe.Pret;
 import sid.org.biblio.front.service.PretService;
 @Controller
@@ -47,4 +53,20 @@ public class PretsController {
 	      
 	   return "prets";
 }
+	   @PostMapping(value = "/prets",  consumes = "application/x-www-form-urlencoded")
+	   public  String creerUnPret(  @RequestParam Long id,Model model) {
+		   Pret pret=new Pret();
+		   pret.setId(id);
+		   try {
+			pretService.creerPret(pret);
+			return "pretCreation";
+		} catch (HttpStatusCodeException e) {
+		
+			model.addAttribute("error",e);
+			return "error";
+		}
+		   
+		
+		   
+	   }
 }

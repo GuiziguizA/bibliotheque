@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://ultraq.net.nz/thymleaf/layout"
-	layout:decorator="template1">
+	data-layout-decorator="template1">
  
 <head>
 	<meta charset="utf-8"/>
@@ -17,39 +17,8 @@
  <div class="form-group">
  <div class="jumbotron text-center">
  
-
+<h1>Les Prets</h1>
 </div>
-	<!-- <table border="1">
-    <thead>
-    	<tr>
-				<th scope="col">Livre</th>
-				<th scope="col">DateFin</th>
-				<th scope="col">Statut</th>
-		</tr>
-				
-    </thead>
-    <tbody>
-        <tr th:each="pret, iStat : ${prets}"
-            th:style="${iStat.odd}? 'font-weight: bold;'"
-            th:alt-title="${iStat.even}? 'even' : 'odd'">
-         	<td th:text="${pret.livre.nom}"></td>
-				<td th:text="${pret.statut}"></td>
-				<td th:text="${pret.dateDeFin}" ></td>
-				
-        </tr>
-    </tbody>
-</table>
-<div th:if="${prets.totalPages > 0}" class="pagination"
-    th:each="pageNumber : ${pageNumbers}">
-    <a th:href="@{/prets(size=${prets.size}, page=${pageNumber})}"
-        th:text=${pageNumber}
-        th:class="${pageNumber==bookPage.number + 1} ? active"></a>
-</div>
-	</div>
-
-				</div>
-				</div>	 -->	
-				
 				
 				
 					<div>

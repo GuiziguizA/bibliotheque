@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://ultraq.net.nz/thymleaf/layout"
->
+data-layout-decorator="template1">
  
 <head>
 	<meta charset="utf-8"/>
@@ -12,10 +12,23 @@
 </head>
  
 <body>
+
+
+
 	<div layout:fragment="content">
 	<div class="container pt-3">
  <div class="form-group">
  <div class="jumbotron text-center">
+ 
+ <h1>Liste des sites d'escalade</h1>
+ </div>
+ 	<br>
+		<div>
+			<a th:href="@{/books/form}"><input type="button" class="btn btn-primary"value="+Ajouter" /></a>
+		</div>
+		
+		<br>
+		
 					<div>
 	<table  class="table table-striped">
 		<tr>
@@ -25,6 +38,7 @@
 				<th scope="col">Section</th>
 				<th scope="col">Emplacement</th>
 				<th scope="col">Nombre d'exemplaire</th>
+				<th></th>
 		</tr>
 		<tr th:each="book:${bookPage}" >
 				<td th:text="${book.nom}"></td>
@@ -33,51 +47,24 @@
 				<td th:text="${book.section}"></td>	
 				<td th:text="${book.emplacement}"></td>	
 				<td th:text="${book.nombreExemplaire}"></td>	
+				<td><form method="post" th:action="@{/prets(id=${book.codeLivre})}"  >
+            <button type="submit" name="submit" value="value" class="link-button">Reserver</button>
+        </form> </td>
+				
 			</tr>
 	
 	</table>
 	<div th:if="${bookPage.totalPages > 0}" class="pagination"
     th:each="pageNumber : ${pageNumbers}">
-    <a th:href="@{/books(size=${bookPage.size}, page=${pageNumber})}"
+    <a th:href="@{/books(size=1, page=${pageNumber},type=${type},recherche=${recherche})}"
         th:text=${pageNumber}
         th:class="${pageNumber==bookPage.number + 1} ? active"></a>
 </div>
 	</div>
 	</div>
-	<!-- <table border="1">
-    <thead>
-    	<tr>
-				<th scope="col">Nom</th>
-				<th scope="col">Auteur</th>
-				<th scope="col">Type</th>
-				<th scope="col">Section</th>
-				<th scope="col">Emplacement</th>
-				<th scope="col">Nombre d'exemplaire</th>
-		</tr>
-				
-    </thead>
-    <tbody>
-        <tr th:each="book, iStat : ${bookPage}"
-            th:style="${iStat.odd}? 'font-weight: bold;'"
-            th:alt-title="${iStat.even}? 'even' : 'odd'">
-         	<td th:text="${book.nom}"></td>
-				<td th:text="${book.auteur}"></td>
-				<td th:text="${book.type}" ></td>
-				<td th:text="${book.section}"></td>	
-				<td th:text="${book.emplacement}"></td>	
-				<td th:text="${book.nombreExemplaire}"></td>	
-        </tr>
-    </tbody>
-</table>
-<div th:if="${bookPage.totalPages > 0}" class="pagination"
-    th:each="pageNumber : ${pageNumbers}">
-    <a th:href="@{/listBooks(size=${bookPage.size}, page=${pageNumber})}"
-        th:text=${pageNumber}
-        th:class="${pageNumber==bookPage.number + 1} ? active"></a>
-</div>
-	</div> -->
+	
 
 				</div>
 				</div>		
-</div>	
+
 </body>

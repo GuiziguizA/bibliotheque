@@ -2,10 +2,12 @@
 
 
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -142,6 +144,10 @@ public class BiblioAppli implements CommandLineRunner{
 					 
 				int size=	livreService.searchLivres(critere, 0, 2).getSize();
 				System.out.println(size);
+			
+				Long l=(long) 1;
+	
+		pretService.creerPret(l, "gualisse@gmail.com");
 		/* pretService.afficherPrets(user1.getMail(), 1, 1); */
 	}
 	}

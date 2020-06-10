@@ -1,5 +1,7 @@
 package sid.org.biblio.front.service;
 
+import java.util.Optional;
+
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
@@ -13,11 +15,15 @@ public interface BookService {
 
 	public void createLivre(Livre livre) throws Exception;
 
-	public Page<Livre> listLivre(LivreCriteria livreCriteria, int size, int page) throws Exception;
+	
 
 
 
-	public Page<Livre> callApi(String type, String recherche, int size, int page);
+	public Page<Livre> livresRecherche(Optional<String> type, Optional<String> recherche, int size, int page);
+
+	
+
+	
 
 
 
