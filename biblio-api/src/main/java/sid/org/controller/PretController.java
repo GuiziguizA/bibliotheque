@@ -108,6 +108,15 @@ return pret;
 
 
 }
+@PutMapping("/prets/{id}")
+@ApiOperation(value="modifier statut du pret pour confirmer que le livre a été rendu",response = PretController.class)
+public void retourLivre(@PathVariable Long id) throws ResultNotFoundException {
+	pretService.modifierPret(id);
+	
+}
+
+
+
 
 
 }

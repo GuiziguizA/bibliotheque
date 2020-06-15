@@ -32,6 +32,8 @@ public interface PretService {
 	public void modifierStatut(Long id) throws ResultNotFoundException;
 	public void modifierStatutsPrets() throws ResultNotFoundException;
 
+	public void modifierPret(Long id) throws ResultNotFoundException;
+
 	
 	
 

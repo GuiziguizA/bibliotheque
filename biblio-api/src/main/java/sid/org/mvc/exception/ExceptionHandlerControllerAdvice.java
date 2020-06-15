@@ -29,7 +29,8 @@ public class ExceptionHandlerControllerAdvice {
 		error.setMessage(exception.getMessage());
 		error.setDate(new Date());
 		error.setHttpCodeMessage(request.getRequestURI());
-		error.setStatus(415);
+		error.setStatus(404);
+		
 		return error;
 	}
 	
@@ -45,7 +46,7 @@ public class ExceptionHandlerControllerAdvice {
 		error.setMessage(exception.getMessage());
 		error.setDate(new Date());
 		error.setHttpCodeMessage(request.getRequestURI());
-		error.setStatus(420);
+		error.setStatus(409);
 		return error;
 	}
 	

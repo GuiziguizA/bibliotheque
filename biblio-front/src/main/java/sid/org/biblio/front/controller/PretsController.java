@@ -1,5 +1,6 @@
 package sid.org.biblio.front.controller;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -22,51 +23,49 @@ import org.springframework.web.client.HttpStatusCodeException;
 
 import sid.org.biblio.front.classe.Pret;
 import sid.org.biblio.front.service.PretService;
+
 @Controller
 public class PretsController {
 	@Autowired
 	private PretService pretService;
-	
-	   @GetMapping(value = "/prets")
-	    public String pretUtilisateur(Model model, @RequestParam("page") Optional<Integer> page, 
-          @RequestParam("size") Optional<Integer> size) {
-            int currentPage = page.orElse(1);
-            int pageSize = size.orElse(2);
-		   String mail="gualisse@gmail.com";
-		   
-		   try {
-			Page<Pret>prets=pretService.pretsUtilisateur(mail, currentPage, pageSize);
+
+	@GetMapping(value = "/prets")
+	public String pretUtilisateur(Model model, @RequestParam("page") Optional<Integer> page,
+			@RequestParam("size") Optional<Integer> size) {
+		int currentPage = page.orElse(1);
+		int pageSize = size.orElse(5);
+		String mail = "gualisse@gmail.com";
+
+		try {
+			Page<Pret> prets = pretService.pretsUtilisateur(mail, currentPage, pageSize);
 			model.addAttribute("prets", prets);
-			
-			  int totalPages = prets.getTotalPages();
-			  if (totalPages > 0) {
-				  List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages) .boxed()
-			  .collect(Collectors.toList()); model.addAttribute("pageNumbers",pageNumbers); }
-			 
-			
+
+			int totalPages = prets.getTotalPages();
+			if (totalPages > 0) {
+				List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages).boxed().collect(Collectors.toList());
+				model.addAttribute("pageNumbers", pageNumbers);
+			}
+
 		} catch (Exception e) {
-			
+
 			model.addAttribute("error", e);
 		}
-		   
-	   
-	      
-	   return "prets";
-}
-	   @PostMapping(value = "/prets",  consumes = "application/x-www-form-urlencoded")
-	   public  String creerUnPret(  @RequestParam Long id,Model model) {
-		   Pret pret=new Pret();
-		   pret.setId(id);
-		   try {
+
+		return "prets";
+	}
+
+	@PostMapping(value = "/prets", consumes = "application/x-www-form-urlencoded")
+	public String creerUnPret(@RequestParam Long id, Model model) {
+		Pret pret = new Pret();
+		pret.setId(id);
+		try {
 			pretService.creerPret(pret);
-			return "pretCreation";
+			return "succesOperation";
 		} catch (HttpStatusCodeException e) {
-		
-			model.addAttribute("error",e);
+
+			model.addAttribute("error", e);
 			return "error";
 		}
-		   
-		
-		   
-	   }
+
+	}
 }

@@ -7,6 +7,9 @@
   </parent>
   <artifactId>biblio-batch</artifactId>
   	<packaging>jar</packaging>
+  	
+  	
+  	
   	<dependencies>
 
 <dependency>
@@ -15,7 +18,7 @@
 	<version>1.0</version>
 	
 </dependency>
-		
+	
 
 
 		
@@ -53,6 +56,7 @@
 		</dependency>
 
 	</dependencies>
+
  <build>
 	<plugins>
 			<plugin>
@@ -67,7 +71,7 @@
 				<configuration>
 					<archive>
 						<manifest>
-							<mainClass>sid.org.BatchAppli</mainClass>
+							<mainClass>sig.org.BatchAppli</mainClass>
 						</manifest>
 					</archive>
 				</configuration>

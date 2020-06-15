@@ -12,34 +12,35 @@ import java.net.URI;
 
 @Component
 public class RequestFactory {
-    private RestTemplate restTemplate = new RestTemplate();
+	private RestTemplate restTemplate = new RestTemplate();
 
-    public RequestFactory() {
-        this.restTemplate.setRequestFactory(new HttpComponentsClientHttpRequestWithBodyFactory());
-    }
+	public RequestFactory() {
+		this.restTemplate.setRequestFactory(new HttpComponentsClientHttpRequestWithBodyFactory());
+	}
 
-    private static final class HttpComponentsClientHttpRequestWithBodyFactory extends HttpComponentsClientHttpRequestFactory {
-        @Override
-        protected HttpUriRequest createHttpUriRequest(HttpMethod httpMethod, URI uri) {
-            if (httpMethod == HttpMethod.GET) {
-                return new HttpGetRequestWithEntity(uri);
-            }
-            return super.createHttpUriRequest(httpMethod, uri);
-        }
-    }
+	private static final class HttpComponentsClientHttpRequestWithBodyFactory
+			extends HttpComponentsClientHttpRequestFactory {
+		@Override
+		protected HttpUriRequest createHttpUriRequest(HttpMethod httpMethod, URI uri) {
+			if (httpMethod == HttpMethod.GET) {
+				return new HttpGetRequestWithEntity(uri);
+			}
+			return super.createHttpUriRequest(httpMethod, uri);
+		}
+	}
 
-    private static final class HttpGetRequestWithEntity extends HttpEntityEnclosingRequestBase {
-        public HttpGetRequestWithEntity(final URI uri) {
-            super.setURI(uri);
-        }
+	private static final class HttpGetRequestWithEntity extends HttpEntityEnclosingRequestBase {
+		public HttpGetRequestWithEntity(final URI uri) {
+			super.setURI(uri);
+		}
 
-        @Override
-        public String getMethod() {
-            return HttpMethod.GET.name();
-        }
-    }
+		@Override
+		public String getMethod() {
+			return HttpMethod.GET.name();
+		}
+	}
 
-    public RestTemplate getRestTemplate() {
-        return restTemplate;
-    }
+	public RestTemplate getRestTemplate() {
+		return restTemplate;
+	}
 }

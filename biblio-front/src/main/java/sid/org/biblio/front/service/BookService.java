@@ -7,7 +7,6 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 
 import sid.org.biblio.front.classe.Livre;
-import sid.org.biblio.front.classe.LivreCriteria;
 
 public interface BookService {
 
@@ -15,24 +14,6 @@ public interface BookService {
 
 	public void createLivre(Livre livre) throws Exception;
 
-	
-
-
-
-	public Page<Livre> livresRecherche(Optional<String> type, Optional<String> recherche, int size, int page);
-
-	
-
-	
-
-
-
-	
-	
-
-	
-	
-	
-	
+	public Page<Livre> livresRecherche(Optional<String> type, Optional<String> recherche, int  size, int page);
 
 }

@@ -12,6 +12,7 @@ import java.util.Optional;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -150,16 +151,22 @@ public class PretServiceImpl implements PretService{
 		return pret.get();
 	}
 
-	
+	 @Value("${pret.statut1}")
+	 private String statut1;
+	 @Value("${pret.statut2}")
+	 private String statut2;
+	 @Value("${pret.statut3}")
+	 private String statut3;
+	 
 	@Override
 	 public void modifierStatut(Long id) throws ResultNotFoundException {
 	 	 Date aujourdhui = new Date(); 
 	 	 Optional<Pret> pret =pretRepository.findById(id);
-	 	 if(pret.get().getDateDeFin().compareTo(aujourdhui)>0 && pret.get().getStatut()=="deuxiemeTemps") {
-	 		 pret.get().setStatut("depasse");
+	 	 if(pret.get().getDateDeFin().compareTo(aujourdhui)>0 && pret.get().getStatut()==statut2) {
+	 		 pret.get().setStatut(statut3);
 	 		 pretRepository.saveAndFlush(pret.get());
-	 	 }else if (pret.get().getDateDeFin().compareTo(aujourdhui)>0 && pret.get().getStatut()=="premierTemps") {
-	 		 pret.get().setStatut("deuxiemeTemps");
+	 	 }else if (pret.get().getDateDeFin().compareTo(aujourdhui)>0 && pret.get().getStatut()==statut1) {
+	 		 pret.get().setStatut(statut2);
 	 		pret.get().setDateDeFin( dateService.modifierDate(pret.get().getDateDeFin(), 2));
 	 		 pretRepository.saveAndFlush(pret.get());
 	 	 }
@@ -177,8 +184,23 @@ public void modifierStatutsPrets() throws ResultNotFoundException {
 	
 	}
 
+@Value("${pret.statut4}")
+private String statut4;
+@Override
+public void modifierPret(Long id) throws ResultNotFoundException{
+	Optional<Pret>pret=pretRepository.findById(id);
 	
-
+	if(!pret.isPresent()) {
+		throw new ResultNotFoundException("Ce pret n'existe pas");
+	}
+	Optional<Livre>livre=livreRepository.findByCodeLivre(pret.get().getLivre().getCodeLivre());
+	if(!livre.isPresent()) {
+		throw new ResultNotFoundException("Ce livre n'existe pas");
+	}
+	pret.get().setStatut(statut4);
+	livre.get().setNombreExemplaire(livre.get().getNombreExemplaire() + 1);
+	pretRepository.saveAndFlush(pret.get());
+}
 
 
 

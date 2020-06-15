@@ -7,6 +7,7 @@ import java.util.Optional;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -23,6 +24,7 @@ import sid.org.dao.UtilisateurRepository;
 import sid.org.dto.UtilisateurDto;
 import sid.org.exception.BibliothequeException;
 import sid.org.exception.EntityAlreadyExistException;
+import sid.org.exception.MotDePasseInvalidException;
 import sid.org.exception.ResultNotFoundException;
 
 
@@ -37,7 +39,8 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	private PasswordEncoder passwordEncoder;
 	@Autowired
 	private RolesRepository rolesRepository;
-	
+	 @Value("${role.default}")
+	 private String roleDefault;
 	@Override
 	public Utilisateur creerUtilisateur(UtilisateurDto utilisateurDto) throws EntityAlreadyExistException{
 		Optional<Utilisateur> user =utilisateurRepository.findByMail(utilisateurDto.getMail());
@@ -48,7 +51,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	
 		utilisateurDto.setMotDePasse(passwordEncoder.encode(utilisateurDto.getMotDePasse()));
 		Utilisateur utilisateur= convertToUtilisateur(utilisateurDto);
-		Optional<Roles> roles=rolesRepository.findByNom("user");
+		Optional<Roles> roles=rolesRepository.findByNom(roleDefault);
 		utilisateur.setRoles(roles.get());
 		return utilisateurRepository.save(utilisateur);
 	}
@@ -110,6 +113,25 @@ Pageable pageable =PageRequest.of(page,size );
 	
 	return utilisateurs;
 	}
+	@Override
+	public Optional<Utilisateur> connectionUtilisateur(String mail , String motDePasse) throws ResultNotFoundException,MotDePasseInvalidException {
+		Optional<Utilisateur>user=utilisateurRepository.findByMail(mail);
+		if(!user.isPresent()) {
+			throw new ResultNotFoundException("Il n'existe aucun compte contenant cette adresse e-mail");
+		}
+		if (!motDePasse.equals(user.get().getMotDePasse())) {
+			throw new MotDePasseInvalidException("Le mot de passe est incorrect");
+		}
+		
+		
+		return user;
+		
+		
+	}
+	
+	
+	
+	
 private Utilisateur convertToUtilisateur(UtilisateurDto utilisateurDto) {
 	Utilisateur utilisateur = new Utilisateur();
 	utilisateur.setAdresse(utilisateurDto.getAdresse());

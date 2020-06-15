@@ -3,12 +3,15 @@ package sid.org.service;
 
 
 
+import java.util.Optional;
+
 import org.springframework.data.domain.Page;
 
 import sid.org.classe.Utilisateur;
 import sid.org.dto.UtilisateurDto;
 
 import sid.org.exception.EntityAlreadyExistException;
+import sid.org.exception.MotDePasseInvalidException;
 import sid.org.exception.ResultNotFoundException;
 
 public interface UtilisateurService {
@@ -18,6 +21,7 @@ public interface UtilisateurService {
 	public void supprimerUtilisateur(Long id) throws ResultNotFoundException;
 	public Page<Utilisateur> voirListeUtilisateurs(int page, int size) throws  ResultNotFoundException;
 	public Utilisateur voirUtilisateur(Long id) throws ResultNotFoundException ;
+	public Optional<Utilisateur> connectionUtilisateur(String mail, String motDePasse)throws ResultNotFoundException, MotDePasseInvalidException;
 	
 	
 	

@@ -20,7 +20,7 @@ data-layout-decorator="template1">
  <div class="form-group">
  <div class="jumbotron text-center">
  
- <h1>Liste des sites d'escalade</h1>
+ <h1>Livres</h1>
  </div>
  	<br>
 		<div>
@@ -54,11 +54,12 @@ data-layout-decorator="template1">
 			</tr>
 	
 	</table>
-	<div th:if="${bookPage.totalPages > 0}" class="pagination"
+
+<div th:if="${bookPage.totalPages > 0}" class="pagination"
     th:each="pageNumber : ${pageNumbers}">
-    <a th:href="@{/books(size=1, page=${pageNumber},type=${type},recherche=${recherche})}"
+    <a th:href="@{/books(page=${pageNumber-1},size=${bookPage.size},type=${type},recherche=${recherche})}"
         th:text=${pageNumber}
-        th:class="${pageNumber==bookPage.number + 1} ? active"></a>
+        th:class="${pageNumber==bookPage.number} ? active"></a>
 </div>
 	</div>
 	</div>

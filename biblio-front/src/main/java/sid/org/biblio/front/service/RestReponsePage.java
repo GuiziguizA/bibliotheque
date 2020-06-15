@@ -17,23 +17,25 @@ public class RestReponsePage<T> extends PageImpl<T> {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+
 	@JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
-    public RestReponsePage(@JsonProperty("content") List<T> content, @JsonProperty("number") int number, @JsonProperty("size") int size,
-                    @JsonProperty("totalElements") Long totalElements, @JsonProperty("pageable") JsonNode pageable, @JsonProperty("last") boolean last,
-                    @JsonProperty("totalPages") int totalPages, @JsonProperty("sort") JsonNode sort, @JsonProperty("first") boolean first,
-                    @JsonProperty("numberOfElements") int numberOfElements) {
-        super(content, PageRequest.of(number, size), totalElements);
-    }
+	public RestReponsePage(@JsonProperty("content") List<T> content, @JsonProperty("number") int number,
+			@JsonProperty("size") int size, @JsonProperty("totalElements") Long totalElements,
+			@JsonProperty("pageable") JsonNode pageable, @JsonProperty("last") boolean last,
+			@JsonProperty("totalPages") int totalPages, @JsonProperty("sort") JsonNode sort,
+			@JsonProperty("first") boolean first, @JsonProperty("numberOfElements") int numberOfElements) {
+		super(content, PageRequest.of(number, size), totalElements);
+	}
 
-    public RestReponsePage(List<T> content, Pageable pageable, long total) {
-        super(content, pageable, total);
-    }
+	public RestReponsePage(List<T> content, Pageable pageable, long total) {
+		super(content, pageable, total);
+	}
 
-    public RestReponsePage(List<T> content) {
-        super(content);
-    }
+	public RestReponsePage(List<T> content) {
+		super(content);
+	}
 
-    public RestReponsePage() {
-        super(new ArrayList<T>());
-    }
+	public RestReponsePage() {
+		super(new ArrayList<T>());
+	}
 }

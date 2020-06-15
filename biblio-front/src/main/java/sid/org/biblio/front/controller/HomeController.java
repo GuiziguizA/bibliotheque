@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class HomeController {
 
 	@GetMapping("/home")
-	public String afficherHome(){
-		
-		return"Home";
+	public String afficherHome() {
+
+		return "Home";
 	}
-	
+
 }

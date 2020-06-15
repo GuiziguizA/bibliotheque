@@ -2,17 +2,17 @@ package sid.org.biblio.front.classe;
 
 public class LivreCriteria {
 	private Long codeLivre;
-	
+
 	private String nom;
-	
+
 	private String auteur;
 
 	private String type;
-	
+
 	private String section;
-	
+
 	private String emplacement;
-	
+
 	private int nombreExemplaire;
 
 	public LivreCriteria(Long codeLivre, String nom, String auteur, String type, String section, String emplacement,
@@ -87,7 +87,5 @@ public class LivreCriteria {
 	public void setNombreExemplaire(int nombreExemplaire) {
 		this.nombreExemplaire = nombreExemplaire;
 	}
-	
-	
-	
+
 }

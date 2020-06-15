@@ -1,6 +1,7 @@
 package sid.org.controller;
 
 import java.util.Map;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -22,6 +23,8 @@ import io.swagger.annotations.ApiParam;
 import sid.org.classe.Utilisateur;
 import sid.org.dto.UtilisateurDto;
 import sid.org.exception.BibliothequeException;
+import sid.org.exception.MotDePasseInvalidException;
+import sid.org.exception.ResultNotFoundException;
 import sid.org.service.UtilisateurService;
 
 @RestController
@@ -42,6 +45,22 @@ public class UtilisateurController {
 	
 
 }
+	
+	
+	@GetMapping("/users/identity")
+	@ApiOperation(value="identification de l'utilisateur",response = UtilisateurController.class)
+ public Optional<Utilisateur> afficherUtilisateurs(@RequestParam String mail,@RequestParam String motDePasse) throws ResultNotFoundException,MotDePasseInvalidException {
+	  
+	Optional<Utilisateur> user=utilisateurService.connectionUtilisateur(mail, motDePasse);
+		return user;
+	
+
+}
+	
+	
+	
+	
+	
 	@GetMapping("/users")
 	@ApiOperation(value="affiche une Page avec tous les utilisateurs",response = UtilisateurController.class)
 	 public   Page<Utilisateur> afficherUtilisateurs(@RequestParam int page, @RequestParam int size) throws BibliothequeException{
@@ -87,6 +106,7 @@ public class UtilisateurController {
 	
 	}
 	 
+	
 
 	
 }
