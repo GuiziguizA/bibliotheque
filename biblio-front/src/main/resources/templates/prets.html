@@ -38,9 +38,14 @@
 	</table>
 				<div th:if="${prets.totalPages > 0}" class="pagination"
     th:each="pageNumber : ${pageNumbers}">
-    <a th:href="@{/prets(size=${prets.size}, page=${pageNumber-1})}"
+    <nav aria-label="...">
+  <ul class="pagination pagination-lg">
+    <li class="page-item"> <a th:href="@{/prets(size=${prets.size}, page=${pageNumber-1})}"
         th:text=${pageNumber}
         th:class="${pageNumber==prets.number + 1} ? active"></a>
+        </li>
+        </ul>
+        </nav>
 </div>
 				
 	</div>

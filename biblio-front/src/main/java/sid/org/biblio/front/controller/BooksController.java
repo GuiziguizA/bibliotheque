@@ -1,5 +1,6 @@
 package sid.org.biblio.front.controller;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -22,6 +23,7 @@ import org.springframework.web.client.RestTemplate;
 
 import sid.org.biblio.front.classe.Livre;
 import sid.org.biblio.front.classe.Pret;
+import sid.org.biblio.front.config.SimpleAuthenticationFilter;
 import sid.org.biblio.front.service.BookService;
 
 import org.springframework.data.domain.Page;
@@ -37,10 +39,12 @@ public class BooksController {
 	@Autowired
 	private BookService bookService;
 
+
 	@GetMapping(value = "/books/{id}")
 	public String Book(Model model, @PathVariable("id") String id) {
 
 		RestTemplate rt = new RestTemplate();
+
 
 		final String uri = "http://localhost:8081/books/" + id;
 		try {
@@ -86,7 +90,7 @@ public class BooksController {
 			@RequestParam(required = false) Optional<Integer> size,
 			@RequestParam(required = false) Optional<String> type,
 			@RequestParam(required = false) Optional<String> recherche) {
-
+	
 		int currentPage = page.orElse(1);
 		int pageSize = size.orElse(5);
 		try {
@@ -96,13 +100,14 @@ public class BooksController {
 			if (totalPages > 0) {
 				List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages).boxed().collect(Collectors.toList());
 				model.addAttribute("pageNumbers", pageNumbers);
+				
 			}
 			model.addAttribute("type", type.get());
 			model.addAttribute("recherche", recherche.get());
 
 			return "books";
 
-		} catch (Exception e) {
+		} catch (HttpStatusCodeException e) {
 
 			model.addAttribute("error", e);
 			return "error";

@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import sid.org.biblio.front.classe.LivreCriteria;
 import sid.org.biblio.front.classe.Pret;
+import sid.org.biblio.front.config.SimpleAuthenticationFilter;
 import sid.org.biblio.front.config.UserDetailsImpl;
 import sid.org.biblio.front.service.BookService;
 import sid.org.biblio.front.service.PretService;
@@ -45,7 +46,8 @@ public class Application implements CommandLineRunner {
 		 */
 
 		userDetailsImpl.loadUserByUsername("gualisse@gmail.com");
-
+		
+		
 		/*
 		 * pretService.pretsUtilisateur("gualisse@gmail.com", 1, 1);
 		 */ }

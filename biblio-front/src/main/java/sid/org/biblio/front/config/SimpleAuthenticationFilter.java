@@ -9,9 +9,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.stereotype.Service;
 
-public class SimpleAuthenticationFilter
-extends UsernamePasswordAuthenticationFilter {
+public class SimpleAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
   @Override

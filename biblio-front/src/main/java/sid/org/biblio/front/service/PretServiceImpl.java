@@ -20,7 +20,10 @@ public class PretServiceImpl implements PretService {
 
 	@Value("${api.url}")
 	private String apiUrl;
-
+	@Value("${spring.api.identifiant}")
+	private String identifiant;
+	@Value("${spring.api.motDePasse}")
+	private String motDePasse;
 	@Override
 	public Page<Pret> pretsUtilisateur(String mail, int page, int size) throws Exception {
 
@@ -33,7 +36,7 @@ public class PretServiceImpl implements PretService {
 
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
-		headers.setBasicAuth("gualisse@gmail.com", "motDePasse1");
+		headers.setBasicAuth(identifiant, motDePasse);
 
 		ResponseEntity<RestReponsePage<Pret>> result = rt.exchange(uri, HttpMethod.GET, new HttpEntity<>(headers),
 				responseType);
@@ -52,7 +55,7 @@ public class PretServiceImpl implements PretService {
 
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
-		headers.setBasicAuth("gualisse@gmail.com", "motDePasse1");
+		headers.setBasicAuth(identifiant, motDePasse);
 		try {
 			rt.exchange(uri, HttpMethod.POST, new HttpEntity<>(pret, headers), Pret.class);
 		} catch (HttpStatusCodeException e) {

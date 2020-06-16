@@ -20,7 +20,10 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 	@Value("${api.url}")
 	private String apiUrl;
-
+	@Value("${spring.api.identifiant}")
+	private String identifiant;
+	@Value("${spring.api.motDePasse}")
+	private String motDePasse;
 	@Override
 	public void creerUtilisateur(Utilisateur utilisateur) throws HttpStatusCodeException {
 
@@ -28,7 +31,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		RestTemplate rt = new RestTemplate();
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
-		headers.setBasicAuth("gualisse@gmail.com", "motDePasse1");
+		headers.setBasicAuth(identifiant, motDePasse);
 		try {
 			ResponseEntity<Utilisateur> user = rt.exchange(uri, HttpMethod.POST, new HttpEntity<>(utilisateur),
 					Utilisateur.class);

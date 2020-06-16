@@ -27,6 +27,7 @@ import groovy.util.logging.Slf4j;
 import sid.org.biblio.front.classe.Livre;
 import sid.org.biblio.front.classe.LivreCriteria;
 import sid.org.biblio.front.config.RequestFactory;
+import sid.org.biblio.front.config.SimpleAuthenticationFilter;
 
 @Component
 @Slf4j
@@ -39,17 +40,26 @@ public class BooksServiceImpl implements BookService {
 		this.requestFactory = requestFactory;
 	}
 
+	
 	@Value("${api.url}")
 	private String apiUrl;
-
+	
+	@Value("${spring.api.identifiant}")
+	private String identifiant;
+	@Value("${spring.api.motDePasse}")
+	private String motDePasse;
+	
 	@Override
 	public Livre livre(String id) throws Exception {
 
 		RestTemplate rt = new RestTemplate();
 		final String uri = apiUrl + "/books/" + id;
+		
+	
+		
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
-		headers.setBasicAuth("gualisse@gmail.com", "motDePasse1");
+		headers.setBasicAuth(identifiant, motDePasse);
 		
 			ResponseEntity<Livre> livre = rt.exchange(uri, HttpMethod.GET, new HttpEntity<>(headers), Livre.class);
 			Livre book = livre.getBody();
@@ -63,7 +73,7 @@ public class BooksServiceImpl implements BookService {
 		final String uri = apiUrl + "/books";
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
-		headers.setBasicAuth("gualisse@gmail.com", "motDePasse1");
+		headers.setBasicAuth(identifiant, motDePasse);
 		try {
 			ResponseEntity<Livre> livres = rt.exchange(uri, HttpMethod.POST, new HttpEntity<>(livre, headers),
 					Livre.class);
@@ -81,7 +91,7 @@ public class BooksServiceImpl implements BookService {
 		RestTemplate rt = requestFactory.getRestTemplate();
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
-		headers.setBasicAuth("gualisse@gmail.com", "motDePasse1");
+		headers.setBasicAuth(identifiant, motDePasse);
 		ParameterizedTypeReference<RestReponsePage<Livre>> responseType = new ParameterizedTypeReference<RestReponsePage<Livre>>() {
 		};
 		final String uri = apiUrl + "/books?page=" + page1 + "&size=" + size1;

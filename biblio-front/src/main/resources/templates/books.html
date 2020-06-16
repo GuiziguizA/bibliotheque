@@ -27,8 +27,27 @@ data-layout-decorator="template1">
 			<a th:href="@{/books/form}"><input type="button" class="btn btn-primary"value="+Ajouter" /></a>
 		</div>
 		
-		<br>
-		
+	<br>
+	 <div class="col-md-3 mb-3">
+	<form  th:action="@{/books}" method="get">
+
+    <br>
+
+    <input type="text" th:name="recherche" class="form-control" placeholder="Rechercher">
+  <br>
+     
+
+    <input type="text" th:name="type" class="form-control" placeholder="type">
+    <br>
+    
+    
+     <input type="submit" class="btn btn-primary" value="rechercher">   
+
+     
+    </form>
+    </div>
+    <br>
+    <br>
 					<div>
 	<table  class="table table-striped">
 		<tr>
@@ -57,9 +76,14 @@ data-layout-decorator="template1">
 
 <div th:if="${bookPage.totalPages > 0}" class="pagination"
     th:each="pageNumber : ${pageNumbers}">
-    <a th:href="@{/books(page=${pageNumber-1},size=${bookPage.size},type=${type},recherche=${recherche})}"
+    <nav aria-label="...">
+  <ul class="pagination pagination-lg">
+    <li class="page-item"> <a th:href="@{/books(page=${pageNumber-1},size=${bookPage.size},type=${type},recherche=${recherche})}"
         th:text=${pageNumber}
         th:class="${pageNumber==bookPage.number} ? active"></a>
+        </li>
+        </ul>
+        </nav>
 </div>
 	</div>
 	</div>

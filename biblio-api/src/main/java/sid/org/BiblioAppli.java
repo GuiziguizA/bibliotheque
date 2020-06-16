@@ -73,7 +73,7 @@ public class BiblioAppli implements CommandLineRunner{
 		Utilisateur user4= utilisateurService.creerUtilisateur(new UtilisateurDto( "nom4", "gusalissfe@gmail.com"," adresse4", "motDePasse4", "codePostal4"));
 		Utilisateur user5= utilisateurService.creerUtilisateur(new UtilisateurDto("nom5", "gwalfisse@gmail.com"," adresse5", "motDePasse5", "codePostal5"));
 		Utilisateur user6= utilisateurService.creerUtilisateur(new UtilisateurDto( "nom6", "guxavlisse@gmail.com"," adresse6", "motDePasse6", "codePostal6"));
-		
+		utilisateurService.creerUtilisateur(new UtilisateurDto( "front", "front"," adresse7", "front", "codePostal7"));
 		
 		Livre livre1=livreService.createLivre(new LivreDto("le bossu","auteur1","type1","section1","emplacement1",3));
 		Livre livre2=livreService.createLivre(new LivreDto("la merguez","auteur2","type2","section2","emplacement1",4));
