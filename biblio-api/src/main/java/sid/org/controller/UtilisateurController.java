@@ -49,9 +49,9 @@ public class UtilisateurController {
 	
 	@GetMapping("/users/identity")
 	@ApiOperation(value="identification de l'utilisateur",response = UtilisateurController.class)
- public Optional<Utilisateur> afficherUtilisateurs(@RequestParam String mail,@RequestParam String motDePasse) throws ResultNotFoundException,MotDePasseInvalidException {
+ public Optional<Utilisateur> afficherUtilisateurs(@RequestParam String mail) throws ResultNotFoundException,MotDePasseInvalidException {
 	  
-	Optional<Utilisateur> user=utilisateurService.connectionUtilisateur(mail, motDePasse);
+	Optional<Utilisateur> user=utilisateurService.connectionUtilisateur(mail);
 		return user;
 	
 

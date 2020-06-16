@@ -33,4 +33,13 @@ public class UtilisateurController {
 		}
 
 	}
+	
+	@GetMapping("/login")
+	public String afficherLogin() {
+
+		return "login";
+
+	}
+	
+	
 }

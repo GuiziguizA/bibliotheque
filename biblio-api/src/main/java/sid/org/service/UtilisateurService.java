@@ -21,7 +21,8 @@ public interface UtilisateurService {
 	public void supprimerUtilisateur(Long id) throws ResultNotFoundException;
 	public Page<Utilisateur> voirListeUtilisateurs(int page, int size) throws  ResultNotFoundException;
 	public Utilisateur voirUtilisateur(Long id) throws ResultNotFoundException ;
-	public Optional<Utilisateur> connectionUtilisateur(String mail, String motDePasse)throws ResultNotFoundException, MotDePasseInvalidException;
+	public Optional<Utilisateur> connectionUtilisateur(String mail) throws ResultNotFoundException;
+	
 	
 	
 	

@@ -1,6 +1,7 @@
 package sid.org.biblio.front.config;
 
 
+import org.apache.catalina.startup.PasswdUserDatabase;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -45,7 +46,6 @@ public class UserDetailsImpl implements UserDetailsService{
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		headers.setBasicAuth("gualisse@gmail.com", "motDePasse1");
 		
-	
 			ResponseEntity<Utilisateur> user= rt.exchange(uri,HttpMethod.GET,new HttpEntity<>(headers),Utilisateur.class);
 			Utilisateur utilisateur = user.getBody();
 		

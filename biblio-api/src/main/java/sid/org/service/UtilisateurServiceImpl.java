@@ -114,14 +114,11 @@ Pageable pageable =PageRequest.of(page,size );
 	return utilisateurs;
 	}
 	@Override
-	public Optional<Utilisateur> connectionUtilisateur(String mail , String motDePasse) throws ResultNotFoundException,MotDePasseInvalidException {
+	public Optional<Utilisateur> connectionUtilisateur(String mail ) throws ResultNotFoundException {
 		Optional<Utilisateur>user=utilisateurRepository.findByMail(mail);
 		if(!user.isPresent()) {
 			throw new ResultNotFoundException("Il n'existe aucun compte contenant cette adresse e-mail");
-		}
-		if (!motDePasse.equals(user.get().getMotDePasse())) {
-			throw new MotDePasseInvalidException("Le mot de passe est incorrect");
-		}
+	}
 		
 		
 		return user;
