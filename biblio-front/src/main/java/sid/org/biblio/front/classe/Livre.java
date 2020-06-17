@@ -1,13 +1,23 @@
 package sid.org.biblio.front.classe;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 public class Livre {
 	private Long codeLivre;
+	@NotBlank(message = "le champ nom ne peut pas etre vide")
 	private String nom;
+	@NotBlank(message = "le champ auteur ne peut pas etre vide")
 	private String auteur;
+	@NotBlank(message = "le champ type ne peut pas etre vide")
 	private String type;
+	@NotBlank(message = "le champ section ne peut pas etre vide")
 	private String section;
+	@NotBlank(message = "le champ emplacement ne peut pas etre vide")
 	private String emplacement;
+	@NotNull(message = "le champ nombre d'exemplaire ne peut pas etre vide")
 	private int nombreExemplaire;
+	
 
 	public Livre(Long codeLivre, String nom, String auteur, String type, String section, String emplacement,
 			int nombreExemplaire) {

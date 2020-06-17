@@ -40,29 +40,7 @@ public class BooksController {
 	private BookService bookService;
 
 
-	@GetMapping(value = "/books/{id}")
-	public String Book(Model model, @PathVariable("id") String id) {
-
-		RestTemplate rt = new RestTemplate();
-
-
-		final String uri = "http://localhost:8081/books/" + id;
-		try {
-			ResponseEntity<Livre> livre = rt.getForEntity(uri, Livre.class);
-			Livre book = livre.getBody();
-			model.addAttribute("book", book);
-			return "book";
-
-		} catch (HttpStatusCodeException e) {
-			String errorpayload = e.getResponseBodyAsString();
-			model.addAttribute("error", errorpayload);
-			return "error";
-		} catch (RestClientException e) {
-			model.addAttribute("error", e);
-			return "error";
-		}
-
-	}
+	
 
 	@GetMapping(value = "/books/form")
 	public String Book(Livre livre) {
