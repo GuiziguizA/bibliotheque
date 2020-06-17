@@ -39,7 +39,7 @@ public class ExceptionHandlerControllerAdvice {
 
 	@ExceptionHandler(EntityAlreadyExistException.class)
 	@ResponseStatus(value = HttpStatus.CONFLICT)
-	public @ResponseBody ExceptionReponse ResourceNotFound(final EntityAlreadyExistException exception,
+	public @ResponseBody ExceptionReponse EntityAlreadyExistException(final EntityAlreadyExistException exception,
 			final HttpServletRequest request) {
 
 		ExceptionReponse error=new ExceptionReponse();

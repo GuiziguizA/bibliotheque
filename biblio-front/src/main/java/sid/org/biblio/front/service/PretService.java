@@ -12,6 +12,8 @@ public interface PretService {
 
 	public Page<Pret> pretsUtilisateur(String mail, int page, int size) throws Exception;
 
-	public void creerPret(Pret pret) throws HttpStatusCodeException, RestClientException;
+	public void creerPret(Pret pret, String mail) throws Exception;
+
+
 
 }

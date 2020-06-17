@@ -13,13 +13,14 @@ import sid.org.classe.Pret;
 import sid.org.classe.Utilisateur;
 import sid.org.dto.PretDto;
 import sid.org.exception.BibliothequeException;
+import sid.org.exception.EntityAlreadyExistException;
 import sid.org.exception.LivreIndisponibleException;
 import sid.org.exception.ResultNotFoundException;
 
 public interface PretService {
 
 	
-	public 	Pret creerPret(Long idLivre, String mail) throws ResultNotFoundException, LivreIndisponibleException;
+	public 	Pret creerPret(Long idLivre, String mail) throws ResultNotFoundException, LivreIndisponibleException, EntityAlreadyExistException;
 
 	public void supprimerPret(Long id) throws  ResultNotFoundException;
 
@@ -30,7 +31,7 @@ public interface PretService {
 	public List<Pret> afficherPrets() throws ResultNotFoundException;
 	public List<Pret> afficherPrets(String statut) throws ResultNotFoundException;
 	public void modifierStatut(Long id) throws ResultNotFoundException;
-	public void modifierStatutsPrets() throws ResultNotFoundException;
+	public void modifierStatutsPrets() throws ResultNotFoundException ;
 
 	public void modifierPret(Long id) throws ResultNotFoundException;
 

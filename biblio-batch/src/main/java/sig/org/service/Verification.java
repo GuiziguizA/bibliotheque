@@ -5,7 +5,6 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 
-import sid.org.service.PretService;
 
 @Component
 public class Verification {
@@ -16,14 +15,13 @@ public class Verification {
 	  
 	  @Autowired 
 	  private PretAutoService pretAutoService;
-	  @Autowired 
-	  private PretService pretService;
+	 
 	  
 	@Scheduled(fixedRate=10)
 	public void effectuerLesEnvoies() throws Exception {
 		
-		  emailService.sendSimpleMessage("gua@gmail.com", "go@gmail.com", "test du mail"); 
-		  pretService.modifierStatutsPrets();
+		 
+		  pretAutoService.modifierStatutPrets();
 		  pretAutoService.envoieMails();
 		  
 		  

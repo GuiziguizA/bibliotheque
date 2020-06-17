@@ -47,23 +47,17 @@ public class PretServiceImpl implements PretService {
 	}
 
 	@Override
-	public void creerPret(Pret pret) throws HttpStatusCodeException, RestClientException {
+	public void creerPret(Pret pret,String mail){
 
 		RestTemplate rt = new RestTemplate();
 
-		final String uri = apiUrl + "/prets";
+		final String uri = apiUrl + "/prets?mail="+mail;
 
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		headers.setBasicAuth(identifiant, motDePasse);
-		try {
-			rt.exchange(uri, HttpMethod.POST, new HttpEntity<>(pret, headers), Pret.class);
-		} catch (HttpStatusCodeException e) {
-			String errorpayload = e.getResponseBodyAsString();
-			// do whatever you want
-		} catch (RestClientException e) {
-			// no response payload, tell the user sth else
-		}
+
+		rt.exchange(uri, HttpMethod.POST, new HttpEntity<>(pret, headers), Pret.class);
 
 	}
 

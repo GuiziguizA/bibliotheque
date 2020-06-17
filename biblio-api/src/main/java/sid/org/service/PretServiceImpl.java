@@ -26,6 +26,7 @@ import sid.org.dao.PretRepository;
 import sid.org.dao.UtilisateurRepository;
 import sid.org.dto.PretDto;
 import sid.org.exception.BibliothequeException;
+import sid.org.exception.EntityAlreadyExistException;
 import sid.org.exception.LivreIndisponibleException;
 import sid.org.exception.ResultNotFoundException;
 
@@ -39,12 +40,17 @@ public class PretServiceImpl implements PretService{
 	private UtilisateurRepository utilisateurRepository;
 	@Autowired
 	private LivreRepository livreRepository;
+	@Value("${pret.statut4}")
+	private String statut4;
+	
+	
 	@Override
 	@Transactional
-	public Pret creerPret(Long idLivre,String mail) throws ResultNotFoundException,LivreIndisponibleException {
+	public Pret creerPret(Long idLivre,String mail) throws ResultNotFoundException,LivreIndisponibleException, EntityAlreadyExistException {
 		
 		Optional<Utilisateur> utilisateur = utilisateurRepository.findByMail(mail);
 		Optional<Livre>livre=livreRepository.findByCodeLivre(idLivre);
+		
 		if(!utilisateur.isPresent()) {
 			throw new ResultNotFoundException("l'utilisateur n'existe pas");
 		}
@@ -54,6 +60,11 @@ public class PretServiceImpl implements PretService{
 
 		if(livre.get().getNombreExemplaire()< 1) {
 			throw new LivreIndisponibleException("ce livre n'est pas disponible pour "+livre.get().getNombreExemplaire()+" exemplaires");
+		}
+		
+		Optional<Pret>pret1=pretRepository.findByUtilisateurAndLivre(utilisateur.get(),livre.get());
+		if(pret1.isPresent()&&!pret1.get().getStatut().equals(statut4)) {
+			throw new EntityAlreadyExistException("La reservation existe deja pour ce livre");
 		}
 		
 		
@@ -178,14 +189,14 @@ public class PretServiceImpl implements PretService{
 public void modifierStatutsPrets() throws ResultNotFoundException {
 	
 	ArrayList<Pret>prets=(ArrayList<Pret>)afficherPrets();
+	if (prets.isEmpty()) {
 	for(int i = 0; i <prets.size(); i++) {
 		modifierStatut(prets.get(i).getCodePret());
 	}
-	
+	}
 	}
 
-@Value("${pret.statut4}")
-private String statut4;
+
 @Override
 public void modifierPret(Long id) throws ResultNotFoundException{
 	Optional<Pret>pret=pretRepository.findById(id);

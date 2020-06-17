@@ -71,12 +71,13 @@ public class BooksController {
 	}
 
 	@PostMapping("/books")
-	public String createBook(Pret pret, Livre livre, BindingResult result, Model model) {
+	public String createBook( Livre livre, BindingResult result, Model model)  {
 
-		RestTemplate rt = new RestTemplate();
-		final String uri = "http://localhost:8081/books";
+		
 		try {
-			ResponseEntity<Livre> livres = rt.postForEntity(uri, livre, Livre.class);
+		bookService.createLivre(livre);
+			String succes = "Le livre a été ajouté";
+			model.addAttribute("succes",succes);
 		} catch (HttpStatusCodeException e) {
 			model.addAttribute("error", e);
 

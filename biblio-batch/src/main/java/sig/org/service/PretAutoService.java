@@ -4,6 +4,8 @@ public interface PretAutoService {
 
 	public void envoieMails() throws Exception;
 
+	public void modifierStatutPrets();
+
 
 
 }

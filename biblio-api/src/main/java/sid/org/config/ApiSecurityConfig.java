@@ -61,7 +61,9 @@ import
 		  @Override protected void configure(HttpSecurity http) throws Exception { http
 		  .csrf().disable();
 		  
-		  http.authorizeRequests().anyRequest().authenticated();
+		  http.authorizeRequests()
+		.antMatchers(HttpMethod.POST,"/users").permitAll()
+		  .anyRequest().authenticated();
 		  
 		  
 		  http.httpBasic().authenticationEntryPoint(authEntryPoint);

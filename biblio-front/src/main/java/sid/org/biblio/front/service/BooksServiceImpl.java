@@ -67,7 +67,7 @@ public class BooksServiceImpl implements BookService {
 	}
 
 	@Override
-	public void createLivre(Livre livre) throws Exception {
+	public void createLivre(Livre livre) throws HttpStatusCodeException {
 
 		RestTemplate rt = new RestTemplate();
 		final String uri = apiUrl + "/books";
@@ -77,8 +77,8 @@ public class BooksServiceImpl implements BookService {
 		try {
 			ResponseEntity<Livre> livres = rt.exchange(uri, HttpMethod.POST, new HttpEntity<>(livre, headers),
 					Livre.class);
-		} catch (Exception e) {
-			throw new Exception("le livre n'a pas pu etre ajouté");
+		} catch (HttpStatusCodeException e) {
+		
 		}
 
 	}

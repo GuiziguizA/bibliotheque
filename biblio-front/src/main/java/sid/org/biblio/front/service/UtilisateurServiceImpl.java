@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
 
+import sid.org.biblio.front.classe.Livre;
 import sid.org.biblio.front.classe.Utilisateur;
 
 @Service
@@ -29,15 +30,12 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 		final String uri = apiUrl + "/users";
 		RestTemplate rt = new RestTemplate();
-		HttpHeaders headers = new HttpHeaders();
-		headers.setContentType(MediaType.APPLICATION_JSON);
-		headers.setBasicAuth(identifiant, motDePasse);
-		try {
-			ResponseEntity<Utilisateur> user = rt.exchange(uri, HttpMethod.POST, new HttpEntity<>(utilisateur),
+		HttpHeaders headers=new HttpHeaders();
+	
+	
+		 rt.exchange(uri, HttpMethod.POST, new HttpEntity<>(utilisateur, headers),
 					Utilisateur.class);
-		} catch (HttpStatusCodeException e) {
-			throw e;
-		}
+		
 
 	}
 

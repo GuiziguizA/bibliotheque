@@ -3,6 +3,7 @@ package sid.org.biblio.front.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.client.HttpStatusCodeException;
@@ -23,13 +24,13 @@ public class UtilisateurController {
 	}
 
 	@PostMapping("/users")
-	public String creerUtilisateur(Utilisateur utilisateur, Model model) {
+	public String creerUtilisateur(Utilisateur utilisateur, BindingResult result,Model model) {
 		try {
 			utilisateurService.creerUtilisateur(utilisateur);
-			return "home";
+			return "login";
 		} catch (HttpStatusCodeException e) {
 			model.addAttribute("error", e);
-			return "error";
+			return  "formulaireUtilisateur";
 		}
 
 	}

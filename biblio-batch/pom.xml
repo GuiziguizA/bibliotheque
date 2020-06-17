@@ -12,12 +12,7 @@
   	
   	<dependencies>
 
-<dependency>
-	<groupId>sid.org</groupId>
-	<artifactId>biblio-api</artifactId>
-	<version>1.0</version>
-	
-</dependency>
+
 	
 
 

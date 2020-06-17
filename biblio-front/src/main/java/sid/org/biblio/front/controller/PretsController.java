@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.HttpStatusCodeException;
+import org.springframework.web.client.RestClientException;
 
 import sid.org.biblio.front.classe.Pret;
 import sid.org.biblio.front.service.PretService;
@@ -55,11 +56,11 @@ public class PretsController {
 	}
 
 	@PostMapping(value = "/prets", consumes = "application/x-www-form-urlencoded")
-	public String creerUnPret(@RequestParam Long id, Model model) {
+	public String creerUnPret(@RequestParam Long id, Model model,Principal principal) throws Exception {
 		Pret pret = new Pret();
 		pret.setId(id);
 		try {
-			pretService.creerPret(pret);
+			pretService.creerPret(pret,principal.getName());
 			return "succesOperation";
 		} catch (HttpStatusCodeException e) {
 

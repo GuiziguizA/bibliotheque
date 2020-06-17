@@ -52,11 +52,12 @@
     <input type="submit" class="btn btn-primary" value="Ajouter">   
     
 </form>
-<div class="alert alert-danger"th:if="${error}" role="alert">
-Ce livre existe deja 
+<div class="alert alert-danger"th:if="${error}"th:text="${error.message}" role="alert">
 </div>
 
+<div class="alert alert-success"th:if="${succes}" th:text="${succes}"role="alert" >
 
+</div>
 
 </div>
 </div>

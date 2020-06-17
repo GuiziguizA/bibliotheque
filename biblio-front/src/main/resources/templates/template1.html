@@ -5,7 +5,7 @@
  	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
 <meta charset="utf-8"/>		
-<title>Site Escalade</title>
+<title>Bibliotheque</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -25,7 +25,7 @@
 <div class=pull-right>
 
 <div sec:authorize="isAuthenticated()" class="text-primary">
-    login : <span class="text-primary" sec:authentication="name"></span></div>
+  e-mail: <span class="text-light" sec:authentication="name"></span></div>
 
     <input type="submit"class="btn btn-primary" value = "se déconnecter"></input>
     </div>
