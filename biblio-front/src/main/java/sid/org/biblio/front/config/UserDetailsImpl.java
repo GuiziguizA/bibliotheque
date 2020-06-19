@@ -15,7 +15,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-
+import sid.org.biblio.front.classe.Sessions;
 import sid.org.biblio.front.classe.Utilisateur;
 
 
@@ -38,15 +38,20 @@ public class UserDetailsImpl implements UserDetailsService{
         .roles(utilisateur.get().getRole().getNom()).build();
 	 */
 	@Override
-	public UserDetails loadUserByUsername(String mail)  {
+	public UserDetails loadUserByUsername(String mailAndPassword)  {
 		
 		RestTemplate rt = new RestTemplate();
-		final String uri = apiUrl + "/users/identity?mail="+mail;
-		HttpHeaders headers = new HttpHeaders();
-		headers.setContentType(MediaType.APPLICATION_JSON);
-		headers.setBasicAuth("gualisse@gmail.com", "motDePasse1");
+		final String uri = apiUrl + "/users/identity";
 		
-			ResponseEntity<Utilisateur> user= rt.exchange(uri,HttpMethod.GET,new HttpEntity<>(headers),Utilisateur.class);
+		
+		
+		 String[] split =mailAndPassword.split(":");
+		    String username = split[0];
+		    String motDePasse = split[1];
+		    Sessions sessions=new Sessions();
+		    sessions.setMail(username);
+		    sessions.setMotDePasse(motDePasse);
+			ResponseEntity<Utilisateur> user= rt.exchange(uri,HttpMethod.POST,new HttpEntity<>(sessions),Utilisateur.class);
 			Utilisateur utilisateur = user.getBody();
 		
 	if(utilisateur==null) {

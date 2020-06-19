@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import sid.org.classe.Pret;
 import sid.org.classe.Roles;
+import sid.org.classe.Sessions;
 import sid.org.classe.Utilisateur;
 import sid.org.dao.PretRepository;
 import sid.org.dao.RolesRepository;
@@ -114,15 +115,20 @@ Pageable pageable =PageRequest.of(page,size );
 	return utilisateurs;
 	}
 	@Override
-	public Optional<Utilisateur> connectionUtilisateur(String mail ) throws ResultNotFoundException {
-		Optional<Utilisateur>user=utilisateurRepository.findByMail(mail);
+	public Optional<Utilisateur> connectionUtilisateur(Sessions sessions) throws ResultNotFoundException, MotDePasseInvalidException {
+		Optional<Utilisateur>user=utilisateurRepository.findByMail(sessions.getMail());
+		
+		
 		if(!user.isPresent()) {
 			throw new ResultNotFoundException("Il n'existe aucun compte contenant cette adresse e-mail");
+		}
+	if(!passwordEncoder.matches(sessions.getMotDePasse(), user.get().getMotDePasse())) {
+		throw new MotDePasseInvalidException("mot de passe invalide");
 	}
 		
 		
 		return user;
-		
+	
 		
 	}
 	

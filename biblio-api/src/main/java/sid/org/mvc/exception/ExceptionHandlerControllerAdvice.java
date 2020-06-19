@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import io.swagger.annotations.ApiOperation;
 import sid.org.exception.EntityAlreadyExistException;
 import sid.org.exception.LivreIndisponibleException;
+import sid.org.exception.MotDePasseInvalidException;
 import sid.org.exception.ResultNotFoundException;
 
 
@@ -65,4 +66,20 @@ public class ExceptionHandlerControllerAdvice {
 		error.setStatus(430);
 		return error;
 	}
+	
+	@ExceptionHandler(MotDePasseInvalidException.class)
+	@ResponseStatus(value = HttpStatus.CONFLICT)
+	public @ResponseBody ExceptionReponse ResourceNotFound(final MotDePasseInvalidException exception,
+			final HttpServletRequest request) {
+
+		ExceptionReponse error=new ExceptionReponse();
+		error.setMessage(exception.getMessage());
+		error.setDate(new Date());
+		error.setHttpCodeMessage(request.getRequestURI());
+		error.setStatus(403);
+		return error;
+	}
+	
+	
+	
 }

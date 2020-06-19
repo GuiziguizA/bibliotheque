@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 
+import sid.org.classe.Sessions;
 import sid.org.classe.Utilisateur;
 import sid.org.dto.UtilisateurDto;
 
@@ -21,7 +22,8 @@ public interface UtilisateurService {
 	public void supprimerUtilisateur(Long id) throws ResultNotFoundException;
 	public Page<Utilisateur> voirListeUtilisateurs(int page, int size) throws  ResultNotFoundException;
 	public Utilisateur voirUtilisateur(Long id) throws ResultNotFoundException ;
-	public Optional<Utilisateur> connectionUtilisateur(String mail) throws ResultNotFoundException;
+	public Optional<Utilisateur> connectionUtilisateur(Sessions sessions) throws ResultNotFoundException, MotDePasseInvalidException;
+	
 	
 	
 	

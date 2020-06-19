@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import sid.org.classe.Sessions;
 import sid.org.classe.Utilisateur;
 import sid.org.dto.UtilisateurDto;
 import sid.org.exception.BibliothequeException;
@@ -47,11 +48,11 @@ public class UtilisateurController {
 }
 	
 	
-	@GetMapping("/users/identity")
+	@PostMapping("/users/identity")
 	@ApiOperation(value="identification de l'utilisateur",response = UtilisateurController.class)
- public Optional<Utilisateur> afficherUtilisateurs(@RequestParam String mail) throws ResultNotFoundException,MotDePasseInvalidException {
+ public Optional<Utilisateur> afficherUtilisateurs(@RequestBody Sessions sessions) throws ResultNotFoundException,MotDePasseInvalidException {
 	  
-	Optional<Utilisateur> user=utilisateurService.connectionUtilisateur(mail);
+	Optional<Utilisateur> user=utilisateurService.connectionUtilisateur(sessions);
 		return user;
 	
 

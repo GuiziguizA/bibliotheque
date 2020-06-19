@@ -13,6 +13,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import sid.org.classe.Livre;
 import sid.org.classe.Pret;
@@ -23,6 +24,7 @@ import sid.org.dao.PretRepository;
 import sid.org.dao.RolesRepository;
 import sid.org.dto.LivreDto;
 import sid.org.dto.UtilisateurDto;
+import sid.org.exception.MotDePasseInvalidException;
 import sid.org.service.DateService;
 import sid.org.service.LivreService;
 
@@ -51,7 +53,8 @@ public class BiblioAppli implements CommandLineRunner {
 	private LivreRepository livreRepository;
 	@Autowired
 	private DateService dateService;
-
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	@Override
 
 	public void run(String... args) throws Exception {
@@ -89,7 +92,9 @@ public class BiblioAppli implements CommandLineRunner {
 		Pret pret3 = pretRepository.save(new Pret(new Date(), new Date(), "premierTemps", 1, livre3, user1));
 		Pret pret5 = pretRepository.save(new Pret(new Date(), new Date(), "depasse", 1, livre1, user1));
 	
-
+		if(passwordEncoder.matches("motDePasse1", user1.getMotDePasse())) {
+			System.out.println(user1.getMotDePasse());
+		}
 		/*
 		 * System.out.println("yolo"); Pret pret7 =pretService.creerPret(new Pret(null,
 		 * null, "statut1", livre4, user4));

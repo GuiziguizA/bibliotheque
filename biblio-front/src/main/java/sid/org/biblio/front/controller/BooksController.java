@@ -6,6 +6,8 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
@@ -32,6 +34,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 
 @Controller
 
@@ -49,11 +53,14 @@ public class BooksController {
 	}
 
 	@PostMapping("/books")
-	public String createBook( Livre livre, BindingResult result, Model model)  {
+	public String createBook( Livre livre, BindingResult result, Model model,Authentication auth)  {
 
-		
+		UserDetails userdetails =(UserDetails) auth.getPrincipal();	
+	
+	String mail=userdetails.getUsername();
+	String motDePasse=userdetails.getPassword();
 		try {
-		bookService.createLivre(livre);
+		bookService.createLivre(livre,mail,motDePasse);
 			String succes = "Le livre a été ajouté";
 			model.addAttribute("succes",succes);
 		} catch (HttpStatusCodeException e) {
@@ -68,12 +75,16 @@ public class BooksController {
 	public String listBooks(Model model, @RequestParam(required = false) Optional<Integer> page,
 			@RequestParam(required = false) Optional<Integer> size,
 			@RequestParam(required = false) Optional<String> type,
-			@RequestParam(required = false) Optional<String> recherche) {
+			@RequestParam(required = false) Optional<String> recherche,Authentication auth) {
+
+		UserDetails userdetails =(UserDetails) auth.getPrincipal();	
 	
+	String mail=userdetails.getUsername();
+	String motDePasse=userdetails.getPassword();
 		int currentPage = page.orElse(1);
 		int pageSize = size.orElse(5);
 		try {
-			Page<Livre> bookPage = bookService.livresRecherche(type, recherche, pageSize, currentPage);
+			Page<Livre> bookPage = bookService.livresRecherche(type, recherche, pageSize, currentPage,mail,motDePasse);
 			model.addAttribute("bookPage", bookPage);
 			int totalPages = bookPage.getTotalPages();
 			if (totalPages > 0) {

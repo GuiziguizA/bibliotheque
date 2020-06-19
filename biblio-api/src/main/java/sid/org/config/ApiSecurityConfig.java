@@ -62,8 +62,9 @@ import
 		  .csrf().disable();
 		  
 		  http.authorizeRequests()
-		.antMatchers(HttpMethod.POST,"/users").permitAll()
-		  .anyRequest().authenticated();
+		.antMatchers(HttpMethod.POST,"/users/identity").permitAll()
+		.and()
+        .authorizeRequests().anyRequest().authenticated();
 		  
 		  
 		  http.httpBasic().authenticationEntryPoint(authEntryPoint);

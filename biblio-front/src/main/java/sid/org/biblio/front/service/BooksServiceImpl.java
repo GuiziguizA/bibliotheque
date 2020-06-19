@@ -5,6 +5,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
@@ -14,6 +17,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpStatusCodeException;
@@ -50,16 +54,14 @@ public class BooksServiceImpl implements BookService {
 	private String motDePasse;
 	
 	@Override
-	public Livre livre(String id) throws Exception {
+	public Livre livre(String id,String mail,String motDePasse) throws Exception {
 
 		RestTemplate rt = new RestTemplate();
 		final String uri = apiUrl + "/books/" + id;
 		
-	
-		
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
-		headers.setBasicAuth(identifiant, motDePasse);
+		headers.setBasicAuth(mail, motDePasse);
 		
 			ResponseEntity<Livre> livre = rt.exchange(uri, HttpMethod.GET, new HttpEntity<>(headers), Livre.class);
 			Livre book = livre.getBody();
@@ -67,13 +69,16 @@ public class BooksServiceImpl implements BookService {
 	}
 
 	@Override
-	public void createLivre(Livre livre) throws HttpStatusCodeException {
+	public void createLivre(Livre livre,String mail,String motDePasse) throws HttpStatusCodeException {
 
 		RestTemplate rt = new RestTemplate();
 		final String uri = apiUrl + "/books";
+		
+		
+		
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
-		headers.setBasicAuth(identifiant, motDePasse);
+		headers.setBasicAuth(mail, motDePasse);
 		try {
 			ResponseEntity<Livre> livres = rt.exchange(uri, HttpMethod.POST, new HttpEntity<>(livre, headers),
 					Livre.class);
@@ -84,14 +89,14 @@ public class BooksServiceImpl implements BookService {
 	}
 
 	@Override
-	public Page<Livre> livresRecherche(Optional<String> type, Optional<String> recherche, int size, int page) {
+	public Page<Livre> livresRecherche(Optional<String> type, Optional<String> recherche, int size, int page,String mail,String motDePasse) {
 
 		String page1 = Integer.toString(page);
 		String size1 = Integer.toString(size);
 		RestTemplate rt = requestFactory.getRestTemplate();
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
-		headers.setBasicAuth(identifiant, motDePasse);
+		headers.setBasicAuth(mail, motDePasse);
 		ParameterizedTypeReference<RestReponsePage<Livre>> responseType = new ParameterizedTypeReference<RestReponsePage<Livre>>() {
 		};
 		final String uri = apiUrl + "/books?page=" + page1 + "&size=" + size1;

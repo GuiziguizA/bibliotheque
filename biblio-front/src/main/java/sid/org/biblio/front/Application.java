@@ -6,11 +6,16 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.client.RestTemplate;
 
 import sid.org.biblio.front.classe.LivreCriteria;
 import sid.org.biblio.front.classe.Pret;
+import sid.org.biblio.front.classe.Sessions;
+import sid.org.biblio.front.classe.Utilisateur;
 import sid.org.biblio.front.config.SimpleAuthenticationFilter;
 import sid.org.biblio.front.config.UserDetailsImpl;
 import sid.org.biblio.front.service.BookService;
@@ -44,9 +49,16 @@ public class Application implements CommandLineRunner {
 		 * System.out.println(entity.getBody()); Pret pret = new Pret(); Long id =
 		 * (long) 2; pret.setId(id);
 		 */
-
-		userDetailsImpl.loadUserByUsername("gualisse@gmail.com");
-		
+		RestTemplate rt = new RestTemplate();
+		 String uri ="http://localhost:8081/users/identity";
+		 String username = "gualisse@gmail.com";
+		    String motDePasse = "motDePasse1";
+		    Sessions sessions=new Sessions();
+	    sessions.setMail(username);
+	    sessions.setMotDePasse(motDePasse);
+		ResponseEntity<Utilisateur> user= rt.exchange(uri,HttpMethod.POST,new HttpEntity<>(sessions),Utilisateur.class);
+		Utilisateur utilisateur = user.getBody();
+		System.out.println(utilisateur.getMail());
 		
 		/*
 		 * pretService.pretsUtilisateur("gualisse@gmail.com", 1, 1);
