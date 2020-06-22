@@ -33,6 +33,15 @@ public class PretAutoServiceImpl implements PretAutoService{
 	@Value("${spring.api.motDePasse}")
 	private String motDePasse;
 	
+	@Value("${mail.bibliotheque}")
+	private String biblioMail;
+	@Value("${mail.subject}")
+	private String subject;
+	@Value("${mail.message}")
+	private String message;
+	
+	
+	
 	
 	@Override
 public void envoieMails() throws Exception {
@@ -50,7 +59,7 @@ public void envoieMails() throws Exception {
 		List<Pret>prets= pret.getBody();
 		if (!prets.isEmpty()) {
 			for(int i = 0; i < prets.size(); i++) {
-				emailService.sendSimpleMessage("bibliothequeMuni@gmail.com",prets.get(i).getUtilisateur().getMail(),"le livre "+prets.get(i).getLivre().getNom()	+" doit etre rendu au plus vite car vous avez depassé la date de pret");
+				emailService.sendMail(biblioMail,prets.get(i).getUtilisateur().getMail(),subject,message+prets.get(i).getLivre().getNom());
 				
 			}
 		}

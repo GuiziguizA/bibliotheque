@@ -63,6 +63,7 @@ import
 		  
 		  http.authorizeRequests()
 		.antMatchers(HttpMethod.POST,"/users/identity").permitAll()
+		.antMatchers(HttpMethod.POST,"/users").permitAll()
 		.and()
         .authorizeRequests().anyRequest().authenticated();
 		  

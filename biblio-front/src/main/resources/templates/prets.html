@@ -27,12 +27,14 @@
 					<th scope="col">Livre</th>
 				<th scope="col">Statut</th>
 				<th scope="col">DateFin</th>
+					<th scope="col"></th>
 		</tr>
 	
 			<tr th:each="pret:${prets}" >
 				<td th:text="${pret.livre.nom}"></td>
 				<td th:text="${pret.statut}"></td>
 				<td th:text="${pret.dateDeFin}" ></td>
+					<td><a><input th:href="@{/prets/{id}(id=${pret.id})}" type="button"  id="${pret.id}" class="btn btn-primary" value="PUT" value="modifier" /></a></td>
 			</tr>
 	
 	</table>

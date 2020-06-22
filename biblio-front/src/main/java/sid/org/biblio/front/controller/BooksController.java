@@ -7,9 +7,11 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,7 +36,11 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 
 @Controller
@@ -53,34 +59,43 @@ public class BooksController {
 	}
 
 	@PostMapping("/books")
-	public String createBook( Livre livre, BindingResult result, Model model,Authentication auth)  {
-
-		UserDetails userdetails =(UserDetails) auth.getPrincipal();	
+	public String createBook( Livre livre, BindingResult result, Model model,HttpServletRequest request)  {
+		
+		
+	HttpSession session = request.getSession();
+	String motDePasse=(String) session.getAttribute("password");
+	String mail=(String) session.getAttribute("username");
 	
-	String mail=userdetails.getUsername();
-	String motDePasse=userdetails.getPassword();
 		try {
 		bookService.createLivre(livre,mail,motDePasse);
 			String succes = "Le livre a été ajouté";
 			model.addAttribute("succes",succes);
+			return "home";
 		} catch (HttpStatusCodeException e) {
 			model.addAttribute("error", e);
-
+			return "formulaireLivre";
 		}
 
-		return "formulaireLivre";
+		
 	}
 
 	@GetMapping(value = "/books")
 	public String listBooks(Model model, @RequestParam(required = false) Optional<Integer> page,
 			@RequestParam(required = false) Optional<Integer> size,
 			@RequestParam(required = false) Optional<String> type,
-			@RequestParam(required = false) Optional<String> recherche,Authentication auth) {
+			@RequestParam(required = false) Optional<String> recherche,HttpServletRequest request) {
 
-		UserDetails userdetails =(UserDetails) auth.getPrincipal();	
-	
-	String mail=userdetails.getUsername();
-	String motDePasse=userdetails.getPassword();
+		/*
+		 * UserDetails userdetails =(UserDetails) auth.getPrincipal();
+		 * 
+		 * String mail=userdetails.getUsername(); String
+		 * motDePasse=userdetails.getPassword();
+		 */
+		HttpSession session = request.getSession();
+		String motDePasse=(String) session.getAttribute("password");
+		String mail=(String) session.getAttribute("username");
+
+		
 		int currentPage = page.orElse(1);
 		int pageSize = size.orElse(5);
 		try {

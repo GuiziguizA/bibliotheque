@@ -10,9 +10,15 @@ import sid.org.biblio.front.classe.Pret;
 
 public interface PretService {
 
-	public Page<Pret> pretsUtilisateur(String mail, int page, int size) throws Exception;
+	public Page<Pret> pretsUtilisateur(String mail, int page, int size, String motDePasse) throws Exception;
 
-	public void creerPret(Pret pret, String mail) throws Exception;
+	public void creerPret(Pret pret, String mail, String motDePasse);
+
+	public void modifierUnPret(Long Id, String mail, String motDePasse);
+
+	
+
+	
 
 
 

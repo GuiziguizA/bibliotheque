@@ -31,6 +31,8 @@ public class UtilisateurController {
 	public String creerUtilisateur(Utilisateur utilisateur, BindingResult result,Model model) {
 		try {
 			utilisateurService.creerUtilisateur(utilisateur);
+			String succes="Votre compte a ete cree";
+			model.addAttribute("succes",succes);
 			return "login";
 		} catch (HttpStatusCodeException e) {
 			model.addAttribute("error", e);

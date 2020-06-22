@@ -40,10 +40,16 @@ public class PretServiceImpl implements PretService{
 	private UtilisateurRepository utilisateurRepository;
 	@Autowired
 	private LivreRepository livreRepository;
-	@Value("${pret.statut4}")
-	private String statut4;
 	
-	
+	@Value("${pret.statut1}")
+	private String statut1;
+	 @Value("${pret.statut2}")
+	 private String statut2;
+	 @Value("${pret.statut3}")
+	 private String statut3;
+	 @Value("${pret.statut4}")
+		private String statut4;
+	 
 	@Override
 	@Transactional
 	public Pret creerPret(Long idLivre,String mail) throws ResultNotFoundException,LivreIndisponibleException, EntityAlreadyExistException {
@@ -76,7 +82,7 @@ public class PretServiceImpl implements PretService{
 		pret.setDateDeFin(dateService.modifierDate(date1, 2 ));
 		pret.setUtilisateur(utilisateur.get());
 		pret.setNombreLivres(1);
-		pret.setStatut("premierTemps");
+		pret.setStatut(statut1);
 		livre.get().setNombreExemplaire(livre.get().getNombreExemplaire()-1);
 		livreRepository.saveAndFlush(livre.get());
 		return pretRepository.saveAndFlush(pret);
@@ -162,12 +168,7 @@ public class PretServiceImpl implements PretService{
 		return pret.get();
 	}
 
-	 @Value("${pret.statut1}")
-	 private String statut1;
-	 @Value("${pret.statut2}")
-	 private String statut2;
-	 @Value("${pret.statut3}")
-	 private String statut3;
+
 	 
 	@Override
 	 public void modifierStatut(Long id) throws ResultNotFoundException {
@@ -211,6 +212,7 @@ public void modifierPret(Long id) throws ResultNotFoundException{
 	pret.get().setStatut(statut4);
 	livre.get().setNombreExemplaire(livre.get().getNombreExemplaire() + 1);
 	pretRepository.saveAndFlush(pret.get());
+	livreRepository.saveAndFlush(livre.get());
 }
 
 

@@ -86,10 +86,10 @@ public class BiblioAppli implements CommandLineRunner {
 		Livre livre4 = livreService
 				.createLivre(new LivreDto("nom4", "auteur4", "type1", "section1", "emplacement1", 7));
 
-		Pret pret = pretRepository.save(new Pret(new Date(), new Date(), "premierTemps", 1, livre1, user4));
-		Pret pret1 = pretRepository.save(new Pret(new Date(), new Date(), "premierTemps", 1, livre1, user4));
-		Pret pret2 = pretRepository.save(new Pret(new Date(), new Date(), "premierTemps", 1, livre2, user1));
-		Pret pret3 = pretRepository.save(new Pret(new Date(), new Date(), "premierTemps", 1, livre3, user1));
+		Pret pret = pretRepository.save(new Pret(new Date(), new Date(), "encours", 1, livre1, user4));
+		Pret pret1 = pretRepository.save(new Pret(new Date(), new Date(), "encours", 1, livre1, user4));
+		Pret pret2 = pretRepository.save(new Pret(new Date(), new Date(), "encours", 1, livre2, user1));
+		Pret pret3 = pretRepository.save(new Pret(new Date(), new Date(), "encours", 1, livre3, user1));
 		Pret pret5 = pretRepository.save(new Pret(new Date(), new Date(), "depasse", 1, livre1, user1));
 	
 		if(passwordEncoder.matches("motDePasse1", user1.getMotDePasse())) {

@@ -25,7 +25,7 @@ public class PretServiceImpl implements PretService {
 	@Value("${spring.api.motDePasse}")
 	private String motDePasse;
 	@Override
-	public Page<Pret> pretsUtilisateur(String mail, int page, int size) throws Exception {
+	public Page<Pret> pretsUtilisateur(String mail, int page, int size,String motDePasse) throws Exception {
 
 		RestTemplate rt = new RestTemplate();
 		String page1 = Integer.toString(page);
@@ -36,7 +36,7 @@ public class PretServiceImpl implements PretService {
 
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
-		headers.setBasicAuth(identifiant, motDePasse);
+		headers.setBasicAuth(mail, motDePasse);
 
 		ResponseEntity<RestReponsePage<Pret>> result = rt.exchange(uri, HttpMethod.GET, new HttpEntity<>(headers),
 				responseType);
@@ -47,7 +47,7 @@ public class PretServiceImpl implements PretService {
 	}
 
 	@Override
-	public void creerPret(Pret pret,String mail){
+	public void creerPret(Pret pret,String mail,String motDePasse){
 
 		RestTemplate rt = new RestTemplate();
 
@@ -55,12 +55,24 @@ public class PretServiceImpl implements PretService {
 
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
-		headers.setBasicAuth(identifiant, motDePasse);
+		headers.setBasicAuth(mail, motDePasse);
 
 		rt.exchange(uri, HttpMethod.POST, new HttpEntity<>(pret, headers), Pret.class);
 
 	}
 
+@Override
+public void modifierUnPret(Long Id,String mail,String motDePasse) {
+	RestTemplate rt = new RestTemplate();
 
+	final String uri = apiUrl + "/prets/{id}";
+	
 
+	HttpHeaders headers = new HttpHeaders();
+	headers.setContentType(MediaType.APPLICATION_JSON);
+	headers.setBasicAuth(mail, motDePasse);
+
+	rt.exchange(uri, HttpMethod.PUT, new HttpEntity<>( headers), Pret.class);
+
+}
 }
