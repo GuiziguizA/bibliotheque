@@ -40,10 +40,9 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	private PasswordEncoder passwordEncoder;
 	@Autowired
 	private RolesRepository rolesRepository;
-	 @Value("${role.default}")
-	 private String roleDefault;
+	 
 	@Override
-	public Utilisateur creerUtilisateur(UtilisateurDto utilisateurDto) throws EntityAlreadyExistException{
+	public Utilisateur creerUtilisateur(UtilisateurDto utilisateurDto,String role) throws EntityAlreadyExistException{
 		Optional<Utilisateur> user =utilisateurRepository.findByMail(utilisateurDto.getMail());
 		if(user.isPresent()) {
 			throw new EntityAlreadyExistException("le mail est deja utilise");
@@ -52,7 +51,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	
 		utilisateurDto.setMotDePasse(passwordEncoder.encode(utilisateurDto.getMotDePasse()));
 		Utilisateur utilisateur= convertToUtilisateur(utilisateurDto);
-		Optional<Roles> roles=rolesRepository.findByNom(roleDefault);
+		Optional<Roles> roles=rolesRepository.findByNom(role);
 		utilisateur.setRoles(roles.get());
 		return utilisateurRepository.save(utilisateur);
 	}
@@ -88,11 +87,11 @@ Page<Pret>listPretUtilisateur=pretRepository.findByUtilisateur(user.get(),pageab
 	}
 	
 	@Override
-	public Utilisateur voirUtilisateur(Long id) throws ResultNotFoundException{
+	public Utilisateur voirUtilisateur(String mail) throws ResultNotFoundException{
 		
 
 		
-		Optional<Utilisateur>user= utilisateurRepository.findById(id);
+		Optional<Utilisateur>user= utilisateurRepository.findByMail(mail);
 		if(!user.isPresent()) {
 			throw new ResultNotFoundException("Utilisateur introuvable");
 		}

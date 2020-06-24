@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://ultraq.net.nz/thymleaf/layout"
->
+data-layout-decorator="template1">
  
 <head>
 	<meta charset="utf-8"/>
@@ -11,11 +11,13 @@
 </head>
  
 <body>
-<br>
-<br>
-<br>
-<br>
-<br>
-
+<div layout:fragment="content">
+<div class="container pt-3">
+<div class="jumbotron text-center">
+<h1>Page d'erreur</h1>
+	
 	<div class="alert alert-danger"th:if="${error}" role="alert" th:text="${error}"></div>
+	</div>
+	</div>
+	</div>
 </body>

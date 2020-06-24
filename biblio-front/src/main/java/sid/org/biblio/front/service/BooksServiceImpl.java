@@ -3,6 +3,7 @@ package sid.org.biblio.front.service;
 import java.io.IOException;
 
 import java.net.URL;
+import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,6 +33,8 @@ import sid.org.biblio.front.classe.Livre;
 import sid.org.biblio.front.classe.LivreCriteria;
 import sid.org.biblio.front.config.RequestFactory;
 import sid.org.biblio.front.config.SimpleAuthenticationFilter;
+import sid.org.biblio.front.enumeration.ListType;
+import sid.org.biblio.front.enumeration.Types;
 
 @Component
 @Slf4j
@@ -54,7 +57,7 @@ public class BooksServiceImpl implements BookService {
 	private String motDePasse;
 	
 	@Override
-	public Livre livre(String id,String mail,String motDePasse) throws Exception {
+	public Livre livre(String id,String mail,String motDePasse) throws HttpStatusCodeException {
 
 		RestTemplate rt = new RestTemplate();
 		final String uri = apiUrl + "/books/" + id;
@@ -62,10 +65,13 @@ public class BooksServiceImpl implements BookService {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		headers.setBasicAuth(mail, motDePasse);
-		
+		try {
 			ResponseEntity<Livre> livre = rt.exchange(uri, HttpMethod.GET, new HttpEntity<>(headers), Livre.class);
 			Livre book = livre.getBody();
 			return book;
+		} catch (HttpStatusCodeException e) {
+			throw e;
+			}
 	}
 
 	@Override
@@ -83,13 +89,13 @@ public class BooksServiceImpl implements BookService {
 			ResponseEntity<Livre> livres = rt.exchange(uri, HttpMethod.POST, new HttpEntity<>(livre, headers),
 					Livre.class);
 		} catch (HttpStatusCodeException e) {
-		
+		throw e;
 		}
 
 	}
 
 	@Override
-	public Page<Livre> livresRecherche(Optional<String> type, Optional<String> recherche, int size, int page,String mail,String motDePasse) {
+	public Page<Livre> livresRecherche(Optional<String> type, Optional<String> recherche, int size, int page,String mail,String motDePasse)throws HttpStatusCodeException {
 
 		String page1 = Integer.toString(page);
 		String size1 = Integer.toString(size);
@@ -101,10 +107,17 @@ public class BooksServiceImpl implements BookService {
 		};
 		final String uri = apiUrl + "/books?page=" + page1 + "&size=" + size1;
 		LivreCriteria critere = critereImpl(type, recherche);
-		ResponseEntity<RestReponsePage<Livre>> result = rt.exchange(uri, HttpMethod.GET,
-				new HttpEntity<>(critere, headers), responseType);
-		Page<Livre> bookPage = result.getBody();
-		return bookPage;
+		try {
+			ResponseEntity<RestReponsePage<Livre>> result = rt.exchange(uri, HttpMethod.GET,
+					new HttpEntity<>(critere, headers), responseType);
+			Page<Livre> bookPage = result.getBody();
+			return bookPage;
+		} catch (HttpStatusCodeException e) {
+			throw e;
+		}
+		
+	
+	
 	}
 
 	public LivreCriteria critereImpl(Optional<String> type, Optional<String> recherche) {
@@ -123,5 +136,29 @@ public class BooksServiceImpl implements BookService {
 		return critere;
 
 	}
-
+	@Override
+	public List<Types> chargerLesTypesDeRecherches(){
+		
+		ListType listType=new ListType();
+		List<Types>types=listType.listTypes();
+		
+		return types;
+		
+	}
+	
+	@Override
+	public void supprimerUnLivre(Long id,String mail,String motDePasse) throws HttpStatusCodeException{
+		RestTemplate rt = new RestTemplate();
+		final String uri = apiUrl + "/books?id="+id;
+		
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		headers.setBasicAuth(mail, motDePasse);
+		try {
+			rt.exchange(uri, HttpMethod.DELETE, new HttpEntity<>(headers),Long.class);
+		} catch (HttpStatusCodeException e) {
+			throw e;
+		}
+		
+	}
 }

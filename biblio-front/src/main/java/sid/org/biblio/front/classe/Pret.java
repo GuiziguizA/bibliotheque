@@ -12,7 +12,6 @@ public class Pret {
 	private Date dateDeFin;
 	
 	
-	
 	public Long getId() {
 		return id;
 	}
@@ -37,6 +36,7 @@ public class Pret {
 	public void setDateDeFin(Date dateDeFin) {
 		this.dateDeFin = dateDeFin;
 	}
-
+	
+	
 	
 }

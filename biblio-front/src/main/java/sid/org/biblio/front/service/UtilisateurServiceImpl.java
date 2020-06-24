@@ -65,7 +65,26 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 	}
 	
+	@Override
+	public Utilisateur infosUtilisateur(String mail,String motDePasse) {
+		final String uri = apiUrl + "/user?mail="+mail;
 	
-	
+		RestTemplate rt = new RestTemplate();
+		HttpHeaders headers=new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		headers.setBasicAuth(mail, motDePasse);
+		
+		try {
+		ResponseEntity<Utilisateur> user = 	 rt.exchange(uri, HttpMethod.GET, new HttpEntity<>( headers),
+						Utilisateur.class);
+		return user.getBody();
+		} catch (HttpStatusCodeException e) {
+		return null;
+		}
+		
+		
+		
+		
+	}
 
 }

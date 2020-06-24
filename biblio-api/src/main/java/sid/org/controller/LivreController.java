@@ -10,7 +10,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.data.domain.Page;
-
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -76,7 +76,7 @@ public  Livre afficheUnLivre(@PathVariable Long id) throws ResultNotFoundExcepti
 	  
 	  
 	  @PostMapping("/books")
-	/* @Secured(value= {"ROLE_admin","ROLE_employe"}) */
+	 @Secured(value= {"ROLE_admin","ROLE_employe"}) 
 	  @ApiOperation(value="ajout d'un nouveau livre",response = LivreController.class)
 	public  Livre ajouterLivre(
 			  @ApiParam(value="LivreDto dans le body" , required=true)@Valid @RequestBody LivreDto livre) throws EntityAlreadyExistException { 
@@ -85,10 +85,10 @@ public  Livre afficheUnLivre(@PathVariable Long id) throws ResultNotFoundExcepti
 		  
 	  }
 	 
-	/* @Secured(value= {"ROLE_admin"}) */
-	  @DeleteMapping("/books/{id}")
+	@Secured(value= {"ROLE_admin"}) 
+	  @DeleteMapping("/books")
 	  @ApiOperation(value="supprimer un livre",response = LivreController.class)
-	  public  void supprimerUnLivre1(@PathVariable Long id) throws ResultNotFoundException{
+	  public  void supprimerUnLivre(@RequestParam Long id) throws ResultNotFoundException{
 	  		 
 	  		
 	  	 livreService.supprimerLivre(id);

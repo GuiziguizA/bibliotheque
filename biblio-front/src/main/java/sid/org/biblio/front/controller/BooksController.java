@@ -8,6 +8,7 @@ import java.util.stream.IntStream;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,8 +29,13 @@ import org.springframework.web.client.RestTemplate;
 
 import sid.org.biblio.front.classe.Livre;
 import sid.org.biblio.front.classe.Pret;
+import sid.org.biblio.front.classe.Utilisateur;
 import sid.org.biblio.front.config.SimpleAuthenticationFilter;
+import sid.org.biblio.front.enumeration.ListType;
+import sid.org.biblio.front.enumeration.Types;
 import sid.org.biblio.front.service.BookService;
+import sid.org.biblio.front.service.UtilisateurService;
+
 
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpEntity;
@@ -36,6 +43,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -48,23 +56,30 @@ import org.springframework.security.core.userdetails.UserDetails;
 public class BooksController {
 	@Autowired
 	private BookService bookService;
+	@Autowired
+private UtilisateurService utilisateurService;
 
-
-	
-
+	 @Secured(value= {"ROLE_admin","ROLE_employe"}) 
 	@GetMapping(value = "/books/form")
 	public String Book(Livre livre) {
 
 		return "formulaireLivre";
 	}
-
+	 @Secured(value= {"ROLE_admin","ROLE_employe"}) 
 	@PostMapping("/books")
-	public String createBook( Livre livre, BindingResult result, Model model,HttpServletRequest request)  {
+	public String createBook(@Valid Livre livre, BindingResult result, Model model,HttpServletRequest request)  {
 		
 		
 	HttpSession session = request.getSession();
 	String motDePasse=(String) session.getAttribute("password");
 	String mail=(String) session.getAttribute("username");
+	
+	
+	Utilisateur user=utilisateurService.infosUtilisateur(mail,motDePasse);
+	model.addAttribute("role",user.getRoles().getNom());
+	
+	List<Types>listTypes=bookService.chargerLesTypesDeRecherches();
+	model.addAttribute("listTypes",listTypes);
 	
 		try {
 		bookService.createLivre(livre,mail,motDePasse);
@@ -84,20 +99,20 @@ public class BooksController {
 			@RequestParam(required = false) Optional<Integer> size,
 			@RequestParam(required = false) Optional<String> type,
 			@RequestParam(required = false) Optional<String> recherche,HttpServletRequest request) {
+		
 
-		/*
-		 * UserDetails userdetails =(UserDetails) auth.getPrincipal();
-		 * 
-		 * String mail=userdetails.getUsername(); String
-		 * motDePasse=userdetails.getPassword();
-		 */
+	
+		  
+		 
 		HttpSession session = request.getSession();
 		String motDePasse=(String) session.getAttribute("password");
 		String mail=(String) session.getAttribute("username");
 
+		List<Types>listTypes=bookService.chargerLesTypesDeRecherches();
+		model.addAttribute("listTypes",listTypes);
 		
-		int currentPage = page.orElse(1);
-		int pageSize = size.orElse(5);
+		int currentPage = page.orElse(0);
+		int pageSize = size.orElse(2);
 		try {
 			Page<Livre> bookPage = bookService.livresRecherche(type, recherche, pageSize, currentPage,mail,motDePasse);
 			model.addAttribute("bookPage", bookPage);
@@ -106,6 +121,9 @@ public class BooksController {
 				List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages).boxed().collect(Collectors.toList());
 				model.addAttribute("pageNumbers", pageNumbers);
 				
+				
+				Utilisateur user=utilisateurService.infosUtilisateur(mail,motDePasse);
+				model.addAttribute("role",user.getRoles().getNom());
 			}
 			model.addAttribute("type", type.get());
 			model.addAttribute("recherche", recherche.get());
@@ -119,5 +137,21 @@ public class BooksController {
 		}
 
 	}
-
+	@GetMapping(value = "/supprBooks/{id}")
+	public String supprimerBook(@PathVariable Long id,HttpServletRequest request,Model model) {
+		
+		HttpSession session = request.getSession();
+		String motDePasse=(String) session.getAttribute("password");
+		String mail=(String) session.getAttribute("username");
+		try {
+			bookService.supprimerUnLivre(id, mail, motDePasse);
+			
+			return "succesOperation";
+		} catch (HttpStatusCodeException e) {
+			model.addAttribute("error",e);
+			return "error";
+		}
+	
+	
+	}
 }

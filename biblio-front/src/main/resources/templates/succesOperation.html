@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://ultraq.net.nz/thymleaf/layout"
->
+data-layout-decorator="template1">
  
 <head>
 	<meta charset="utf-8"/>
@@ -11,9 +11,12 @@
 </head>
  
 <body>
-<br>
-<br>
-<br>
-<br>
-	<h1>Succes operation</h1>
+<div layout:fragment="content">
+<div class="container pt-3">
+<div class="jumbotron text-center">
+<h1>Succes operation</h1>
+	
+	</div>
+	</div>
+	</div>
 </body>

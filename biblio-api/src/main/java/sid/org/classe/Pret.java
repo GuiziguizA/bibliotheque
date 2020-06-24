@@ -18,7 +18,7 @@ import javax.persistence.ManyToOne;
 
 public class Pret {
 @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
-private Long codePret;	
+private Long id;	
 private Date dateDeDebut;
 private Date dateDeFin;
 private String statut;
@@ -127,9 +127,12 @@ public void setUtilisateur(Utilisateur utilisateur) {
 
 
 
-public Long getCodePret() {
-	return codePret;
+public Long getId() {
+	return id;
 }
+
+
+
 
 
 

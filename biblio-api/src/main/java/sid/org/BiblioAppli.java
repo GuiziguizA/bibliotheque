@@ -22,6 +22,7 @@ import sid.org.classe.Utilisateur;
 import sid.org.dao.LivreRepository;
 import sid.org.dao.PretRepository;
 import sid.org.dao.RolesRepository;
+import sid.org.dao.UtilisateurRepository;
 import sid.org.dto.LivreDto;
 import sid.org.dto.UtilisateurDto;
 import sid.org.exception.MotDePasseInvalidException;
@@ -55,28 +56,32 @@ public class BiblioAppli implements CommandLineRunner {
 	private DateService dateService;
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+	@Autowired
+	private UtilisateurRepository utilisateurRepository;
 	@Override
-
 	public void run(String... args) throws Exception {
 
 		Roles role1 = rolesRepository.save(new Roles("user"));
 		Roles role2 = rolesRepository.save(new Roles("employe"));
 		Roles role3 = rolesRepository.save(new Roles("admin"));
-
+		Utilisateur admin = utilisateurService.creerUtilisateur(
+				new UtilisateurDto("admin", "admin@gmail.com", " adresse1", "admin", "codePostal1"),"admin");
+		Utilisateur employe = utilisateurService.creerUtilisateur(
+				new UtilisateurDto("employe", "employe@gmail.com", " adresse1", "employe", "codePostal1"),"employe");
 		Utilisateur user1 = utilisateurService.creerUtilisateur(
-				new UtilisateurDto("nom1", "gualisse@gmail.com", " adresse1", "motDePasse1", "codePostal1"));
+				new UtilisateurDto("nom1", "gualisse@gmail.com", " adresse1", "motDePasse1", "codePostal1"),"user");
 		Utilisateur user2 = utilisateurService.creerUtilisateur(
-				new UtilisateurDto("nom2", "guzalfisse@gmail.com", " adresse2", "motDePasse2", "codePostal2"));
+				new UtilisateurDto("nom2", "guzalfisse@gmail.com", " adresse2", "motDePasse2", "codePostal2"),"user");
 		Utilisateur user3 = utilisateurService.creerUtilisateur(
-				new UtilisateurDto("nom3", "gfusalisse@gmail.com", " adresse3", "motDePasse3", "codePostal3"));
+				new UtilisateurDto("nom3", "gfusalisse@gmail.com", " adresse3", "motDePasse3", "codePostal3"),"user");
 		Utilisateur user4 = utilisateurService.creerUtilisateur(
-				new UtilisateurDto("nom4", "gusalissfe@gmail.com", " adresse4", "motDePasse4", "codePostal4"));
+				new UtilisateurDto("nom4", "gusalissfe@gmail.com", " adresse4", "motDePasse4", "codePostal4"),"user");
 		Utilisateur user5 = utilisateurService.creerUtilisateur(
-				new UtilisateurDto("nom5", "gwalfisse@gmail.com", " adresse5", "motDePasse5", "codePostal5"));
+				new UtilisateurDto("nom5", "gwalfisse@gmail.com", " adresse5", "motDePasse5", "codePostal5"),"user");
 		Utilisateur user6 = utilisateurService.creerUtilisateur(
-				new UtilisateurDto("nom6", "guxavlisse@gmail.com", " adresse6", "motDePasse6", "codePostal6"));
-		utilisateurService.creerUtilisateur(new UtilisateurDto("front", "front", " adresse7", "front", "codePostal7"));
-		utilisateurService.creerUtilisateur(new UtilisateurDto("batch", "batch", " adresse7", "batch", "codePostal7"));
+				new UtilisateurDto("nom6", "guxavlisse@gmail.com", " adresse6", "motDePasse6", "codePostal6"),"user");
+		utilisateurService.creerUtilisateur(new UtilisateurDto("front", "front", " adresse7", "front", "codePostal7"),"user");
+		utilisateurService.creerUtilisateur(new UtilisateurDto("batch", "batch", " adresse7", "batch", "codePostal7"),"user");
 		Livre livre1 = livreService
 				.createLivre(new LivreDto("le bossu", "auteur1", "type1", "section1", "emplacement1", 3));
 		Livre livre2 = livreService

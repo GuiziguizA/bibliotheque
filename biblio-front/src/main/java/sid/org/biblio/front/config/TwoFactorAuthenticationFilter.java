@@ -22,6 +22,7 @@ public class TwoFactorAuthenticationFilter extends UsernamePasswordAuthenticatio
     {
         String username = request.getParameter(getUsernameParameter());
         String password = request.getParameter(getPasswordParameter());
+
         String combinedUsername = username + ":" +password;
         
         HttpSession session = request.getSession();

@@ -37,6 +37,8 @@ public class Application implements CommandLineRunner {
 	private PretService pretService;
 	@Autowired
 	private UserDetailsImpl userDetailsImpl;
+	@Autowired
+	private UtilisateurService utilisateurService;
 
 	@Override
 	public void run(String... args) throws Exception {
@@ -48,8 +50,7 @@ public class Application implements CommandLineRunner {
 		 * LivreCriteria(); criteres.setNom("le"); HttpHeaders headers = new
 		 * HttpHeaders(); headers.setContentType(MediaType.APPLICATION_JSON);
 		 * HttpEntity<LivreCriteria> entity = new HttpEntity<>(criteres, headers);
-		 * System.out.println(entity.getBody()); Pret pret = new Pret(); Long id =
-		 * (long) 2; pret.setId(id);
+		 * System.out.println(entity.getBody()); Pret pret = new Pret();  pret.setId(id);
 		 */
 		RestTemplate rt = new RestTemplate();
 		 String uri ="http://localhost:8081/users/identity";
@@ -61,8 +62,14 @@ public class Application implements CommandLineRunner {
 		ResponseEntity<Utilisateur> user= rt.exchange(uri,HttpMethod.POST,new HttpEntity<>(sessions),Utilisateur.class);
 		Utilisateur utilisateur = user.getBody();
 		System.out.println(utilisateur.getMail());
-		
+		String mail="gualisse@gmail.com";
+		Utilisateur userr=utilisateurService.infosUtilisateur(mail,motDePasse);
+		userr.getRoles().getNom();
 		/*
 		 * pretService.pretsUtilisateur("gualisse@gmail.com", 1, 1);
-		 */ }
+		 */ 
+		pretService.AfficherToutLesPrets(1, 1,"admin@gmail.com", "admin");
+		Long id =(long) 4;
+		/* bookService.supprimerUnLivre(id, "admin@gmail.com", "admin"); */
+	}
 }

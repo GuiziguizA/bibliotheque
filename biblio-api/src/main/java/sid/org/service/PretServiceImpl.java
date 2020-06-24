@@ -98,7 +98,8 @@ public class PretServiceImpl implements PretService{
 			throw new ResultNotFoundException("ce pret n'existe pas");
 		}
 		Optional<Livre> livre=livreRepository.findById(pret.get().getLivre().getCodeLivre());
-		livre.get().setNombreExemplaire(livre.get().getNombreExemplaire()+pret.get().getNombreLivres());
+		if(!pret.get().getStatut().equals(statut4)) {
+		livre.get().setNombreExemplaire(livre.get().getNombreExemplaire()+pret.get().getNombreLivres());}
 		livreRepository.saveAndFlush(livre.get());
 		pretRepository.delete(pret.get());
 	
@@ -192,7 +193,7 @@ public void modifierStatutsPrets() throws ResultNotFoundException {
 	ArrayList<Pret>prets=(ArrayList<Pret>)afficherPrets();
 	if (prets.isEmpty()) {
 	for(int i = 0; i <prets.size(); i++) {
-		modifierStatut(prets.get(i).getCodePret());
+		modifierStatut(prets.get(i).getId());
 	}
 	}
 	}

@@ -16,9 +16,10 @@
 <div class="navbar navbar-inverse" >
 <div class="container-fluid" >
 <ul class="nav navbar-nav">
-<li ><a th:href="@{/home}">Home</a></li>     
+<li ><a th:href="@{/}">Home</a></li>     
 <li ><a th:href="@{/books?page=0&size=2&type=&recherche=}" >Livres</a></li>
-<li ><a th:href="@{/prets?page=0&size=2}"  >prets</a></li>
+<li sec:authorize="hasRole('ROLE_user')"><a th:href="@{/prets?page=0&size=2}"  >prets</a></li>
+<li sec:authorize="hasAnyRole('ROLE_admin','ROLE_employe')"><a th:href="@{/allprets?page=0&size=2}"  >prets</a></li>
 </ul>
 
 <form th:action="@{/logout}" method="post">

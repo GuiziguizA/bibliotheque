@@ -12,4 +12,10 @@ public interface UtilisateurService {
 
 	public String identification(HttpServletRequest request) throws HttpStatusCodeException;
 
+	public Utilisateur infosUtilisateur(String mail, String motDePasse);
+
+	
+
+
+	
 }

@@ -23,26 +23,32 @@ data-layout-decorator="template1">
  <h1>Livres</h1>
  </div>
  	<br>
+ 	 <div class="col-md-3 mb-3">
 		<div>
-			<a th:href="@{/books/form}"><input type="button" class="btn btn-primary"value="+Ajouter" /></a>
+			<span th:if="${role!='user'} "> <a th:href="@{/books/form}"><input type="button" class="btn btn-primary"value="+Ajouter" /></a></span>
 		</div>
 		
 	<br>
-	 <div class="col-md-3 mb-3">
+	
 	<form  th:action="@{/books}" method="get">
 
     <br>
-
+<div>
+  <label for="nom">Type de recherche</label>
+   		<select th:name=type>
+   		
+   		<option th:each="o:${listTypes}"  th:text="${o.nom}" th:value= "${o.nom}"></option>
+   	</select>
+    <br>
     <input type="text" th:name="recherche" class="form-control" placeholder="Rechercher">
-  <br>
-     
-
-    <input type="text" th:name="type" class="form-control" placeholder="type">
+    
+   </div>
     <br>
     
-    
      <input type="submit" class="btn btn-primary" value="rechercher">   
-
+   <br>
+      <br>
+   
      
     </form>
     </div>
@@ -58,6 +64,7 @@ data-layout-decorator="template1">
 				<th scope="col">Emplacement</th>
 				<th scope="col">Nombre d'exemplaire</th>
 				<th></th>
+				<th></th>
 		</tr>
 		<tr th:each="book:${bookPage}" >
 				<td th:text="${book.nom}"></td>
@@ -67,9 +74,9 @@ data-layout-decorator="template1">
 				<td th:text="${book.emplacement}"></td>	
 				<td th:text="${book.nombreExemplaire}"></td>	
 				<td><form method="post" th:action="@{/prets(id=${book.codeLivre})}"  >
-            <button type="submit" name="submit" value="value" class="link-button">Reserver</button>
+            <button type="submit" name="submit" value="value" class="btn btn-primary">Reserver</button>
         </form> </td>
-				
+				<td><a th:href="@{/supprBooks/{id}(id=${book.codeLivre})}"><input type="button"  class="btn btn-outline-danger" value="supprimer" /></a></td>
 			</tr>
 	
 	</table>

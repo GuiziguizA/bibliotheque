@@ -1,6 +1,8 @@
 package sid.org.biblio.front.config;
 
 
+import javax.servlet.http.HttpSession;
+
 import org.apache.catalina.startup.PasswdUserDatabase;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -48,6 +50,7 @@ public class UserDetailsImpl implements UserDetailsService{
 		 String[] split =mailAndPassword.split(":");
 		    String username = split[0];
 		    String motDePasse = split[1];
+		   
 		    Sessions sessions=new Sessions();
 		    sessions.setMail(username);
 		    sessions.setMotDePasse(motDePasse);
@@ -58,7 +61,7 @@ public class UserDetailsImpl implements UserDetailsService{
 		throw new UsernameNotFoundException("l'utilisateur n'existe pas");
 	}
 		
-		
+	
 
 		return  User.withUsername(utilisateur.getMail())
         .password( utilisateur.getMotDePasse())

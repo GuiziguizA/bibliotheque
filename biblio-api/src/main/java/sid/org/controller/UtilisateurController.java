@@ -6,6 +6,7 @@ import java.util.Optional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -24,6 +25,7 @@ import sid.org.classe.Sessions;
 import sid.org.classe.Utilisateur;
 import sid.org.dto.UtilisateurDto;
 import sid.org.exception.BibliothequeException;
+import sid.org.exception.EntityAlreadyExistException;
 import sid.org.exception.MotDePasseInvalidException;
 import sid.org.exception.ResultNotFoundException;
 import sid.org.service.UtilisateurService;
@@ -32,16 +34,17 @@ import sid.org.service.UtilisateurService;
 @Api(value="Api Utilisateurs",description = "Api Utilisateurs")
 public class UtilisateurController {
 	
-
+	@Value("${role.default}")
+	 private String roleDefault;
 	@Autowired
 	private UtilisateurService utilisateurService;
 
 	
-	@GetMapping("/users/{id}")
+	@GetMapping("/user")
 	@ApiOperation(value="affiche un utilisateur en fonction de son id",response = UtilisateurController.class)
- public Utilisateur afficherUtilisateurs(@PathVariable Long id) throws BibliothequeException {
+ public Utilisateur afficherUtilisateurs(@RequestParam String mail) throws ResultNotFoundException {
 	  
-	Utilisateur user=utilisateurService.voirUtilisateur(id);
+	Utilisateur user=utilisateurService.voirUtilisateur(mail);
 		return user;
 	
 
@@ -64,7 +67,7 @@ public class UtilisateurController {
 	
 	@GetMapping("/users")
 	@ApiOperation(value="affiche une Page avec tous les utilisateurs",response = UtilisateurController.class)
-	 public   Page<Utilisateur> afficherUtilisateurs(@RequestParam int page, @RequestParam int size) throws BibliothequeException{
+	 public   Page<Utilisateur> afficherUtilisateurs(@RequestParam int page, @RequestParam int size) throws ResultNotFoundException{
 		  
 		  Page<Utilisateur> users;
 		 
@@ -76,9 +79,9 @@ public class UtilisateurController {
 	@PostMapping("/users")
 	@ApiOperation(value="ajouter un utilisateur ",response = UtilisateurController.class)
 	public Utilisateur creerUtilisateur(
-			  @ApiParam(value="Ajouter UtilisateurDto dans le body" , required=true)@Valid @RequestBody UtilisateurDto utilisateurDto) throws BibliothequeException{
+			  @ApiParam(value="Ajouter UtilisateurDto dans le body" , required=true)@Valid @RequestBody UtilisateurDto utilisateurDto) throws ResultNotFoundException,EntityAlreadyExistException{
 
-		Utilisateur user =	utilisateurService.creerUtilisateur(utilisateurDto);
+		Utilisateur user =	utilisateurService.creerUtilisateur(utilisateurDto,roleDefault);
 		return user;
 		
 
@@ -87,7 +90,7 @@ public class UtilisateurController {
 	@PutMapping("/users/{id}")
 	/* @Secured(value= {"ROLE_admin"}) */
 	@ApiOperation(value="modifier le statut de l'utilisateur",response = UtilisateurController.class)
-	public Utilisateur modifierUtilisateur(@PathVariable Long id ,   @ApiParam(value="statut dans le body" , required=true)@Valid @RequestBody String statut) throws BibliothequeException{
+	public Utilisateur modifierUtilisateur(@PathVariable Long id ,   @ApiParam(value="statut dans le body" , required=true)@Valid @RequestBody String statut) throws ResultNotFoundException{
 		
 		Utilisateur user =	utilisateurService.modifierUtilisateur(id, statut);
 		return user;
@@ -98,7 +101,7 @@ public class UtilisateurController {
 	/* @Secured(value= {"ROLE_admin"}) */
 	@DeleteMapping("/users/{id}")
 	 @ApiOperation(value="supprimer un utilisateur",response = UtilisateurController.class)
-	public void supprimerUtilisateur(@PathVariable Long id) throws BibliothequeException	{
+	public void supprimerUtilisateur(@PathVariable Long id) throws ResultNotFoundException	{
 		
 		
 

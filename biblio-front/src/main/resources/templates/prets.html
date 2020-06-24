@@ -34,7 +34,8 @@
 				<td th:text="${pret.livre.nom}"></td>
 				<td th:text="${pret.statut}"></td>
 				<td th:text="${pret.dateDeFin}" ></td>
-					<td><a><input th:href="@{/prets/{id}(id=${pret.id})}" type="button"  id="${pret.id}" class="btn btn-primary" value="PUT" value="modifier" /></a></td>
+					<td><span th:if="${role!='user'} "><a th:href="@{/pretstatut/{id}(id=${pret.id})}"th:method="put"><input  type="button"   class="btn btn-primary" value="modifier" /></a></span></td>
+					
 			</tr>
 	
 	</table>
@@ -42,9 +43,12 @@
     th:each="pageNumber : ${pageNumbers}">
     <nav aria-label="...">
   <ul class="pagination pagination-lg">
-    <li class="page-item"> <a th:href="@{/prets(size=${prets.size}, page=${pageNumber-1})}"
+  <li class="page-item">   <span th:if="${role!='admin' and role!='employe' } "><a th:href="@{/prets(size=${prets.size}, page=${pageNumber-1})}"
         th:text=${pageNumber}
-        th:class="${pageNumber==prets.number + 1} ? active"></a>
+        th:class="${pageNumber==prets.number + 1} ? active"></a></span>
+         <span th:if="${role!='user'} "><a th:href="@{/allprets(size=${prets.size}, page=${pageNumber-1})}"
+        th:text=${pageNumber}
+        th:class="${pageNumber==prets.number + 1} ? active"></a></span>
         </li>
         </ul>
         </nav>

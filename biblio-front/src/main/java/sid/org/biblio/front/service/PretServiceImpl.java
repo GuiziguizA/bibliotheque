@@ -1,8 +1,13 @@
 package sid.org.biblio.front.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -25,7 +30,7 @@ public class PretServiceImpl implements PretService {
 	@Value("${spring.api.motDePasse}")
 	private String motDePasse;
 	@Override
-	public Page<Pret> pretsUtilisateur(String mail, int page, int size,String motDePasse) throws Exception {
+	public Page<Pret> pretsUtilisateur(String mail, int page, int size,String motDePasse) throws HttpStatusCodeException {
 
 		RestTemplate rt = new RestTemplate();
 		String page1 = Integer.toString(page);
@@ -47,7 +52,7 @@ public class PretServiceImpl implements PretService {
 	}
 
 	@Override
-	public void creerPret(Pret pret,String mail,String motDePasse){
+	public void creerPret(Pret pret,String mail,String motDePasse)throws HttpStatusCodeException{
 
 		RestTemplate rt = new RestTemplate();
 
@@ -62,17 +67,46 @@ public class PretServiceImpl implements PretService {
 	}
 
 @Override
-public void modifierUnPret(Long Id,String mail,String motDePasse) {
+public void modifierUnPret(Long Id,String mail,String motDePasse) throws HttpStatusCodeException{
 	RestTemplate rt = new RestTemplate();
 
-	final String uri = apiUrl + "/prets/{id}";
+	final String uri = apiUrl + "/prets?id="+Id;
 	
 
 	HttpHeaders headers = new HttpHeaders();
 	headers.setContentType(MediaType.APPLICATION_JSON);
 	headers.setBasicAuth(mail, motDePasse);
 
-	rt.exchange(uri, HttpMethod.PUT, new HttpEntity<>( headers), Pret.class);
+	rt.exchange(uri, HttpMethod.PUT, new HttpEntity<>( headers), Long.class);
 
 }
+
+
+@Override
+public Page<Pret> AfficherToutLesPrets(int page,int size,String mail,String motDePasse)throws HttpStatusCodeException {
+	
+	RestTemplate rt = new RestTemplate();
+	final String uri = apiUrl + "/allprets?page=0&size=2";
+	
+
+	
+	
+	HttpHeaders headers = new HttpHeaders();
+	headers.setContentType(MediaType.APPLICATION_JSON);
+	headers.setBasicAuth(mail, motDePasse);
+	ParameterizedTypeReference<List<Pret>> responseType = new ParameterizedTypeReference<List<Pret>>() {
+	};
+	ResponseEntity<List<Pret>> pret = rt.exchange(uri, HttpMethod.GET, new HttpEntity<>(headers), responseType);
+	List<Pret>prets= pret.getBody();
+	Pageable pageable=PageRequest.of(page,size );
+	int start = (int) pageable.getOffset();
+	int end = (start + pageable.getPageSize()) > prets.size() ? prets.size() : (start + pageable.getPageSize());
+	Page<Pret> pages = new PageImpl<Pret>(prets.subList(start, end), pageable, prets.size());
+	
+	return pages;
+}
+
+
+
+
 }
