@@ -46,33 +46,23 @@ public class BooksServiceImpl implements BookService {
 	public BooksServiceImpl(RequestFactory requestFactory) {
 		this.requestFactory = requestFactory;
 	}
-
+	@Autowired
+	private HttpService httpService;
 	
 	@Value("${api.url}")
 	private String apiUrl;
 	
-	@Value("${spring.api.identifiant}")
-	private String identifiant;
-	@Value("${spring.api.motDePasse}")
-	private String motDePasse;
-	
-	@Override
-	public Livre livre(String id,String mail,String motDePasse) throws HttpStatusCodeException {
 
-		RestTemplate rt = new RestTemplate();
-		final String uri = apiUrl + "/books/" + id;
-		
-		HttpHeaders headers = new HttpHeaders();
-		headers.setContentType(MediaType.APPLICATION_JSON);
-		headers.setBasicAuth(mail, motDePasse);
-		try {
-			ResponseEntity<Livre> livre = rt.exchange(uri, HttpMethod.GET, new HttpEntity<>(headers), Livre.class);
-			Livre book = livre.getBody();
-			return book;
-		} catch (HttpStatusCodeException e) {
-			throw e;
-			}
-	}
+/*
+ * Creation d'un Livre
+ * @param Livre
+ * @param String mail
+ * @param String motDePasse
+ * 
+ * 
+ */
+	
+
 
 	@Override
 	public void createLivre(Livre livre,String mail,String motDePasse) throws HttpStatusCodeException {
@@ -82,9 +72,7 @@ public class BooksServiceImpl implements BookService {
 		
 		
 		
-		HttpHeaders headers = new HttpHeaders();
-		headers.setContentType(MediaType.APPLICATION_JSON);
-		headers.setBasicAuth(mail, motDePasse);
+		HttpHeaders headers =httpService.creerHeadersHttpAuthentifie(mail, motDePasse);
 		try {
 			ResponseEntity<Livre> livres = rt.exchange(uri, HttpMethod.POST, new HttpEntity<>(livre, headers),
 					Livre.class);
@@ -93,16 +81,23 @@ public class BooksServiceImpl implements BookService {
 		}
 
 	}
-
+	/*
+	 * affiche une pages contenant des livres en fonctiond'un critère
+	 * @param Optional<String> type
+	 * @param Optional<String> recherche
+	 * @param int size
+	 * @param int page
+	 * @param String mail
+	 * @param String motDePasse
+	 * @return Page<Livre> bookPage
+	 */
 	@Override
 	public Page<Livre> livresRecherche(Optional<String> type, Optional<String> recherche, int size, int page,String mail,String motDePasse)throws HttpStatusCodeException {
 
 		String page1 = Integer.toString(page);
 		String size1 = Integer.toString(size);
 		RestTemplate rt = requestFactory.getRestTemplate();
-		HttpHeaders headers = new HttpHeaders();
-		headers.setContentType(MediaType.APPLICATION_JSON);
-		headers.setBasicAuth(mail, motDePasse);
+		HttpHeaders headers =httpService.creerHeadersHttpAuthentifie(mail, motDePasse);
 		ParameterizedTypeReference<RestReponsePage<Livre>> responseType = new ParameterizedTypeReference<RestReponsePage<Livre>>() {
 		};
 		final String uri = apiUrl + "/books?page=" + page1 + "&size=" + size1;
@@ -119,7 +114,13 @@ public class BooksServiceImpl implements BookService {
 	
 	
 	}
-
+	/*
+	 * creation d'un livreCriteria
+	 * @param Optional<String> type
+	 * @param Optional<String> recherche
+	 * @return LivreCriteria
+	 * 
+	 */
 	public LivreCriteria critereImpl(Optional<String> type, Optional<String> recherche) {
 		LivreCriteria critere = new LivreCriteria();
 
@@ -136,6 +137,11 @@ public class BooksServiceImpl implements BookService {
 		return critere;
 
 	}
+	
+	
+/**
+ * charger les différents types correspondant au différent champs de recherches des livres 
+ */
 	@Override
 	public List<Types> chargerLesTypesDeRecherches(){
 		
@@ -145,20 +151,9 @@ public class BooksServiceImpl implements BookService {
 		return types;
 		
 	}
+
 	
-	@Override
-	public void supprimerUnLivre(Long id,String mail,String motDePasse) throws HttpStatusCodeException{
-		RestTemplate rt = new RestTemplate();
-		final String uri = apiUrl + "/books?id="+id;
+	
 		
-		HttpHeaders headers = new HttpHeaders();
-		headers.setContentType(MediaType.APPLICATION_JSON);
-		headers.setBasicAuth(mail, motDePasse);
-		try {
-			rt.exchange(uri, HttpMethod.DELETE, new HttpEntity<>(headers),Long.class);
-		} catch (HttpStatusCodeException e) {
-			throw e;
-		}
-		
-	}
+	
 }

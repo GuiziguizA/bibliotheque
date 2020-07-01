@@ -23,8 +23,8 @@ package sid.org.config;
   
   
  /**
-	 * Modifie le User details de spring data security en identifiant l'utilisateur
-	 * par son mail dans BD
+	 * Modification du UserDetails de spring Security
+	 * 
 	 * 
 	 * @param mail
 	 * @return User.withUsername(utilisateur.get().getMail()) .password(

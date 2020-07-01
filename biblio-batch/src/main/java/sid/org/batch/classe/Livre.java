@@ -1,4 +1,4 @@
-package sig.org.classe;
+package sid.org.batch.classe;
 
 public class Livre {
 	private Long codeLivre;

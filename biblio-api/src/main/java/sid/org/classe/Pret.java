@@ -1,4 +1,4 @@
-package sid.org.classe;
+ package sid.org.classe;
 
 import java.util.Date;
 
@@ -10,7 +10,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 
-
+/**
+ * 
+ * @author guali
+ *
+ */
 
 
 
@@ -29,7 +33,7 @@ private Livre livre;
 @ManyToOne
 @JoinColumn(name = "ID_UTILISATEUR")
 private Utilisateur utilisateur;
-
+private Date dateDeRendu;
 
 
 public Pret() {
@@ -129,6 +133,18 @@ public void setUtilisateur(Utilisateur utilisateur) {
 
 public Long getId() {
 	return id;
+}
+
+
+
+public Date getDateDeRendu() {
+	return dateDeRendu;
+}
+
+
+
+public void setDateDeRendu(Date dateDeRendu) {
+	this.dateDeRendu = dateDeRendu;
 }
 
 

@@ -8,6 +8,13 @@ import sid.org.exception.ResultNotFoundException;
 @Service
 public class DateServiceImpl implements DateService{
 
+	/*
+	 * modification d'une date
+	 * @param Date date
+	 * @param int mois
+	 * @return Date
+	 */
+	
 	@SuppressWarnings("deprecation")
 	@Override
 	public Date modifierDate(Date date,int mois) throws ResultNotFoundException {

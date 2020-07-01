@@ -11,7 +11,11 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotBlank;
 
-
+/**
+ * 
+ * @author guali
+ *
+ */
 @Entity
 public class Roles {
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)

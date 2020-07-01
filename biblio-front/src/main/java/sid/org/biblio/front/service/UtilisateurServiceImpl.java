@@ -5,6 +5,7 @@ import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -23,12 +24,13 @@ import sid.org.biblio.front.classe.Utilisateur;
 @Service
 public class UtilisateurServiceImpl implements UtilisateurService {
 
+	
+	@Autowired
+	private HttpService httpService;
+	
 	@Value("${api.url}")
 	private String apiUrl;
-	@Value("${spring.api.identifiant}")
-	private String identifiant;
-	@Value("${spring.api.motDePasse}")
-	private String motDePasse;
+
 	@Override
 	public void creerUtilisateur(Utilisateur utilisateur) throws HttpStatusCodeException {
 
@@ -70,9 +72,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		final String uri = apiUrl + "/user?mail="+mail;
 	
 		RestTemplate rt = new RestTemplate();
-		HttpHeaders headers=new HttpHeaders();
-		headers.setContentType(MediaType.APPLICATION_JSON);
-		headers.setBasicAuth(mail, motDePasse);
+		HttpHeaders headers =httpService.creerHeadersHttpAuthentifie(mail, motDePasse);
 		
 		try {
 		ResponseEntity<Utilisateur> user = 	 rt.exchange(uri, HttpMethod.GET, new HttpEntity<>( headers),

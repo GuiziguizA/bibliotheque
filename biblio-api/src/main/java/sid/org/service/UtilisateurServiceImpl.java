@@ -41,6 +41,13 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	@Autowired
 	private RolesRepository rolesRepository;
 	 
+/**
+ * creation d'un utilisateur 
+ * @param UtilisateurDto utilisateurDto
+ * @param String role
+ * 
+ * @return Utilisateur
+ */
 	@Override
 	public Utilisateur creerUtilisateur(UtilisateurDto utilisateurDto,String role) throws EntityAlreadyExistException{
 		Optional<Utilisateur> user =utilisateurRepository.findByMail(utilisateurDto.getMail());
@@ -55,7 +62,13 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		utilisateur.setRoles(roles.get());
 		return utilisateurRepository.save(utilisateur);
 	}
-
+	/**
+	 * Modifier le statut d'un utilisateur
+	 * @param Long id
+	 * @param String statut
+	 * 
+	 * @return Utilisateur
+	 */
 	@Override
 	public Utilisateur modifierUtilisateur(Long id, String statut) throws ResultNotFoundException{
 		Optional<Utilisateur> user =utilisateurRepository.findById(id);
@@ -69,7 +82,13 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		
 		return utilisateurRepository.save(user.get());
 	}
-
+	/**
+	 * Supprimer un utilisateur
+	 * @param Long id
+	 * 
+	 * 
+	 * 
+	 */
 	@Override
 	@Transactional
 	public void supprimerUtilisateur(Long id) throws ResultNotFoundException {
@@ -85,7 +104,13 @@ Page<Pret>listPretUtilisateur=pretRepository.findByUtilisateur(user.get(),pageab
 		pretRepository.deleteAll(listPretUtilisateur);
 		
 	}
-	
+	/**
+	 * afficher un utilisateur 
+	 * @param String mail
+	 * 
+	 * 
+	 * @return Utilisateur
+	 */
 	@Override
 	public Utilisateur voirUtilisateur(String mail) throws ResultNotFoundException{
 		
@@ -100,7 +125,14 @@ Page<Pret>listPretUtilisateur=pretRepository.findByUtilisateur(user.get(),pageab
 	
 	return user.get();
 	}
-
+	/**
+	 * Afficher une Page d'utilisateurs 
+	 * @param int page 
+	 * @param int size
+	 * 
+	 * 
+	 * @return Page<Utilisateur>
+	 */
 	@Override
 	public Page<Utilisateur> voirListeUtilisateurs(int page, int size) throws ResultNotFoundException{
 		if(size==0) {
@@ -113,6 +145,13 @@ Pageable pageable =PageRequest.of(page,size );
 	
 	return utilisateurs;
 	}
+	/**
+	 * return un utilisateur en fonction du mail de l'objet Sessions
+	 * @param Sessions sessions
+	 * 
+	 * @return Utilisateur
+	 */
+	
 	@Override
 	public Optional<Utilisateur> connectionUtilisateur(Sessions sessions) throws ResultNotFoundException, MotDePasseInvalidException {
 		Optional<Utilisateur>user=utilisateurRepository.findByMail(sessions.getMail());
@@ -133,6 +172,12 @@ Pageable pageable =PageRequest.of(page,size );
 	
 	
 	
+	/**
+	 *Convertie un UtilsateurDto en Utilisateur
+	 * @param UtilisateurDto
+	 * 
+	 * @return Utilisateur
+	 */
 	
 private Utilisateur convertToUtilisateur(UtilisateurDto utilisateurDto) {
 	Utilisateur utilisateur = new Utilisateur();

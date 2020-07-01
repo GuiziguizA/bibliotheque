@@ -13,13 +13,15 @@ import org.springframework.web.client.HttpStatusCodeException;
 
 import sid.org.biblio.front.classe.Sessions;
 import sid.org.biblio.front.classe.Utilisateur;
+import sid.org.biblio.front.service.HttpService;
 import sid.org.biblio.front.service.UtilisateurService;
 
 @Controller
 public class UtilisateurController {
 	@Autowired
 	private UtilisateurService utilisateurService;
-
+	@Autowired
+	private HttpService httpService;
 	@GetMapping("/users/form")
 	public String afficherForm(Utilisateur utilisateur) {
 
@@ -35,7 +37,8 @@ public class UtilisateurController {
 			model.addAttribute("succes",succes);
 			return "login";
 		} catch (HttpStatusCodeException e) {
-			model.addAttribute("error", e);
+			String error=httpService.traiterLesExceptionsApi(e);
+			model.addAttribute("error", error);
 			return  "formulaireUtilisateur";
 		}
 

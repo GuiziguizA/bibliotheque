@@ -27,16 +27,22 @@
 					<th scope="col">Livre</th>
 				<th scope="col">Statut</th>
 				<th scope="col">DateFin</th>
+					<th scope="col" th:if="${role!='user'} ">Utilisateur</th>
+				<th scope="col" th:if="${role!='user'} ">DateDeRendu</th>
+					<th scope="col" th:if="${role!='user'} "></th>
 					<th scope="col"></th>
 		</tr>
 	
 			<tr th:each="pret:${prets}" >
 				<td th:text="${pret.livre.nom}"></td>
 				<td th:text="${pret.statut}"></td>
-				<td th:text="${pret.dateDeFin}" ></td>
-					<td><span th:if="${role!='user'} "><a th:href="@{/pretstatut/{id}(id=${pret.id})}"th:method="put"><input  type="button"   class="btn btn-primary" value="modifier" /></a></span></td>
-					
-			</tr>
+				<td th:text="${#dates.format(pret.DateDeFin, 'dd-MM-yyyy')}" ></td>
+				
+		<td th:text="${pret.utilisateur.nom}" th:if="${role!='user'} "></td>
+		<td th:text="${#dates.format(pret.DateDeRendu, 'dd-MM-yyyy')}" th:if="${ pret.statut =='remis'} "></td>
+					<td><span th:if="${role!='user' and pret.statut !='remis'} "><a th:href="@{/pretstatut/{id}(id=${pret.id})}"th:method="put"><input  type="button"   class="btn btn-primary" value="remettre" /></a></span></td>
+						<td><span th:if="${role!='user' and pret.statut =='encours'} "><a th:href="@{/prolongerPret/{id}(id=${pret.id})}"th:method="put"><input  type="button"   class="btn btn-primary" value="prolonger" /></a></span></td>
+								</tr>
 	
 	</table>
 				<div th:if="${prets.totalPages > 0}" class="pagination"

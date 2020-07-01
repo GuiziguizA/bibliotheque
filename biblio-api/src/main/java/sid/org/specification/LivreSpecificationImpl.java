@@ -28,7 +28,13 @@ public class LivreSpecificationImpl implements Specification<Livre> {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	
+	/*
+	 * Modification de l'objet predicate
+	 *@param Root<Livre> root
+	 *@param CriteriaQuery<?> query
+	 *@param CriteriaBuilder builder
+	 *@return Predicate
+	 */
 	@Override
 	public Predicate toPredicate(Root<Livre> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
 		Predicate predicate = builder.conjunction();

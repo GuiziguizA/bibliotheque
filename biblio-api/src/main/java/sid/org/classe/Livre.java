@@ -14,7 +14,11 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
-
+/**
+ * 
+ * @author guali
+ *
+ */
 
 @XmlRootElement
 @Entity

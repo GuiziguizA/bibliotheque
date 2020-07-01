@@ -69,7 +69,8 @@ public class Application implements CommandLineRunner {
 		 * pretService.pretsUtilisateur("gualisse@gmail.com", 1, 1);
 		 */ 
 		pretService.AfficherToutLesPrets(1, 1,"admin@gmail.com", "admin");
-		Long id =(long) 4;
+		Long id =(long) 1;
+		pretService.renouvelerUnPret(id, mail, motDePasse);
 		/* bookService.supprimerUnLivre(id, "admin@gmail.com", "admin"); */
 	}
 }

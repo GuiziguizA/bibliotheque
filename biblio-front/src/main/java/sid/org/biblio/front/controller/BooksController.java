@@ -34,6 +34,7 @@ import sid.org.biblio.front.config.SimpleAuthenticationFilter;
 import sid.org.biblio.front.enumeration.ListType;
 import sid.org.biblio.front.enumeration.Types;
 import sid.org.biblio.front.service.BookService;
+import sid.org.biblio.front.service.HttpService;
 import sid.org.biblio.front.service.UtilisateurService;
 
 
@@ -58,7 +59,8 @@ public class BooksController {
 	private BookService bookService;
 	@Autowired
 private UtilisateurService utilisateurService;
-
+	@Autowired
+private HttpService httpService;
 	 @Secured(value= {"ROLE_admin","ROLE_employe"}) 
 	@GetMapping(value = "/books/form")
 	public String Book(Livre livre) {
@@ -87,7 +89,8 @@ private UtilisateurService utilisateurService;
 			model.addAttribute("succes",succes);
 			return "home";
 		} catch (HttpStatusCodeException e) {
-			model.addAttribute("error", e);
+			String error=httpService.traiterLesExceptionsApi(e);
+			model.addAttribute("error", error);
 			return "formulaireLivre";
 		}
 
@@ -132,26 +135,14 @@ private UtilisateurService utilisateurService;
 
 		} catch (HttpStatusCodeException e) {
 
-			model.addAttribute("error", e);
+			String error=httpService.traiterLesExceptionsApi(e);
+			model.addAttribute("error", error);
 			return "error";
 		}
 
 	}
-	@GetMapping(value = "/supprBooks/{id}")
-	public String supprimerBook(@PathVariable Long id,HttpServletRequest request,Model model) {
-		
-		HttpSession session = request.getSession();
-		String motDePasse=(String) session.getAttribute("password");
-		String mail=(String) session.getAttribute("username");
-		try {
-			bookService.supprimerUnLivre(id, mail, motDePasse);
-			
-			return "succesOperation";
-		} catch (HttpStatusCodeException e) {
-			model.addAttribute("error",e);
-			return "error";
-		}
 	
 	
-	}
+	
+	
 }

@@ -4,6 +4,10 @@ public class Sessions {
 private String mail;
 private String motDePasse;
 
+/**
+ * 
+ * @return
+ */
 
 
 public String getMail() {

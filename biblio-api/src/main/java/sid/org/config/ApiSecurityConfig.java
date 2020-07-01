@@ -37,7 +37,11 @@ import
   org.springframework.web.servlet.config.annotation.WebMvcConfigurer; import
   org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
  
-
+/**
+ * 
+ * @author guali
+ *fonction spring security initialisant la basic authentification
+ */
   @Configuration
   
   @EnableWebSecurity

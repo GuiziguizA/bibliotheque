@@ -63,7 +63,7 @@ data-layout-decorator="template1">
 				<th scope="col">Section</th>
 				<th scope="col">Emplacement</th>
 				<th scope="col">Nombre d'exemplaire</th>
-				<th></th>
+				<th th:if="${role=='user' } "></th>
 				<th></th>
 		</tr>
 		<tr th:each="book:${bookPage}" >
@@ -73,10 +73,10 @@ data-layout-decorator="template1">
 				<td th:text="${book.section}"></td>	
 				<td th:text="${book.emplacement}"></td>	
 				<td th:text="${book.nombreExemplaire}"></td>	
-				<td><form method="post" th:action="@{/prets(id=${book.codeLivre})}"  >
+				<td  th:if="${role=='user' } "><form method="post" th:action="@{/prets(id=${book.codeLivre})}"  >
             <button type="submit" name="submit" value="value" class="btn btn-primary">Reserver</button>
         </form> </td>
-				<td><a th:href="@{/supprBooks/{id}(id=${book.codeLivre})}"><input type="button"  class="btn btn-outline-danger" value="supprimer" /></a></td>
+				
 			</tr>
 	
 	</table>

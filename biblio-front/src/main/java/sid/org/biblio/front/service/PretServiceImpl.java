@@ -2,6 +2,7 @@ package sid.org.biblio.front.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.data.domain.Page;
@@ -23,12 +24,14 @@ import sid.org.biblio.front.classe.Pret;
 @Service
 public class PretServiceImpl implements PretService {
 
+	
+	@Autowired
+	private HttpService httpService;
+	
+	
 	@Value("${api.url}")
 	private String apiUrl;
-	@Value("${spring.api.identifiant}")
-	private String identifiant;
-	@Value("${spring.api.motDePasse}")
-	private String motDePasse;
+
 	@Override
 	public Page<Pret> pretsUtilisateur(String mail, int page, int size,String motDePasse) throws HttpStatusCodeException {
 
@@ -39,9 +42,7 @@ public class PretServiceImpl implements PretService {
 		ParameterizedTypeReference<RestReponsePage<Pret>> responseType = new ParameterizedTypeReference<RestReponsePage<Pret>>() {
 		};
 
-		HttpHeaders headers = new HttpHeaders();
-		headers.setContentType(MediaType.APPLICATION_JSON);
-		headers.setBasicAuth(mail, motDePasse);
+		HttpHeaders headers =httpService.creerHeadersHttpAuthentifie(mail, motDePasse);
 
 		ResponseEntity<RestReponsePage<Pret>> result = rt.exchange(uri, HttpMethod.GET, new HttpEntity<>(headers),
 				responseType);
@@ -58,9 +59,7 @@ public class PretServiceImpl implements PretService {
 
 		final String uri = apiUrl + "/prets?mail="+mail;
 
-		HttpHeaders headers = new HttpHeaders();
-		headers.setContentType(MediaType.APPLICATION_JSON);
-		headers.setBasicAuth(mail, motDePasse);
+		HttpHeaders headers =httpService.creerHeadersHttpAuthentifie(mail, motDePasse);
 
 		rt.exchange(uri, HttpMethod.POST, new HttpEntity<>(pret, headers), Pret.class);
 
@@ -73,14 +72,22 @@ public void modifierUnPret(Long Id,String mail,String motDePasse) throws HttpSta
 	final String uri = apiUrl + "/prets?id="+Id;
 	
 
-	HttpHeaders headers = new HttpHeaders();
-	headers.setContentType(MediaType.APPLICATION_JSON);
-	headers.setBasicAuth(mail, motDePasse);
-
+	HttpHeaders headers =httpService.creerHeadersHttpAuthentifie(mail, motDePasse);
 	rt.exchange(uri, HttpMethod.PUT, new HttpEntity<>( headers), Long.class);
 
 }
 
+@Override
+public void renouvelerUnPret(Long Id,String mail,String motDePasse) throws HttpStatusCodeException{
+	RestTemplate rt = new RestTemplate();
+
+	final String uri = apiUrl + "/pret?id="+Id;
+	
+
+	HttpHeaders headers =httpService.creerHeadersHttpAuthentifie(mail, motDePasse);
+	rt.exchange(uri, HttpMethod.PUT, new HttpEntity<>( headers), Long.class);
+
+}
 
 @Override
 public Page<Pret> AfficherToutLesPrets(int page,int size,String mail,String motDePasse)throws HttpStatusCodeException {
@@ -91,9 +98,7 @@ public Page<Pret> AfficherToutLesPrets(int page,int size,String mail,String motD
 
 	
 	
-	HttpHeaders headers = new HttpHeaders();
-	headers.setContentType(MediaType.APPLICATION_JSON);
-	headers.setBasicAuth(mail, motDePasse);
+	HttpHeaders headers =httpService.creerHeadersHttpAuthentifie(mail, motDePasse);
 	ParameterizedTypeReference<List<Pret>> responseType = new ParameterizedTypeReference<List<Pret>>() {
 	};
 	ResponseEntity<List<Pret>> pret = rt.exchange(uri, HttpMethod.GET, new HttpEntity<>(headers), responseType);

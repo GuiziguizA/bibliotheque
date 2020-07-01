@@ -21,7 +21,7 @@ public interface LivreService {
 
 	public Livre createLivre(LivreDto livre) throws EntityAlreadyExistException;
 	public Livre afficheUnLivre( Long id) throws ResultNotFoundException;
-	public Livre modificationNombreExemplaire(Long id, int nom) throws ResultNotFoundException, LivreIndisponibleException;
+	
 	public Page<Livre> searchLivres(LivreCriteria livreCriteria, int page, int size) throws ResultNotFoundException;
 	public void supprimerLivre(Long id) throws ResultNotFoundException;
 	

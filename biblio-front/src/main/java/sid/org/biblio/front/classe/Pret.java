@@ -10,6 +10,8 @@ public class Pret {
 	private String statut;
 	private Livre livre;
 	private Date dateDeFin;
+	private Utilisateur utilisateur;
+	private Date dateDeRendu;
 	
 	
 	public Long getId() {
@@ -35,6 +37,18 @@ public class Pret {
 	}
 	public void setDateDeFin(Date dateDeFin) {
 		this.dateDeFin = dateDeFin;
+	}
+	public Utilisateur getUtilisateur() {
+		return utilisateur;
+	}
+	public void setUtilisateur(Utilisateur utilisateur) {
+		this.utilisateur = utilisateur;
+	}
+	public Date getDateDeRendu() {
+		return dateDeRendu;
+	}
+	public void setDateDeRendu(Date dateDeRendu) {
+		this.dateDeRendu = dateDeRendu;
 	}
 	
 	

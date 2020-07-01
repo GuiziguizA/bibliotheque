@@ -15,6 +15,6 @@ public interface PretRepository extends JpaRepository<Pret, Long>{
 	
 	 public Page<Pret>findByUtilisateur(Utilisateur utilisateur,Pageable pageable);
 	 public List<Pret>findByStatut(String statut);
-	public Optional<Pret> findByUtilisateurAndLivre(Utilisateur utilisateur,Livre livre);
+	public List<Pret> findByUtilisateurAndLivre(Utilisateur utilisateur,Livre livre);
 
 }

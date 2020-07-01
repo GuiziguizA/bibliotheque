@@ -29,6 +29,7 @@ import org.springframework.web.client.RestClientException;
 
 import sid.org.biblio.front.classe.Pret;
 import sid.org.biblio.front.classe.Utilisateur;
+import sid.org.biblio.front.service.HttpService;
 import sid.org.biblio.front.service.PretService;
 import sid.org.biblio.front.service.UtilisateurService;
 
@@ -38,6 +39,11 @@ public class PretsController {
 	private PretService pretService;
 	@Autowired
 	private UtilisateurService utilisateurService;
+	@Autowired
+	private HttpService httpService;
+	
+	
+	
 	 @Secured(value= {"ROLE_user"}) 
 	@GetMapping(value = "/prets")
 	public String pretUtilisateur(Model model, @RequestParam("page") Optional<Integer> page,
@@ -62,7 +68,8 @@ public class PretsController {
 
 		} catch (HttpStatusCodeException e) {
 
-			model.addAttribute("error", e.getMessage());
+			String error=httpService.traiterLesExceptionsApi(e);
+			model.addAttribute("error", error);
 		}
 
 		return "prets";
@@ -81,7 +88,8 @@ public class PretsController {
 			return "succesOperation";
 		} catch (HttpStatusCodeException e) {
 
-			model.addAttribute("error", e.getMostSpecificCause());
+			String error=httpService.traiterLesExceptionsApi(e);
+			model.addAttribute("error", error);
 			return "error";
 		}
 
@@ -101,10 +109,32 @@ public class PretsController {
 		
 			return "succesOperation";
 		} catch (HttpStatusCodeException e) {
-			model.addAttribute(e);
+			String error=httpService.traiterLesExceptionsApi(e);
+			model.addAttribute("error", error);
 			return"error";
 		}
 	}
+	
+	@GetMapping(value = "/prolongerPret/{id}")
+	public String renouvelerPrets(@PathVariable Long id,Model model,Principal principal,HttpServletRequest request) {
+		
+		
+		HttpSession session = request.getSession();
+		String motDePasse=(String) session.getAttribute("password");
+		String mail=(String) session.getAttribute("username");
+		Utilisateur user=utilisateurService.infosUtilisateur(mail,motDePasse );
+		model.addAttribute("role",user.getRoles().getNom());
+		try {
+			pretService.renouvelerUnPret(id, mail, motDePasse);
+		
+			return "succesOperation";
+		} catch (HttpStatusCodeException e) {
+			String error=httpService.traiterLesExceptionsApi(e);
+			model.addAttribute("error", error);
+			return"error";
+		}
+	}
+	
 	 @Secured(value= {"ROLE_admin","ROLE_employe"}) 
 		@GetMapping(value = "/allprets")
 		public String TousLesPrets(Model model, @RequestParam("page") Optional<Integer> page,
@@ -128,13 +158,20 @@ public class PretsController {
 				}
 
 			} catch (HttpStatusCodeException e) {
-
-				model.addAttribute("error", e);
+				String error=httpService.traiterLesExceptionsApi(e);
+				model.addAttribute("error", error);
 			}
 
 			return "prets";
 		}
+	
 		
+		
+	 
+	 
+	 
+	 
+	 
 	}
 	
 	

@@ -11,13 +11,7 @@
 	<artifactId>biblio-api</artifactId>
 	<packaging>jar</packaging>
 
-<repositories>
-    <repository>
-      <id>jcenter-snapshots</id>
-      <name>jcenter</name>
-      <url>http://oss.jfrog.org/artifactory/oss-snapshot-local/</url>
-    </repository>
-</repositories>
+
 
 
 	<dependencies>
@@ -101,15 +95,28 @@
 
 <build>
 	<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-			
+	
+			 <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                        <configuration>
+                <classifier>exec</classifier>
+            </configuration>
+                    </execution>
+                    
+                </executions>
+            </plugin>
+            
+            
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
-		
+
 				<configuration>
 					<archive>
 						<manifest>
@@ -119,6 +126,7 @@
 				</configuration>
 			</plugin>
 			
+           
 		</plugins>
 </build>
 </project>

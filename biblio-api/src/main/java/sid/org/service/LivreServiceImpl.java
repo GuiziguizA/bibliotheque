@@ -33,6 +33,7 @@ import sid.org.specification.LivreSpecificationImpl;
 
 
 
+
 @Service
 public class LivreServiceImpl implements LivreService{
 	@Autowired
@@ -40,6 +41,13 @@ public class LivreServiceImpl implements LivreService{
 	
 	
 
+	/*
+	 * Creation d'un Livre
+	 * @param LivreDto 
+	 * 
+	 * @return Livre
+	 */
+	
 	@Override
 	public Livre createLivre(LivreDto livreDto) throws EntityAlreadyExistException {
 		List<Livre>livreNom=livreRepository.findByNom(livreDto.getNom());
@@ -54,7 +62,12 @@ public class LivreServiceImpl implements LivreService{
 		return 	livreRepository.save(livre);
 	}
 
-	
+	/*
+	 * Suppression d'un Livre
+	 * @param Long id  
+	 * 
+	 * 
+	 */
 @Override
 	public void supprimerLivre(Long id)throws ResultNotFoundException{
 		
@@ -65,7 +78,12 @@ public class LivreServiceImpl implements LivreService{
 		livreRepository.delete(livre.get());
 	}
 	
-	
+/*
+ *Affichage  d'un Livre
+ * @param L 
+ * 
+ * @return Livre
+ */
 	
 	@Override
 	public Livre  afficheUnLivre( Long id) throws ResultNotFoundException{
@@ -80,45 +98,14 @@ public class LivreServiceImpl implements LivreService{
 		}
 
 
-  
-	@Override
-	
-	public Livre modificationNombreExemplaire(Long id,@Nullable int nombre) throws ResultNotFoundException,LivreIndisponibleException{
-		
-	if(nombre==(Integer)null) {
-		nombre=1;
-	}
-		
-		
-		Optional<Livre> livre=livreRepository.findById(id);
-		if (!livre.isPresent()) {
-			throw new ResultNotFoundException("Le livre n'existe pas");
-		}
-		if(livre.get().getNombreExemplaire()<1) {
-			throw new LivreIndisponibleException("Le livre n'est pas disponible");
-		}
-		
-		livre.get().setNombreExemplaire(livre.get().getNombreExemplaire()-nombre);
-	
-	
-		return 	livreRepository.saveAndFlush(livre.get());
-	}
 	/*
-	 * @Override public Map<String, Object> rechercherLivres(String recherche)
-	 * throws ResultNotFoundException{ LivreSpecificationImpl spec = new
-	 * LivreSpecificationImpl(new SearchCriteria("nom", recherche));
-	 * 
-	 * 
-	 * 
-	 * List<Livre> results = livreRepository.findAll(spec); if (results.isEmpty()) {
-	 * throw new ResultNotFoundException("Aucun resultats"); }
-	 * 
-	 * Map< String, Object> livres=new HashMap<>();
-	 * 
-	 * livres.put("results",results);
-	 * 
-	 * return livres; }
+	 *Rechercher des livre en fonction d'un critere
+	 * @param LivreCriteria livreCriteria 
+	 * @param int page 
+	 * @param int size
+	 * @return Page<Livre>
 	 */
+
 
 @Override
 public Page<Livre> searchLivres(LivreCriteria livreCriteria,int page ,int size) throws ResultNotFoundException {
@@ -136,6 +123,14 @@ public Page<Livre> searchLivres(LivreCriteria livreCriteria,int page ,int size) 
 	return results;
 }
 
+
+/*
+ *Convertir un LivreDto en Livre
+ * @param LivreDto livreDto 
+ * 
+ * 
+ * @return Livre
+ */
 
 private Livre convertoToEntity(LivreDto livreDto) {
 	

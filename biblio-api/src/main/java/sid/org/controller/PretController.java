@@ -50,7 +50,7 @@ public class PretController {
 public Pret afficherUnPret(@PathVariable Long id) throws ResultNotFoundException{
  
 
-	 Pret pret = pretService.afficherPret(id);
+	 Pret pret = pretService.afficherUnPret(id);
 	return pret;
 
 
@@ -142,9 +142,17 @@ return pret;
 @PutMapping("/prets")
 @ApiOperation(value="modifier statut du pret pour confirmer que le livre a été rendu",response = PretController.class)
 public void retourLivre(@RequestParam Long id) throws ResultNotFoundException {
-	pretService.modifierPret(id);
+	pretService.modifierPret(id,"remise");
 	
 }
+
+@PutMapping("/pret")
+@ApiOperation(value="modifier statut du pret pour renouvelé la periode de pret",response = PretController.class)
+public void prolongerLivre(@RequestParam Long id) throws ResultNotFoundException {
+	pretService.modifierPret(id,"renouvelement");
+	
+}
+
 
 @PostMapping("/prets/statuts")
 public  void  modifierStatutBatch() throws ResultNotFoundException {

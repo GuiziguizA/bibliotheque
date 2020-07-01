@@ -7,7 +7,7 @@
 	</configSuffixes>
 	<enableImports><![CDATA[false]]></enableImports>
 	<configs>
-		<config>java:sig.org.BatchAppli</config>
+		<config>java:sid.org.batch.BatchAppli</config>
 	</configs>
 	<autoconfigs>
 	</autoconfigs>

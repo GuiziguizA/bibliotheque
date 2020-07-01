@@ -20,6 +20,11 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
   public class SwaggerConfig {
   
+	 
+	 /*
+	  * definie le chemin d'acces des apis pour les swaggers
+	  */
+	 
   @Bean 
   public Docket productApi() {
   

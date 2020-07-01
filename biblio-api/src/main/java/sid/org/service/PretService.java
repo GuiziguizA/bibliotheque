@@ -27,13 +27,14 @@ public interface PretService {
 	public Page<Pret> afficherPrets(String mail, int page, int size) throws  ResultNotFoundException;
 	
 	public Pret afficherUnPret(Long id) throws ResultNotFoundException;
-	public Pret afficherPret(Long id) throws ResultNotFoundException;
+
 	public List<Pret> afficherPrets() throws ResultNotFoundException;
 	public List<Pret> afficherPrets(String statut) throws ResultNotFoundException;
 	public void modifierStatut(Long id) throws ResultNotFoundException;
 	public void modifierStatutsPrets() throws ResultNotFoundException ;
 
-	public void modifierPret(Long id) throws ResultNotFoundException;
+	public void modifierPret(Long id, String methode) throws ResultNotFoundException;
+	
 
 	
 	

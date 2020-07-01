@@ -18,6 +18,8 @@ public interface PretService {
 
 	public Page<Pret> AfficherToutLesPrets(int page, int size, String mail, String motDePasse)throws HttpStatusCodeException;
 
+	public void renouvelerUnPret(Long Id, String mail, String motDePasse) throws HttpStatusCodeException;
+
 	
 
 	

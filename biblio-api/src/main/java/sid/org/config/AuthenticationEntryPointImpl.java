@@ -12,7 +12,11 @@ package sid.org.config;
   org.springframework.security.web.authentication.www.
   BasicAuthenticationEntryPoint; import
   org.springframework.stereotype.Component;
-  
+  /**
+   * 
+   * @author guali
+   *genère une fenetre pour réalisé la basicAthentification
+   */
   @Component
   public class AuthenticationEntryPointImpl extends BasicAuthenticationEntryPoint {
    

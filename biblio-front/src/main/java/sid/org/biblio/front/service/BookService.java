@@ -15,8 +15,7 @@ import sid.org.biblio.front.enumeration.Types;
 
 public interface BookService {
 
-	public Livre livre(String id, String mail, String motDePasse) throws Exception;
-
+	
 
 	public void createLivre(Livre livre, String mail, String motDePasse) throws HttpStatusCodeException;
 
@@ -27,7 +26,6 @@ public interface BookService {
 	public List<Types> chargerLesTypesDeRecherches();
 
 
-	public void supprimerUnLivre(Long id, String mail, String motDePasse);
 
 
 
