@@ -34,8 +34,8 @@ import sid.org.service.UtilisateurService;
 @Api(value="Api Utilisateurs",description = "Api Utilisateurs")
 public class UtilisateurController {
 	
-	@Value("${role.default}")
-	 private String roleDefault;
+	/* @Value("${role.default}") */
+	 private String roleDefault="user";
 	@Autowired
 	private UtilisateurService utilisateurService;
 
@@ -79,7 +79,7 @@ public class UtilisateurController {
 	@PostMapping("/users")
 	@ApiOperation(value="ajouter un utilisateur ",response = UtilisateurController.class)
 	public Utilisateur creerUtilisateur(
-			  @ApiParam(value="Ajouter UtilisateurDto dans le body" , required=true)@Valid @RequestBody UtilisateurDto utilisateurDto) throws ResultNotFoundException,EntityAlreadyExistException{
+			  @ApiParam(value="Ajouter UtilisateurDto dans le body" , required=true)@Valid@RequestBody UtilisateurDto utilisateurDto) throws ResultNotFoundException,EntityAlreadyExistException{
 
 		Utilisateur user =	utilisateurService.creerUtilisateur(utilisateurDto,roleDefault);
 		return user;

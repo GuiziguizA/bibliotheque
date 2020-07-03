@@ -30,7 +30,11 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	
 	@Value("${api.url}")
 	private String apiUrl;
-
+	/**
+	 * creer un utilisateur
+	 * @param Utilisateur utilisateur
+	 * 
+	 */
 	@Override
 	public void creerUtilisateur(Utilisateur utilisateur) throws HttpStatusCodeException {
 
@@ -44,28 +48,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		
 
 	}
-	
-	@Override
-	public String identification(HttpServletRequest request) throws HttpStatusCodeException {
 
-		final String uri = apiUrl + "/users/identity";
-		RestTemplate rt = new RestTemplate();
-		HttpHeaders headers=new HttpHeaders();
-		HttpSession session = request.getSession();
-		Sessions sessions =new Sessions();
-		sessions.setMail((String) session.getAttribute( "mail" ));
-		sessions.setMotDePasse((String) session.getAttribute( "motDePasse" ));
-	try {
-		 rt.exchange(uri, HttpMethod.POST, new HttpEntity<>(sessions, headers),
-					Sessions.class);
-		 return "True";
-		
-	} catch (HttpStatusCodeException e) {
-		return "False";
-	}
-		
-
-	}
 	
 	@Override
 	public Utilisateur infosUtilisateur(String mail,String motDePasse) {

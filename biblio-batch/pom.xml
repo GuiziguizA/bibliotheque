@@ -1,10 +1,14 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
+  
+  
   <parent>
     <groupId>sid.org</groupId>
     <artifactId>bibliotheque-app</artifactId>
-    <version>1.0</version>
+   <version>0.0.1-SNAPSHOT</version>
   </parent>
+  
+  
   <artifactId>biblio-batch</artifactId>
   	<packaging>jar</packaging>
   	
@@ -18,13 +22,10 @@
 
 	<dependency>
 		<artifactId>biblio-api</artifactId>
- <groupId>sid.org</groupId>
-            <version>1.0</version>
+ 		<groupId>sid.org</groupId>
+        <version>0.0.1-SNAPSHOT</version>
 	</dependency>
 
-
-
-		
 
 
 		
@@ -33,12 +34,7 @@
     <artifactId>spring-batch-core</artifactId>
 </dependency>
 			
-<!-- https://mvnrepository.com/artifact/org.thymeleaf/thymeleaf -->
-<!-- https://mvnrepository.com/artifact/org.thymeleaf/thymeleaf -->
- <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
-        </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-mail</artifactId>
@@ -56,10 +52,7 @@
     <dependency>
         <groupId>nz.net.ultraq.thymeleaf</groupId>
         <artifactId>thymeleaf-layout-dialect</artifactId>
-        
     </dependency>
-<!-- https://mvnrepository.com/artifact/org.thymeleaf/thymeleaf -->
-<!-- https://mvnrepository.com/artifact/org.thymeleaf/thymeleaf -->
 
 
         <dependency>
@@ -68,25 +61,42 @@
             <scope>test</scope>
         </dependency>
         
-<dependency>
+		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<scope>runtime</scope>
 		</dependency>
  
-<dependency>
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
 
 	</dependencies>
-
- <build>
+   <!--  <build>
+        <plugins>
+            <plugin>
+                <groupId>org.Apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>sid.org.BatchAppli</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>   -->
+    
+    
+<!--  <build>
 	<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
+	
 			
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -102,5 +112,5 @@
 			</plugin>
 			
 		</plugins>
-</build>
+</build> -->
 </project>

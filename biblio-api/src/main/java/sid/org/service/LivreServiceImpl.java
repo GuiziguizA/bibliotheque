@@ -16,6 +16,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.lang.Nullable;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import sid.org.classe.Livre;
@@ -34,7 +35,7 @@ import sid.org.specification.LivreSpecificationImpl;
 
 
 
-@Service
+@Component
 public class LivreServiceImpl implements LivreService{
 	@Autowired
 	private LivreRepository livreRepository;

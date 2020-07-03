@@ -1,5 +1,7 @@
 package sid.org.biblio.front;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -13,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.client.RestTemplate;
 
+import sid.org.BiblioAppli;
 import sid.org.biblio.front.classe.LivreCriteria;
 import sid.org.biblio.front.classe.Pret;
 import sid.org.biblio.front.classe.Sessions;
@@ -26,9 +29,10 @@ import sid.org.biblio.front.service.UtilisateurService;
 @SpringBootApplication
 /* @ImportResource("classpath:spring-security.xml") */
 public class Application implements CommandLineRunner {
-
+	 private static final Logger logger = LoggerFactory.getLogger(BiblioAppli.class);
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
+		logger.info("Biblio-front Started........");
 	}
 
 	@Autowired
@@ -50,27 +54,26 @@ public class Application implements CommandLineRunner {
 		 * LivreCriteria(); criteres.setNom("le"); HttpHeaders headers = new
 		 * HttpHeaders(); headers.setContentType(MediaType.APPLICATION_JSON);
 		 * HttpEntity<LivreCriteria> entity = new HttpEntity<>(criteres, headers);
-		 * System.out.println(entity.getBody()); Pret pret = new Pret();  pret.setId(id);
+		 * System.out.println(entity.getBody()); Pret pret = new Pret(); pret.setId(id);
 		 */
-		RestTemplate rt = new RestTemplate();
-		 String uri ="http://localhost:8081/users/identity";
-		 String username = "gualisse@gmail.com";
-		    String motDePasse = "motDePasse1";
-		    Sessions sessions=new Sessions();
-	    sessions.setMail(username);
-	    sessions.setMotDePasse(motDePasse);
-		ResponseEntity<Utilisateur> user= rt.exchange(uri,HttpMethod.POST,new HttpEntity<>(sessions),Utilisateur.class);
-		Utilisateur utilisateur = user.getBody();
-		System.out.println(utilisateur.getMail());
-		String mail="gualisse@gmail.com";
-		Utilisateur userr=utilisateurService.infosUtilisateur(mail,motDePasse);
-		userr.getRoles().getNom();
 		/*
+		 * RestTemplate rt = new RestTemplate(); String uri
+		 * ="http://localhost:8081/users/identity"; String username =
+		 * "gualisse@gmail.com"; String motDePasse = "motDePasse1"; Sessions
+		 * sessions=new Sessions(); sessions.setMail(username);
+		 * sessions.setMotDePasse(motDePasse); ResponseEntity<Utilisateur> user=
+		 * rt.exchange(uri,HttpMethod.POST,new
+		 * HttpEntity<>(sessions),Utilisateur.class); Utilisateur utilisateur =
+		 * user.getBody(); System.out.println(utilisateur.getMail()); String
+		 * mail="gualisse@gmail.com"; Utilisateur
+		 * userr=utilisateurService.infosUtilisateur(mail,motDePasse);
+		 * userr.getRoles().getNom();
+		 * 
 		 * pretService.pretsUtilisateur("gualisse@gmail.com", 1, 1);
-		 */ 
-		pretService.AfficherToutLesPrets(1, 1,"admin@gmail.com", "admin");
-		Long id =(long) 1;
-		pretService.renouvelerUnPret(id, mail, motDePasse);
+		 * 
+		 * pretService.AfficherToutLesPrets(1, 1,"admin@gmail.com", "admin"); Long id
+		 * =(long) 1; pretService.renouvelerUnPret(id, mail, motDePasse);
+		 */
 		/* bookService.supprimerUnLivre(id, "admin@gmail.com", "admin"); */
 	}
 }

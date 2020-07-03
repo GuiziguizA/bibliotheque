@@ -6,6 +6,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -25,7 +27,7 @@ import sid.org.dao.RolesRepository;
 import sid.org.dao.UtilisateurRepository;
 import sid.org.dto.LivreDto;
 import sid.org.dto.UtilisateurDto;
-import sid.org.exception.MotDePasseInvalidException;
+
 import sid.org.service.DateService;
 import sid.org.service.LivreService;
 
@@ -34,9 +36,10 @@ import sid.org.service.UtilisateurService;
 
 @SpringBootApplication
 public class BiblioAppli implements CommandLineRunner {
-
+	 private static final Logger logger = LoggerFactory.getLogger(BiblioAppli.class);
 	public static void main(String[] args) {
 		SpringApplication.run(BiblioAppli.class, args);
+		logger.info("Biblio-api Started........");
 	}
 
 	@Autowired

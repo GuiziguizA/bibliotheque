@@ -13,8 +13,8 @@ import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
 import sid.org.batch.classe.Pret;
-
-
+import sid.org.exception.ResultNotFoundException;
+import sid.org.service.PretService;
 
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -38,9 +38,10 @@ public class EmailServiceImpl implements EmailService {
 
 	 @Autowired
 	    public JavaMailSender emailSender;
-	/*
-	 * @Autowired public PretService pretService;
-	 */
+	
+	  @Autowired 
+	  public PretService pretService;
+	 
 
 	 
 	 
@@ -86,7 +87,12 @@ public class EmailServiceImpl implements EmailService {
 	           message.setSubject(subject);
 	           message.setFrom(from);
 	           message.setTo(to);
-
+	           try {
+				pretService.afficherPrets();
+			} catch (ResultNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 	           // Create the HTML body using Thymeleaf
 	           final String htmlContent = this.templateEngine.process("email", ctx);
 	           message.setText(htmlContent, true); // true = isHtml

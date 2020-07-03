@@ -1,6 +1,6 @@
 package sid.org.biblio.front.classe;
 
-import javax.persistence.Column;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
@@ -11,7 +11,7 @@ public class Utilisateur {
 
 	@NotBlank(message = "le champ nom ne peut pas etre vide")
 	private String nom;
-	@Column(unique =true )
+
 	@Email(message="L'adresse mail saisie n'est pas valide")
 	@NotBlank(message = "le champ mail ne peut pas etre vide")
 	private String mail;

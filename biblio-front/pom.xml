@@ -5,8 +5,10 @@
 	<parent>
 		<groupId>sid.org</groupId>
 		<artifactId>bibliotheque-app</artifactId>
-		<version>1.0</version>
+		<version>0.0.1-SNAPSHOT</version>
 	</parent>
+	
+	
 	<artifactId>biblio-front</artifactId>
 	<packaging>jar</packaging>
 
@@ -28,7 +30,22 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
         </dependency>
+        
         <dependency>
+		<artifactId>biblio-api</artifactId>
+ 		<groupId>sid.org</groupId>
+        <version>0.0.1-SNAPSHOT</version>
+	</dependency>
+
+        
+        <dependency>
+		<artifactId>biblio-batch</artifactId>
+ 		<groupId>sid.org</groupId>
+        <version>0.0.1-SNAPSHOT</version>
+	</dependency>
+
+        
+       <!--  <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
@@ -41,7 +58,7 @@
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<scope>runtime</scope>
-		</dependency>
+		</dependency> -->
     <dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -53,19 +70,26 @@
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
         
-        
+        		<!-- https://mvnrepository.com/artifact/javax.validation/validation-api -->
+<dependency>
+    <groupId>javax.validation</groupId>
+    <artifactId>validation-api</artifactId>
+   
+</dependency>
+		
+	
         <dependency>
     <groupId>org.thymeleaf.extras</groupId>
     <artifactId>thymeleaf-extras-springsecurity5</artifactId>
 </dependency>
-    <!-- https://mvnrepository.com/artifact/org.json/json -->
+    
 <dependency>
     <groupId>org.json</groupId>
     <artifactId>json</artifactId>
     <version>20200518</version>
 </dependency>
     
-       <!-- https://mvnrepository.com/artifact/org.apache.tiles/tiles-request-api -->
+   
 <dependency>
     <groupId>org.apache.tiles</groupId>
     <artifactId>tiles-request-api</artifactId>
@@ -73,11 +97,10 @@
 </dependency>
         
 
-	<!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient -->
+
 <dependency>
     <groupId>org.apache.httpcomponents</groupId>
     <artifactId>httpclient</artifactId>
-    <version>4.3.6</version>
 </dependency>
 	
 	<dependency>
@@ -94,11 +117,11 @@
             <artifactId>jsp-api</artifactId>
             <version>2.1</version>
         </dependency>
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>servlet-api</artifactId>
-            <version>2.5</version>
-        </dependency>
+      <dependency>
+   <groupId>javax.servlet</groupId>
+   <artifactId>javax.servlet-api</artifactId>
+   <version>4.0.1</version>
+</dependency>
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>jstl</artifactId>

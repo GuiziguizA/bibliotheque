@@ -2,10 +2,11 @@ package sid.org.service;
 
 import java.util.Date;
 
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import sid.org.exception.ResultNotFoundException;
-@Service
+@Component
 public class DateServiceImpl implements DateService{
 
 	/*

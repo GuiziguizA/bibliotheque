@@ -10,11 +10,14 @@ public interface EmailService {
 	
 	  
 
-	public void sendMail(String biblioMail, String mail, String subject, Pret pret, Locale locale)throws MessagingException;
 
 	public void envoieMails(Locale locale) throws Exception;
 
 	public void modifierStatutPrets();
+	
+	public void sendMail(String from, String to, String subject, Pret pret, Locale locale) throws MessagingException;
+
+	
 
 	
 

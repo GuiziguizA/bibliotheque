@@ -31,7 +31,15 @@ public class PretServiceImpl implements PretService {
 	
 	@Value("${api.url}")
 	private String apiUrl;
-
+/**
+ * afficher les prets d'un utilisateurs
+ * @param String mail
+ * @param int page
+ * @param int size 
+ * @param String motDePasse
+ * @return Page<Pret>prets
+ * 
+ */
 	@Override
 	public Page<Pret> pretsUtilisateur(String mail, int page, int size,String motDePasse) throws HttpStatusCodeException {
 
@@ -51,7 +59,14 @@ public class PretServiceImpl implements PretService {
 
 		return prets;
 	}
-
+	/**
+	 * creer un pret 
+	 * @param Pret pret
+	 * @param String mail
+	 * @param String motDePasse
+	 * 
+	 * 
+	 */
 	@Override
 	public void creerPret(Pret pret,String mail,String motDePasse)throws HttpStatusCodeException{
 
@@ -64,7 +79,14 @@ public class PretServiceImpl implements PretService {
 		rt.exchange(uri, HttpMethod.POST, new HttpEntity<>(pret, headers), Pret.class);
 
 	}
-
+	/**
+	 * modifier le statut d'un pret et incrementation du stock de livre
+	 * @param long id
+	 * @param String mail
+	 * @param String motDePasse
+	 * 
+	 * 
+	 */
 @Override
 public void modifierUnPret(Long Id,String mail,String motDePasse) throws HttpStatusCodeException{
 	RestTemplate rt = new RestTemplate();
@@ -76,7 +98,14 @@ public void modifierUnPret(Long Id,String mail,String motDePasse) throws HttpSta
 	rt.exchange(uri, HttpMethod.PUT, new HttpEntity<>( headers), Long.class);
 
 }
-
+/**
+ * renouveler un pret 
+ * @param long id
+ * @param String mail
+ * @param String motDePasse
+ * 
+ * 
+ */
 @Override
 public void renouvelerUnPret(Long Id,String mail,String motDePasse) throws HttpStatusCodeException{
 	RestTemplate rt = new RestTemplate();
@@ -88,7 +117,15 @@ public void renouvelerUnPret(Long Id,String mail,String motDePasse) throws HttpS
 	rt.exchange(uri, HttpMethod.PUT, new HttpEntity<>( headers), Long.class);
 
 }
-
+/**
+ * afficher tous les prets
+ * @param String mail
+ * @param int page
+ * @param int size 
+ * @param String motDePasse
+ * @return Page<Pret>prets
+ * 
+ */
 @Override
 public Page<Pret> AfficherToutLesPrets(int page,int size,String mail,String motDePasse)throws HttpStatusCodeException {
 	

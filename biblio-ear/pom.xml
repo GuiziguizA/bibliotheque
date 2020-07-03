@@ -1,0 +1,78 @@
+	<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <artifactId>bibliotheque-app</artifactId>
+    <groupId>sid.org</groupId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+
+
+  <artifactId>biblio-ear</artifactId>
+  <packaging>ear</packaging>
+
+  <name>biblio-ear</name>
+  <!-- FIXME change it to the project's website -->
+  <url>http://www.example.com</url>
+
+<properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+  <dependencies>
+   
+   
+   
+   <dependency>
+		<artifactId>biblio-api</artifactId>
+ 		<groupId>sid.org</groupId>
+        <version>0.0.1-SNAPSHOT</version>
+	</dependency>
+	<dependency>
+		<artifactId>biblio-batch</artifactId>
+ 		<groupId>sid.org</groupId>
+        <version>0.0.1-SNAPSHOT</version>
+	</dependency>
+	<dependency>
+		<artifactId>biblio-front</artifactId>
+ 		<groupId>sid.org</groupId>
+        <version>0.0.1-SNAPSHOT</version>
+	</dependency>
+  </dependencies>
+
+  <build>
+    <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
+       <plugins>
+    <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-ear-plugin</artifactId>
+        <version>3.0.1</version>
+        <configuration>
+            <modules>
+                <jarModule>
+                    <groupId>sid.org</groupId>
+                    <artifactId>biblio-api</artifactId>
+                    <uri>biblio-api-1.0-SNAPSHOT.jar</uri>
+                    <!-- Set custom context root -->
+                  
+                </jarModule>
+                 <jarModule>
+                    <groupId>sid.org</groupId>
+                    <artifactId>biblio-batch</artifactId>
+                    <uri>biblio-batch-1.0-SNAPSHOT.jar</uri>
+                    <!-- Set custom context root -->
+                    
+                </jarModule>
+                 <jarModule>
+                    <groupId>sid.org</groupId>
+                    <artifactId>biblio-front</artifactId>
+                    <uri>biblio-front-1.0-SNAPSHOT.jar</uri>
+                    <!-- Set custom context root -->
+                 
+                </jarModule>
+            </modules>
+        </configuration>
+    </plugin>
+    </plugins>
+    </pluginManagement>
+  </build>
+</project>

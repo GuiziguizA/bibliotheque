@@ -48,6 +48,8 @@ public class BooksServiceImpl implements BookService {
 	}
 	@Autowired
 	private HttpService httpService;
+	@Autowired
+	private RestTemplate restTemplate;
 	
 	@Value("${api.url}")
 	private String apiUrl;
@@ -73,12 +75,10 @@ public class BooksServiceImpl implements BookService {
 		
 		
 		HttpHeaders headers =httpService.creerHeadersHttpAuthentifie(mail, motDePasse);
-		try {
+		
 			ResponseEntity<Livre> livres = rt.exchange(uri, HttpMethod.POST, new HttpEntity<>(livre, headers),
 					Livre.class);
-		} catch (HttpStatusCodeException e) {
-		throw e;
-		}
+		
 
 	}
 	/*
@@ -102,14 +102,12 @@ public class BooksServiceImpl implements BookService {
 		};
 		final String uri = apiUrl + "/books?page=" + page1 + "&size=" + size1;
 		LivreCriteria critere = critereImpl(type, recherche);
-		try {
-			ResponseEntity<RestReponsePage<Livre>> result = rt.exchange(uri, HttpMethod.GET,
+
+			ResponseEntity<RestReponsePage<Livre>> result =  rt.exchange(uri, HttpMethod.GET,
 					new HttpEntity<>(critere, headers), responseType);
 			Page<Livre> bookPage = result.getBody();
 			return bookPage;
-		} catch (HttpStatusCodeException e) {
-			throw e;
-		}
+		
 		
 	
 	
