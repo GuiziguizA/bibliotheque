@@ -15,7 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.client.RestTemplate;
 
-import sid.org.BiblioAppli;
+
 import sid.org.biblio.front.classe.LivreCriteria;
 import sid.org.biblio.front.classe.Pret;
 import sid.org.biblio.front.classe.Sessions;
@@ -29,7 +29,7 @@ import sid.org.biblio.front.service.UtilisateurService;
 @SpringBootApplication
 /* @ImportResource("classpath:spring-security.xml") */
 public class Application implements CommandLineRunner {
-	 private static final Logger logger = LoggerFactory.getLogger(BiblioAppli.class);
+	 private static final Logger logger = LoggerFactory.getLogger(Application.class);
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
 		logger.info("Biblio-front Started........");

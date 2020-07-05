@@ -94,7 +94,7 @@
     </build>   -->
     
     
-<!--  <build>
+ <build>
 	<plugins>
 	
 			
@@ -112,5 +112,5 @@
 			</plugin>
 			
 		</plugins>
-</build> -->
+</build>
 </project>

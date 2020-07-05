@@ -18,11 +18,7 @@ import sid.org.BiblioAppli;
 import java.util.Locale;
 
 
-@SpringBootApplication
-@ComponentScan(basePackages = {"sid.org.*"})
-@EntityScan(basePackages = {"sid.org.*"})
-@EnableAutoConfiguration
-@EnableJpaRepositories(basePackages = {"sid.org.*"})
+@SpringBootApplication(scanBasePackages= {"sid.org","sid.org.batch"})
 @EnableScheduling
 public class BatchAppli implements CommandLineRunner {
 	 private static final Logger logger = LoggerFactory.getLogger(BiblioAppli.class);

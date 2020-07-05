@@ -80,7 +80,39 @@
         
 	</dependencies>
 	
-	<build>
+	
+	
+	<build><plugins><plugin>
+       <groupId>org.springframework.boot</groupId>
+       <artifactId>spring-boot-maven-plugin</artifactId>
+       <configuration>
+           <layout>JAR</layout>
+       </configuration>
+       <executions>
+        
+            <execution>
+              <goals>
+                <goal>repackage</goal>
+              </goals>
+              <configuration>
+                <mainClass>sid.org.BiblioAppli</mainClass>
+              </configuration>
+            </execution>
+      
+       </executions>
+</plugin></plugins></build>
+	<!-- <build><plugins><plugin>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-maven-plugin</artifactId>
+    <executions>
+        <execution>
+            <configuration>
+                    <classifier>exe</classifier>
+                </configuration>
+        </execution>
+    </executions>
+</plugin></plugins></build> -->
+	<!-- <build>
 	<plugins>
 	<plugin>
         <groupId>org.springframework.boot</groupId>
@@ -106,7 +138,7 @@
         </configuration>
     </plugin>
 	</plugins>
-	</build>
+	</build> -->
     <!-- <build>
         <plugins>
             <plugin>

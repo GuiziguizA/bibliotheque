@@ -31,20 +31,7 @@
             <artifactId>spring-boot-starter</artifactId>
         </dependency>
         
-        <dependency>
-		<artifactId>biblio-api</artifactId>
- 		<groupId>sid.org</groupId>
-        <version>0.0.1-SNAPSHOT</version>
-	</dependency>
-
-        
-        <dependency>
-		<artifactId>biblio-batch</artifactId>
- 		<groupId>sid.org</groupId>
-        <version>0.0.1-SNAPSHOT</version>
-	</dependency>
-
-        
+   
        <!--  <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -53,12 +40,12 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
+        </dependency>-->
 <dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<scope>runtime</scope>
-		</dependency> -->
+		</dependency> 
     <dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
