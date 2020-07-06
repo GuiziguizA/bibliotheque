@@ -13,15 +13,14 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
-import sid.org.BiblioAppli;
 
 import java.util.Locale;
 
 
-@SpringBootApplication(scanBasePackages= {"sid.org","sid.org.batch"})
-@EnableScheduling
+@SpringBootApplication
+
 public class BatchAppli implements CommandLineRunner {
-	 private static final Logger logger = LoggerFactory.getLogger(BiblioAppli.class);
+	 private static final Logger logger = LoggerFactory.getLogger(BatchAppli.class);
 	public static void main(String[] args) {
 		SpringApplication.run(BatchAppli.class, args);
 		logger.info("Biblio-api Started........");

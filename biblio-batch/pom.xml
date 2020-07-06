@@ -19,14 +19,11 @@
   	
   	<dependencies>
 
-
-	<dependency>
-		<artifactId>biblio-api</artifactId>
- 		<groupId>sid.org</groupId>
-        <version>0.0.1-SNAPSHOT</version>
-	</dependency>
-
-
+<dependency>
+ <groupId>sid.org</groupId>
+  <artifactId>biblio-service</artifactId>
+   <version>0.0.1-SNAPSHOT</version>
+</dependency>
 
 		
 <dependency>
@@ -92,25 +89,25 @@
             </plugin>
         </plugins>
     </build>   -->
+  	<build><plugins><plugin>
+       <groupId>org.springframework.boot</groupId>
+       <artifactId>spring-boot-maven-plugin</artifactId>
+       <configuration>
+           <layout>JAR</layout>
+       </configuration>
+       <executions>
+        
+            <execution>
+             
+              <configuration>
+                <mainClass>sid.org.batch.BatchAppli</mainClass>
+              </configuration>
+            </execution>
+      
+       </executions>
+</plugin>
+</plugins>
+</build>  
     
-    
- <build>
-	<plugins>
-	
-			
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jar-plugin</artifactId>
-		
-				<configuration>
-					<archive>
-						<manifest>
-							<mainClass>sid.org.batch.BatchAppli</mainClass>
-						</manifest>
-					</archive>
-				</configuration>
-			</plugin>
-			
-		</plugins>
-</build>
+
 </project>

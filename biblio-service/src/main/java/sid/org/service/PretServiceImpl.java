@@ -31,8 +31,9 @@ import sid.org.exception.EntityAlreadyExistException;
 import sid.org.exception.LivreIndisponibleException;
 import sid.org.exception.ResultNotFoundException;
 
-@Component
+@Service
 public class PretServiceImpl implements PretService{
+	
 	@Autowired
 	private PretRepository pretRepository;
 	@Autowired
@@ -42,23 +43,24 @@ public class PretServiceImpl implements PretService{
 	@Autowired
 	private LivreRepository livreRepository;
 	
-	/*
-	 * @Value("${pret.statut1}") private String statut1;
-	 * 
-	 * @Value("${pret.statut2}") private String statut2;
-	 * 
-	 * @Value("${pret.statut3}") private String statut3;
-	 * 
-	 * @Value("${pret.statut4}") private String statut4;
-	 * 
-	 * @Value("${pret.time}") private int time;
-	 */
+	
+	  @Value("${pret.statut1}") 
+	  private String statut1;
+	  
+	  @Value("${pret.statut2}") 
+	  private String statut2;
+	  
+	  @Value("${pret.statut3}") 
+	  private String statut3;
+	  
+	  @Value("${pret.statut4}") 
+	  private String statut4;
+	  
+	  @Value("${pret.time}") 
+	  private int time;
 	 
-	final String statut1="encours";
-	final String statut2="prolonge";
-	final String statut3="depasse";
-	final String statut4="remis";
-	final int time=1;
+	 
+
 
 		/*
 		 *Creation d'un Pret + decrementation nombreExemplaire pour le livre emprunté
