@@ -6,11 +6,10 @@
    <modules>
    <module>biblio-service</module>
   	<module>biblio-api</module>
-  	<module>biblio-batch</module>
     <module>biblio-front</module>
     <module>biblio-ear</module>
-    
-  </modules>
+
+</modules>
   
  <parent>
 		<groupId>org.springframework.boot</groupId>

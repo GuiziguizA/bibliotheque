@@ -14,12 +14,14 @@ package sid.org.config;
   import sid.org.classe.Utilisateur; import sid.org.dao.UtilisateurRepository;
  
 
-  @Service public class CustomUserDetailService implements UserDetailsService{
+  @Service
+  public class CustomUserDetailService implements UserDetailsService{
   
   
   
   
-  @Autowired private UtilisateurRepository utilisateurRepository;
+  @Autowired 
+  private UtilisateurRepository utilisateurRepository;
   
   
  /**

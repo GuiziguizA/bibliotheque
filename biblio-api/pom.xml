@@ -81,7 +81,11 @@
    
 </dependency>
 
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-mail</artifactId>
 
+</dependency>
         
 	</dependencies>
 	
@@ -103,92 +107,8 @@
             </execution>
       
        </executions>
-</plugin></plugins></build>
-	<!-- <build><plugins><plugin>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-maven-plugin</artifactId>
-    <executions>
-        <execution>
-            <configuration>
-                    <classifier>exe</classifier>
-                </configuration>
-        </execution>
-    </executions>
-</plugin></plugins></build> -->
-	<!-- <build>
-	<plugins>
-	<plugin>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-maven-plugin</artifactId>
-        <configuration>
-          <executions>
-               <execution>
-            <goals>
-                <goal>repackage</goal>
-            </goals>
-            <configuration>
-                <classifier>exec</classifier>
-            </configuration>
-        </execution>
-      </executions>
-      <layout>JAR</layout>
-            <skip>true</skip>
-               <archive>
-                        <manifest>
-                            <mainClass>sid.org.BiblioAppli</mainClass>
-                        </manifest>
-                    </archive>
-        </configuration>
-    </plugin>
-	</plugins>
-	</build> -->
-    <!-- <build>
-        <plugins>
-            <plugin>
-                <groupId>org.Apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <configuration>
-                    <archive>
-                        <manifest>
-                            <mainClass>sid.org.BiblioAppli</mainClass>
-                        </manifest>
-                    </archive>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>   -->
-    
-    
-    
-    
-<!-- <build>
-	<plugins>
-	
-			<plugin>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-maven-plugin</artifactId>
-    <executions>
-        <execution>
-            <goals>
-                <goal>repackage</goal>
-            </goals>
-            <configuration>
-                <classifier>spring-boot</classifier>
-                <mainClass>
-                 sid.org.BiblioAppli
-                </mainClass>
-            </configuration>
-        </execution>
-    </executions>
 </plugin>
-            
-		
-           
-		</plugins>
-</build> -->
+</plugins></build>
+	
 
 </project>

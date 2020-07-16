@@ -26,6 +26,7 @@ import sid.org.dao.LivreRepository;
 import sid.org.dao.PretRepository;
 import sid.org.dao.UtilisateurRepository;
 import sid.org.dto.PretDto;
+import sid.org.enumeration.statutPret;
 import sid.org.exception.BibliothequeException;
 import sid.org.exception.EntityAlreadyExistException;
 import sid.org.exception.LivreIndisponibleException;
@@ -60,8 +61,9 @@ public class PretServiceImpl implements PretService{
 	  private int time;
 	 
 	 
+	 
 
-
+	  
 		/*
 		 *Creation d'un Pret + decrementation nombreExemplaire pour le livre emprunté
 		 * @param Long idLivre
@@ -90,6 +92,7 @@ public class PretServiceImpl implements PretService{
 		
 		List<Pret>listpret=pretRepository.findByUtilisateurAndLivre(utilisateur.get(),livre.get());
 		Optional<Pret>pret1= trouverPretenCours(listpret);
+		
 		
 		if(pret1.isPresent()&&!pret1.get().getStatut().equals(statut4)) {
 			throw new EntityAlreadyExistException("La reservation existe deja pour ce livre");
