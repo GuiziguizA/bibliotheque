@@ -16,9 +16,11 @@ buildNumber.properties
 
 # End of https://www.gitignore.io/api/maven
 
+
 .classpath
 .factorypath
 .project
 .settings/
 target
-.sts-cache/
+.sts4-cache/
+.springBeans
