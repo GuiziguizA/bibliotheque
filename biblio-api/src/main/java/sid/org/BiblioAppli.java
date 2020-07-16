@@ -26,8 +26,6 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import sid.org.batch.EmailService;
-import sid.org.batch.PretBatchService;
 import sid.org.classe.Livre;
 import sid.org.classe.Pret;
 import sid.org.classe.Roles;
@@ -98,6 +96,8 @@ public class BiblioAppli implements CommandLineRunner  {
 				new UtilisateurDto("nom5", "gwalfisse@gmail.com", " adresse5", "motDePasse5", "codePostal5"),"user");
 		Utilisateur user6 = utilisateurService.creerUtilisateur(
 				new UtilisateurDto("nom6", "guxavlisse@gmail.com", " adresse6", "motDePasse6", "codePostal6"),"user");
+		
+		
 		utilisateurService.creerUtilisateur(new UtilisateurDto("front", "front", " adresse7", "front", "codePostal7"),"user");
 		utilisateurService.creerUtilisateur(new UtilisateurDto("batch", "batch", " adresse7", "batch", "codePostal7"),"user");
 		Livre livre1 = livreService

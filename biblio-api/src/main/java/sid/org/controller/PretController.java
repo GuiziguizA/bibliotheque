@@ -100,10 +100,10 @@ Page<Pret>prets=pretService.afficherPrets(mail, page, size);
 
   
   	}
-	
-@GetMapping("/allprets")
-@ApiOperation(value="affiche Les pret d'un utilisateur",response = PretController.class)
-public List<Pret> afficherToutPrets( @RequestParam int page, @RequestParam int size) throws ResultNotFoundException{
+
+@GetMapping("batch/prets")
+@ApiOperation(value="Renvoie liste de tout les prets",response = PretController.class)
+public List<Pret> afficherPrets() throws ResultNotFoundException{
  
 List<Pret>prets=pretService.afficherPrets();
 	
@@ -112,6 +112,8 @@ List<Pret>prets=pretService.afficherPrets();
 
   
   	}
+	
+
 
 @GetMapping("/listprets")
 @ApiOperation(value="affiche Les prets en fonction d'un statut",response = PretController.class)
@@ -154,7 +156,7 @@ public void prolongerLivre(@RequestParam Long id) throws ResultNotFoundException
 }
 
 
-@PostMapping("/prets/statuts")
+@PutMapping("/prets/statuts")
 public  void  modifierStatutBatch() throws ResultNotFoundException {
 	
 	pretService.modifierStatutsPrets();

@@ -7,31 +7,8 @@ import javax.mail.MessagingException;
 
 import org.springframework.stereotype.Service;
 
-import sid.org.classe.Pret;
-import sid.org.exception.ResultNotFoundException;
+
 
 public interface EmailService {
-	
-	  
-
-
-
-
-
-
 	public void sendMail(String from, String to, String subject, String htmlContent, Locale locale) throws MessagingException, IOException;
-
-	
-
-	
-
-	
-
-	
-			
-
-	
-
-	
-
 }

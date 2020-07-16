@@ -12,19 +12,20 @@ import org.springframework.stereotype.Component;
 import sid.org.batch.PretBatchService;
 
 
-@EnableScheduling
+
 @Component
 public class EnvoiDesMails {
 	@Autowired
 	PretBatchService pretBatchService;
-	@Scheduled(fixedRate=5000)
+	
 	public void effectuerLesEnvoies() throws Exception {
 	
 	
 		Locale locale = new Locale("fr");
-		pretBatchService.modifierStatutPrets();
+		 pretBatchService.modifierStatutPrets(); 
 		
-		 pretBatchService.envoieMails(locale); 
+		
+		  pretBatchService.envoieMails(locale);
 		 
 		  
 		 

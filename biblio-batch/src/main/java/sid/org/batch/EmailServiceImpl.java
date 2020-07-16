@@ -19,7 +19,7 @@ import javax.mail.internet.MimeMessage;
 import org.springframework.stereotype.Service;
 
 
-import sid.org.service.PretService;
+
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -75,42 +75,7 @@ public class EmailServiceImpl implements EmailService  {
 	 
 	  
 	  
-	/*
-	 * public Context variableEmail(final Locale locale,Pret pret) {
-	 * 
-	 * final Context ctx = new Context(locale);
-	 * 
-	 * ctx.setVariable("dateDeFin", pret.getDateDeFin()); ctx.setVariable("livre",
-	 * pret.getLivre().getNom()); ctx.setVariable("user",
-	 * pret.getUtilisateur().getNom()); return ctx;
-	 * 
-	 * }
-	 * 
-	 * @Override public void sendMail(String from, String to, String subject,Pret
-	 * pret,Locale locale) throws MessagingException {
-	 * 
-	 * 
-	 * 
-	 * 
-	 * // Prepare message using a Spring helper Context ctx=variableEmail(locale,
-	 * pret); final MimeMessage mimeMessage = this.emailSender.createMimeMessage();
-	 * final MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true,
-	 * "UTF-8"); message.setSubject(subject); message.setFrom(from);
-	 * message.setTo(to); try { pretService.afficherPrets(); } catch
-	 * (ResultNotFoundException e) { // TODO Auto-generated catch block
-	 * e.printStackTrace(); } // Create the HTML body using Thymeleaf final String
-	 * htmlContent = this.templateEngine.process("email", ctx);
-	 * message.setText(htmlContent, true); // true = isHtml
-	 * 
-	 * this.emailSender.send(mimeMessage);
-	 * 
-	 * 
-	 * 
-	 * }
-	 */
-		
 	
-		
 	
 		
 }

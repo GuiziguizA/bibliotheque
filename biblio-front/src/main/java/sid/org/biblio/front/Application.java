@@ -27,53 +27,13 @@ import sid.org.biblio.front.service.PretService;
 import sid.org.biblio.front.service.UtilisateurService;
 
 @SpringBootApplication
-/* @ImportResource("classpath:spring-security.xml") */
-public class Application implements CommandLineRunner {
+
+public class Application{
 	 private static final Logger logger = LoggerFactory.getLogger(Application.class);
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
 		logger.info("Biblio-front Started........");
 	}
 
-	@Autowired
-	private BookService bookService;
-	@Autowired
-	private PretService pretService;
-	@Autowired
-	private UserDetailsImpl userDetailsImpl;
-	@Autowired
-	private UtilisateurService utilisateurService;
-
-	@Override
-	public void run(String... args) throws Exception {
-
-		/*
-		 * LivreCriteria critere = new LivreCriteria(); critere.setNom("le");
-		 * 
-		 * bookService.listLivre(critere, 1,1); LivreCriteria criteres = new
-		 * LivreCriteria(); criteres.setNom("le"); HttpHeaders headers = new
-		 * HttpHeaders(); headers.setContentType(MediaType.APPLICATION_JSON);
-		 * HttpEntity<LivreCriteria> entity = new HttpEntity<>(criteres, headers);
-		 * System.out.println(entity.getBody()); Pret pret = new Pret(); pret.setId(id);
-		 */
-		/*
-		 * RestTemplate rt = new RestTemplate(); String uri
-		 * ="http://localhost:8081/users/identity"; String username =
-		 * "gualisse@gmail.com"; String motDePasse = "motDePasse1"; Sessions
-		 * sessions=new Sessions(); sessions.setMail(username);
-		 * sessions.setMotDePasse(motDePasse); ResponseEntity<Utilisateur> user=
-		 * rt.exchange(uri,HttpMethod.POST,new
-		 * HttpEntity<>(sessions),Utilisateur.class); Utilisateur utilisateur =
-		 * user.getBody(); System.out.println(utilisateur.getMail()); String
-		 * mail="gualisse@gmail.com"; Utilisateur
-		 * userr=utilisateurService.infosUtilisateur(mail,motDePasse);
-		 * userr.getRoles().getNom();
-		 * 
-		 * pretService.pretsUtilisateur("gualisse@gmail.com", 1, 1);
-		 * 
-		 * pretService.AfficherToutLesPrets(1, 1,"admin@gmail.com", "admin"); Long id
-		 * =(long) 1; pretService.renouvelerUnPret(id, mail, motDePasse);
-		 */
-		/* bookService.supprimerUnLivre(id, "admin@gmail.com", "admin"); */
-	}
+	
 }

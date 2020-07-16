@@ -8,10 +8,9 @@
   </parent>
 
 
-  <artifactId>biblio-service</artifactId>
+  <artifactId>biblio-batch</artifactId>
 
 
-  <name>biblio-service</name>
 
 
   <properties>
@@ -23,10 +22,7 @@
   <dependencies>
    
 
-<dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-security</artifactId>
-        </dependency>
+
 	
 
 	<dependency>
@@ -34,18 +30,9 @@
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
 		
-		<dependency>
-    <groupId>javax.validation</groupId>
-    <artifactId>validation-api</artifactId>
-   
-</dependency>
+	
 		
-		
-		<dependency>
-    <groupId>org.springframework.security</groupId>
-    <artifactId>spring-security-crypto</artifactId>
-   
-</dependency>
+	
 
 
 	<dependency>
@@ -64,7 +51,6 @@
 <dependency>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-mail</artifactId>
-
 </dependency>
 
         
@@ -84,4 +70,23 @@
         <artifactId>thymeleaf-layout-dialect</artifactId>
     </dependency>
 	</dependencies>
+	
+	<build><plugins><plugin>
+       <groupId>org.springframework.boot</groupId>
+       <artifactId>spring-boot-maven-plugin</artifactId>
+       <configuration>
+           <layout>JAR</layout>
+       </configuration>
+       <executions>
+        
+            <execution>
+             
+              <configuration>
+                <mainClass>sid.org.BatchApp</mainClass>
+              </configuration>
+            </execution>
+      
+       </executions>
+</plugin>
+</plugins></build>
 </project>
