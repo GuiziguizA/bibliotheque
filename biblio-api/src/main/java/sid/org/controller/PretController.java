@@ -101,7 +101,7 @@ Page<Pret>prets=pretService.afficherPrets(mail, page, size);
   
   	}
 
-@GetMapping("batch/prets")
+@GetMapping("/allprets")
 @ApiOperation(value="Renvoie liste de tout les prets",response = PretController.class)
 public List<Pret> afficherPrets() throws ResultNotFoundException{
  

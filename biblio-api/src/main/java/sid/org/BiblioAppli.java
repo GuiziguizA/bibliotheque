@@ -44,7 +44,6 @@ import sid.org.service.PretService;
 import sid.org.service.UtilisateurService;
 
 @SpringBootApplication
-
 public class BiblioAppli implements CommandLineRunner  {
 	private static final Logger logger = LoggerFactory.getLogger(BiblioAppli.class);
 
