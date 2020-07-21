@@ -44,8 +44,8 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	 
 /**
  * creation d'un utilisateur 
- * @param UtilisateurDto utilisateurDto
- * @param String role
+ * @param  utilisateurDto
+ * @param  role
  * 
  * @return Utilisateur
  */
@@ -65,8 +65,8 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	}
 	/**
 	 * Modifier le statut d'un utilisateur
-	 * @param Long id
-	 * @param String statut
+	 * @param id
+	 * @param  statut
 	 * 
 	 * @return Utilisateur
 	 */
@@ -85,7 +85,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	}
 	/**
 	 * Supprimer un utilisateur
-	 * @param Long id
+	 * @param  id
 	 * 
 	 * 
 	 * 
@@ -107,7 +107,7 @@ Page<Pret>listPretUtilisateur=pretRepository.findByUtilisateur(user.get(),pageab
 	}
 	/**
 	 * afficher un utilisateur 
-	 * @param String mail
+	 * @param  mail
 	 * 
 	 * 
 	 * @return Utilisateur
@@ -128,11 +128,11 @@ Page<Pret>listPretUtilisateur=pretRepository.findByUtilisateur(user.get(),pageab
 	}
 	/**
 	 * Afficher une Page d'utilisateurs 
-	 * @param int page 
-	 * @param int size
+	 *  @param  page 
+	 *  @param size
 	 * 
 	 * 
-	 * @return Page<Utilisateur>
+	 *  @return une page contenant des Utilisateurs
 	 */
 	@Override
 	public Page<Utilisateur> voirListeUtilisateurs(int page, int size) throws ResultNotFoundException{
@@ -148,9 +148,9 @@ Pageable pageable =PageRequest.of(page,size );
 	}
 	/**
 	 * return un utilisateur en fonction du mail de l'objet Sessions
-	 * @param Sessions sessions
+	 *@param  sessions
 	 * 
-	 * @return Utilisateur
+	 *@return Utilisateur
 	 */
 	
 	@Override
@@ -175,9 +175,9 @@ Pageable pageable =PageRequest.of(page,size );
 	
 	/**
 	 *Convertie un UtilsateurDto en Utilisateur
-	 * @param UtilisateurDto
+	 *@param UtilisateurDto
 	 * 
-	 * @return Utilisateur
+	 *@return Utilisateur
 	 */
 	
 private Utilisateur convertToUtilisateur(UtilisateurDto utilisateurDto) {

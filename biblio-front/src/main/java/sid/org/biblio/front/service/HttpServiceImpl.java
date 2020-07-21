@@ -22,7 +22,8 @@ public class HttpServiceImpl implements HttpService{
 	
 	/**
 	 * afficher uniquelment le message de l'exception
-	 * @param HttpStatusCodeException error
+	 * @param  error
+	 * @return le message d'erreur
 	 */
 	
 	@Override

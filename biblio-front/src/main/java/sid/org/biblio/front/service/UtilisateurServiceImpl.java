@@ -32,7 +32,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	private String apiUrl;
 	/**
 	 * creer un utilisateur
-	 * @param Utilisateur utilisateur
+	 * @param utilisateur
 	 * 
 	 */
 	@Override
@@ -48,7 +48,12 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		
 
 	}
-
+	/**
+	 * recuperer les infos utilisateurs
+	 * @param mail
+	 * @param motDePasse
+	 * @return Utilisateur
+	 */
 	
 	@Override
 	public Utilisateur infosUtilisateur(String mail,String motDePasse) {

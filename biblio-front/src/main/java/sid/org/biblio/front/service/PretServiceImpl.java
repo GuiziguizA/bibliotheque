@@ -33,11 +33,11 @@ public class PretServiceImpl implements PretService {
 	private String apiUrl;
 /**
  * afficher les prets d'un utilisateurs
- * @param String mail
- * @param int page
- * @param int size 
- * @param String motDePasse
- * @return Page<Pret>prets
+ * @param  mail
+ * @param page
+ * @param  size 
+ * @param motDePasse
+ * @return prets
  * 
  */
 	@Override

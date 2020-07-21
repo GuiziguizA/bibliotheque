@@ -19,7 +19,6 @@ import javax.persistence.ManyToOne;
 
 
 @Entity
-
 public class Pret {
 @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
 private Long id;	

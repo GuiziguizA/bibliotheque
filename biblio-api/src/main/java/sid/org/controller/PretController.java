@@ -129,18 +129,16 @@ List<Pret>prets=pretService.afficherPrets(statut);
 	
 
 
-@GetMapping("/pr")
-public  PretDto  affichPretDto() {
-	 
-	
-PretDto pret=new PretDto();
-Long id = (long) 1;
-pret.setId(id);
-return pret;
-
-
-
-}
+	/*
+	 * @GetMapping("/pr") public PretDto affichPretDto() {
+	 * 
+	 * 
+	 * PretDto pret=new PretDto(); Long id = (long) 1; pret.setId(id); return pret;
+	 * 
+	 * 
+	 * 
+	 * }
+	 */
 @PutMapping("/prets")
 @ApiOperation(value="modifier statut du pret pour confirmer que le livre a été rendu",response = PretController.class)
 public void retourLivre(@RequestParam Long id) throws ResultNotFoundException {

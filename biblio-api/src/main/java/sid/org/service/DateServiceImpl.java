@@ -11,9 +11,9 @@ public class DateServiceImpl implements DateService{
 
 	/*
 	 * modification d'une date
-	 * @param Date date
-	 * @param int mois
-	 * @return Date
+	 * @param date
+	 * @param mois
+	 * @return une date modifier en fonction de parametre mois
 	 */
 	
 	@SuppressWarnings("deprecation")

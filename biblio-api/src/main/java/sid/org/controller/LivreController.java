@@ -101,15 +101,5 @@ public  Livre afficheUnLivre(@PathVariable Long id) throws ResultNotFoundExcepti
 	  	  }
 	  
 	  
-	  @GetMapping("/bo")
-public  LivreCriteria affichLivre() throws ResultNotFoundException{
-		 
-		
-	LivreCriteria livre= new LivreCriteria();
-	livre.setNom("le");
-	  return livre;
-	
-	 
-	  
-	  }
+
 }

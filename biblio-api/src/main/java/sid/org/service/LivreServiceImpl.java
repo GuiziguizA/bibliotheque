@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -44,17 +44,16 @@ public class LivreServiceImpl implements LivreService{
 
 	/*
 	 * Creation d'un Livre
-	 * @param LivreDto 
+	 * @param livreDto 
 	 * 
 	 * @return Livre
 	 */
 	
 	@Override
-	public Livre createLivre(LivreDto livreDto) throws EntityAlreadyExistException {
-		List<Livre>livreNom=livreRepository.findByNom(livreDto.getNom());
-		List<Livre>livreAuteur=livreRepository.findByAuteur(livreDto.getAuteur());
+	public Livre createLivre( LivreDto livreDto) throws EntityAlreadyExistException {
 		
-		if(!livreNom.isEmpty() && !livreAuteur.isEmpty() ) {
+		List<Livre>livreAuteurAndNom=livreRepository.findByAuteurAndNom(livreDto.getAuteur(),livreDto.getNom());
+		if(!livreAuteurAndNom.isEmpty()  ) {
 			throw new  EntityAlreadyExistException();
 		}
 		
@@ -101,10 +100,10 @@ public class LivreServiceImpl implements LivreService{
 
 	/*
 	 *Rechercher des livre en fonction d'un critere
-	 * @param LivreCriteria livreCriteria 
-	 * @param int page 
-	 * @param int size
-	 * @return Page<Livre>
+	 * @param  livreCriteria 
+	 * @param  page 
+	 * @param  size
+	 * @return une page contenant des livres en fonction du livreCriteria
 	 */
 
 
@@ -127,7 +126,7 @@ public Page<Livre> searchLivres(LivreCriteria livreCriteria,int page ,int size) 
 
 /*
  *Convertir un LivreDto en Livre
- * @param LivreDto livreDto 
+ * @param  livreDto 
  * 
  * 
  * @return Livre

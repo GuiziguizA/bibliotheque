@@ -24,4 +24,6 @@ public interface  LivreRepository extends JpaRepository<Livre, Long>, JpaSpecifi
 	
 	public List<Livre>findByNom(String nom);
 	public List<Livre>findByAuteur(String auteur);
+	
+	public List<Livre>findByAuteurAndNom(String auteur,String nom);
 }
