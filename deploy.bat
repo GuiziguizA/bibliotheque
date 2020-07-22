@@ -1,6 +1,6 @@
 @echo on
 
-cd  C:\Programmation\Environnement\bibliotheque-app
+
 
 
 

@@ -23,7 +23,7 @@ public class DateServiceImpl implements DateService{
 			throw new ResultNotFoundException("le chifre du mois dois etre strictement inferieur a 12 ");
 		}
 		
-		Date date1 = null;
+		Date date1 = new Date();
 		if (date.getMonth()+mois>12) {
 			date1=new Date(date.getYear()+1,date.getMonth()+mois-12,date.getDay());
 
