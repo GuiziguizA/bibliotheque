@@ -1,4 +1,4 @@
-Prerequis:
+- Prerequis:
 
 programme d'installation java 8
 
@@ -34,13 +34,13 @@ creer une table biblio
 
 		executer la commande: maven clean install
 
-		Deploiement:
+	- Deploiement:
 
 		se placer a la racine du projet et executer : 
 		java -jar biblio-api\target\biblio-api-0.0.1-SNAPSHOT.jar
 		java -jar biblio-front\target\biblio-front-0.0.1-SNAPSHOT.jar
 		java -jar biblio-batch\target\biblio-batch-0.0.1-SNAPSHOT.jar
 
-Execution:
+- Execution:
 
 http://localhost:8084
