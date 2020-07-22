@@ -1,12 +1,13 @@
 package sid.org.dto;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 public class LivreDto {
 
 	
-	
+	 @Valid
 	@NotBlank(message = "le champ nom ne peut pas etre vide")
 	private String nom;
 	@NotBlank(message = "le champ auteur ne peut pas etre vide")

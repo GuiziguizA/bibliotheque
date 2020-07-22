@@ -34,26 +34,25 @@ public class ExceptionHandlerControllerAdvice {
 
 
 
-
-	@ExceptionHandler(EntityAlreadyExistException.class)
-	@ResponseStatus(value = HttpStatus.CONFLICT)
-	public @ResponseBody ExceptionReponse ResourceNotFound(final EntityAlreadyExistException exception,
-			final HttpServletRequest request) {
-
-		ExceptionReponse error=new ExceptionReponse();
-		error.setMessage(exception.getMessage());
-		error.setDate(new Date());
-		error.setHttpCodeMessage(request.getRequestURI());
-		error.setStatus(420);
-		return error;
-	}
+	
+	  @ExceptionHandler(EntityAlreadyExistException.class)
+	  
+	  @ResponseStatus(value = HttpStatus.BAD_REQUEST) public @ResponseBody
+	  ExceptionReponse EntityAlreadyExistException(final
+	  EntityAlreadyExistException exception, final HttpServletRequest request) {
+	  
+	  ExceptionReponse error=new ExceptionReponse();
+	  error.setMessage(exception.getMessage()); error.setDate(new Date());
+	  error.setHttpCodeMessage(request.getRequestURI()); error.setStatus(420);
+	  return error; }
+	 
 
 
 
 
 	@ExceptionHandler(LivreIndisponibleException.class)
-	@ResponseStatus(value = HttpStatus.CONFLICT)
-	public @ResponseBody ExceptionReponse ResourceNotFound(final LivreIndisponibleException exception,
+	@ResponseStatus(value = HttpStatus.BAD_REQUEST)
+	public @ResponseBody ExceptionReponse LivreIndisponibleException(final LivreIndisponibleException exception,
 			final HttpServletRequest request) {
 
 		ExceptionReponse error=new ExceptionReponse();

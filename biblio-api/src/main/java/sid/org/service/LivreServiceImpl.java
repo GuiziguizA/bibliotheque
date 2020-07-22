@@ -11,6 +11,8 @@ import java.util.Optional;
 
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -18,6 +20,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+
 
 import sid.org.classe.Livre;
 import sid.org.dao.LivreRepository;
@@ -39,7 +42,7 @@ import sid.org.specification.LivreSpecificationImpl;
 public class LivreServiceImpl implements LivreService{
 	@Autowired
 	private LivreRepository livreRepository;
-	
+	private static final Logger logger = LoggerFactory.getLogger(LivreServiceImpl.class);
 	
 
 	/*
@@ -54,12 +57,14 @@ public class LivreServiceImpl implements LivreService{
 		
 		List<Livre>livreAuteurAndNom=livreRepository.findByAuteurAndNom(livreDto.getAuteur(),livreDto.getNom());
 		if(!livreAuteurAndNom.isEmpty()  ) {
-			throw new  EntityAlreadyExistException();
+			throw new  EntityAlreadyExistException("Ce livre existe deja");
+			
 		}
 		
 		Livre livre= convertoToEntity(livreDto);
-		
+		logger.info("le livre a ete ajouté");
 		return 	livreRepository.save(livre);
+		
 	}
 
 	/*

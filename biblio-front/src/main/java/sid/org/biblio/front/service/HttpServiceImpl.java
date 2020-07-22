@@ -28,15 +28,19 @@ public class HttpServiceImpl implements HttpService{
 	
 	@Override
 	public String traiterLesExceptionsApi(HttpStatusCodeException error) {
-		String messageErreur=error.getMessage();
-		 String[] split =messageErreur.split("message");
+		String messageErreur=error.getMessage(); 
+		 
+		 String[] split=messageErreur.split("message");
 		 if(split.length==1) {
-			 return "error";
+			 return "error"; 
 		 }else {
+		  
+		  String[] split1 =split[1].split(":");
+		  String[] split2 =split1[1].split(",");
+		  String result= split2[0];
 		
-		 String[] split1 =split[1].split(":");
-		 String[] split2 =split1[1].split(",");
-		return split2[0];
-	}
+		  return result.replaceAll("\"",""); }
+		 
+		
 }
 }
