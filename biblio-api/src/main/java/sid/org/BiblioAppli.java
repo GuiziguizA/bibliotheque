@@ -2,7 +2,10 @@ package sid.org;
 
 import java.io.IOException;
 import java.security.Principal;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -115,11 +118,7 @@ public class BiblioAppli implements CommandLineRunner  {
 		Pret pret3 = pretRepository.save(new Pret(new Date(), new Date(), "encours", 1, livre3, user1));
 		Pret pret5 = pretRepository.save(new Pret(new Date(), new Date(), "depasse", 1, livre1, user1));
 	  
-		Date date=new Date();
-		dateService.modifierDate(date, 1);
-		
-		System.out.println(date.getMonth()+""+date.getDay());
-		
+	
 	  }
 	 
 }

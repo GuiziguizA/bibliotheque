@@ -8,6 +8,6 @@ import sid.org.exception.ResultNotFoundException;
 public interface DateService {
 	
 
-	public Date modifierDate(Date date, int mois) throws ResultNotFoundException;
+	public Date modifierDate(Date date, int jours) throws ResultNotFoundException;
 
 }

@@ -42,6 +42,7 @@ import sid.org.specification.LivreSpecificationImpl;
 public class LivreServiceImpl implements LivreService{
 	@Autowired
 	private LivreRepository livreRepository;
+	
 	private static final Logger logger = LoggerFactory.getLogger(LivreServiceImpl.class);
 	
 
