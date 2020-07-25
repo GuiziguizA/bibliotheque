@@ -46,16 +46,16 @@ public class PretServiceImpl implements PretService{
 	
 	
 	  @Value("${pret.statut1}") 
-	  private String statut1;
+	  private String encours;
 	  
 	  @Value("${pret.statut2}") 
-	  private String statut2;
+	  private String prolonge;
 	  
 	  @Value("${pret.statut3}") 
-	  private String statut3;
+	  private String depasse;
 	  
 	  @Value("${pret.statut4}") 
-	  private String statut4;
+	  private String remis;
 	  
 	  @Value("${pret.time}") 
 	  private int time;
@@ -94,7 +94,7 @@ public class PretServiceImpl implements PretService{
 		Optional<Pret>pret1= trouverPretenCours(listpret);
 		
 		
-		if(pret1.isPresent()&&!pret1.get().getStatut().equals(statut4)) {
+		if(pret1.isPresent()&&!pret1.get().getStatut().equals(remis)) {
 			throw new EntityAlreadyExistException("La reservation existe deja pour ce livre");
 		}
 		
@@ -107,7 +107,7 @@ public class PretServiceImpl implements PretService{
 		pret.setDateDeFin(dateService.modifierDate(date1,time ));
 		pret.setUtilisateur(utilisateur.get());
 		pret.setNombreLivres(1);
-		pret.setStatut(statut1);
+		pret.setStatut(encours);
 		livre.get().setNombreExemplaire(livre.get().getNombreExemplaire()-1);
 		livreRepository.saveAndFlush(livre.get());
 		return pretRepository.saveAndFlush(pret);
@@ -124,7 +124,7 @@ public class PretServiceImpl implements PretService{
 		
 	List<Pret> listPret=new ArrayList<Pret>();
 		 for (Pret pret : prets) {
-		        if (pret.getStatut().equals(statut4)) {
+		        if (pret.getStatut().equals(remis)) {
 		           
 		        }else {
 		        	listPret.add(pret);
@@ -159,7 +159,7 @@ public class PretServiceImpl implements PretService{
 			throw new ResultNotFoundException("ce pret n'existe pas");
 		}
 		Optional<Livre> livre=livreRepository.findById(pret.get().getLivre().getCodeLivre());
-		if(!pret.get().getStatut().equals(statut4)) {
+		if(!pret.get().getStatut().equals(remis)) {
 		livre.get().setNombreExemplaire(livre.get().getNombreExemplaire()+pret.get().getNombreLivres());}
 		livreRepository.saveAndFlush(livre.get());
 		pretRepository.delete(pret.get());
@@ -255,11 +255,11 @@ public class PretServiceImpl implements PretService{
 	 public void modifierStatut(Long id) throws ResultNotFoundException {
 	 	 Date aujourdhui = new Date(); 
 	 	 Optional<Pret> pret =pretRepository.findById(id);
-	 	 if(pret.get().getDateDeFin().compareTo(aujourdhui)>0 && pret.get().getStatut()==statut2) {
-	 		 pret.get().setStatut(statut3);
+	 	 if(pret.get().getDateDeFin().compareTo(aujourdhui)>0 && pret.get().getStatut()==prolonge) {
+	 		 pret.get().setStatut(depasse);
 	 		 pretRepository.saveAndFlush(pret.get());
-	 	 }else if (pret.get().getDateDeFin().compareTo(aujourdhui)>0 && pret.get().getStatut()==statut1) {
-	 		 pret.get().setStatut(statut3);
+	 	 }else if (pret.get().getDateDeFin().compareTo(aujourdhui)>0 && pret.get().getStatut()==encours) {
+	 		 pret.get().setStatut(depasse);
 	 		 pretRepository.saveAndFlush(pret.get());
 	 	 }
 	 }
@@ -284,9 +284,9 @@ public void modifierStatutsPrets() throws ResultNotFoundException {
 	}
 
 /*
- *Modifier le statut d'un Pret en statut4 ou statut2 en fonction du String methode
- * @param Long id 
- * @param String methode
+ *Modifier le statut d'un Pret en statut remis  ou statut prolonge en fonction du String methode
+ * @param id du pret
+ * @param String methode equals a remise on
  *
  *
  */
@@ -302,11 +302,11 @@ public void modifierPret(Long id,String methode) throws ResultNotFoundException{
 		throw new ResultNotFoundException("Ce livre n'existe pas");
 	}
 	if(methode.equals("remise")) {
-	pret.get().setStatut(statut4);
+	pret.get().setStatut(remis);
 	pret.get().setDateDeRendu(new Date());
 	}
 	else {
-	pret.get().setStatut(statut2);
+	pret.get().setStatut(prolonge);
 	pret.get().setDateDeFin(dateService.modifierDate(pret.get().getDateDeFin(), time));
 	}
 	

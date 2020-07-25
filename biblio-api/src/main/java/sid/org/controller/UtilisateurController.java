@@ -1,6 +1,6 @@
 package sid.org.controller;
 
-import java.util.Map;
+
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -8,7 +8,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
-
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,7 +24,7 @@ import io.swagger.annotations.ApiParam;
 import sid.org.classe.Sessions;
 import sid.org.classe.Utilisateur;
 import sid.org.dto.UtilisateurDto;
-import sid.org.exception.BibliothequeException;
+
 import sid.org.exception.EntityAlreadyExistException;
 import sid.org.exception.MotDePasseInvalidException;
 import sid.org.exception.ResultNotFoundException;
@@ -34,8 +34,8 @@ import sid.org.service.UtilisateurService;
 @Api(value="Api Utilisateurs",description = "Api Utilisateurs")
 public class UtilisateurController {
 	
-	/* @Value("${role.default}") */
-	 private String roleDefault="user";
+	@Value("${role.default}") 
+	 private String roleDefault;
 	@Autowired
 	private UtilisateurService utilisateurService;
 
@@ -88,7 +88,7 @@ public class UtilisateurController {
 	}
 	
 	@PutMapping("/users/{id}")
-	/* @Secured(value= {"ROLE_admin"}) */
+	@Secured(value= {"ROLE_admin"}) 
 	@ApiOperation(value="modifier le statut de l'utilisateur",response = UtilisateurController.class)
 	public Utilisateur modifierUtilisateur(@PathVariable Long id ,   @ApiParam(value="statut dans le body" , required=true)@Valid @RequestBody String statut) throws ResultNotFoundException{
 		
@@ -98,7 +98,7 @@ public class UtilisateurController {
 
 	}
 	
-	/* @Secured(value= {"ROLE_admin"}) */
+	@Secured(value= {"ROLE_admin"}) 
 	@DeleteMapping("/users/{id}")
 	 @ApiOperation(value="supprimer un utilisateur",response = UtilisateurController.class)
 	public void supprimerUtilisateur(@PathVariable Long id) throws ResultNotFoundException	{
