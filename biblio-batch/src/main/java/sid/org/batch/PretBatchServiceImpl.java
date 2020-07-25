@@ -10,13 +10,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.mail.javamail.JavaMailSender;
+
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RestController;
+
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
@@ -31,12 +29,6 @@ import org.springframework.http.ResponseEntity;
 
 
 
-
-
-import org.springframework.mail.javamail.MimeMessageHelper;
-
-
-import javax.mail.internet.MimeMessage;
 
 
 
@@ -77,6 +69,13 @@ private String subject;
 @Value("${pret.statut3}") 
   private String statut3;	
 	
+
+/*
+ * creation des différentes variables concernant la singularité du pret 
+ * @param locale
+ * @param pret
+ * @return un objet de type org.thymeleaf.context.Context contenant la date de fin du pret , le livre concerné et le nom de l'utilisateur concerné
+ */
 public Context variableEmail(final Locale locale,Pret pret) {
 	 
 	 final Context ctx = new Context(locale);
@@ -88,7 +87,12 @@ public Context variableEmail(final Locale locale,Pret pret) {
 	 
 }
 
-
+/*
+ * creer un string representant le html Content du mail
+ * @param pret 
+ * @param locale
+ * @return  String decrivant les infos du context (caracteristiques specifique du pret ) et le html qui represente le squelette du pret
+ */
 public String createHtmlContent(Pret pret,Locale locale) {
 	Context ctx=variableEmail(locale, pret);
 	
@@ -98,7 +102,11 @@ public String createHtmlContent(Pret pret,Locale locale) {
 
 
 
- 
+ /**
+  * fonction qui envoie un mail a tout les utilisateur possedant un pret dont le statut est depasse
+  * @param locale
+  *
+  */
 	
 	  
 	  @Override 
@@ -133,7 +141,10 @@ public String createHtmlContent(Pret pret,Locale locale) {
 	  }
 	 
 	 
-
+/**
+ * methode modifiant le statut des prets en fonction de la date de fin du pret 
+ * 
+ */
 
 
 	
@@ -151,12 +162,19 @@ public String createHtmlContent(Pret pret,Locale locale) {
 
 	}	
 	
+	
+	/**
+	 * Methode appelant modifierStatutPrets() et  envoieMails() de maniere repeté
+	 * 
+	 */
+	
 	@Scheduled(fixedRate=5000)
 	public void effectuerLesEnvoies() throws Exception {
 	
 	
 		Locale locale = new Locale("fr");
-		/* modifierStatutPrets(); */ 
+		
+		modifierStatutPrets(); 
 		
 		
 		 envoieMails(locale); 

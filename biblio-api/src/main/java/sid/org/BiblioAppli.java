@@ -84,36 +84,29 @@ public class BiblioAppli implements CommandLineRunner  {
 		Roles role2 = rolesRepository.save(new Roles("employe"));
 		Roles role3 = rolesRepository.save(new Roles("admin"));
 		Utilisateur admin = utilisateurService.creerUtilisateur(
-				new UtilisateurDto("admin", "admin@gmail.com", " adresse1", "admin", "codePostal1"),"admin");
+				new UtilisateurDto("admin", "admin@gmail.com", " 30 rue du Lac", "admin", "93450"),"admin");
 		Utilisateur employe = utilisateurService.creerUtilisateur(
-				new UtilisateurDto("employe", "employe@gmail.com", " adresse1", "employe", "codePostal1"),"employe");
+				new UtilisateurDto("Jean", "jean@gmail.com", "25 rue de la rose", "employe", "94520"),"employe");
 		Utilisateur user1 = utilisateurService.creerUtilisateur(
-				new UtilisateurDto("nom1", "gualisse@gmail.com", " adresse1", "motDePasse1", "codePostal1"),"user");
+				new UtilisateurDto("Michel", "michel@gmail.com", "34 rue de chretiente", "michel", "28450"),"user");
 		Utilisateur user2 = utilisateurService.creerUtilisateur(
-				new UtilisateurDto("nom2", "guzalfisse@gmail.com", " adresse2", "motDePasse2", "codePostal2"),"user");
+				new UtilisateurDto("Bob", "bob@laposte.com", "8rue de le scandinavie", "bob", "85641"),"user");
 		Utilisateur user3 = utilisateurService.creerUtilisateur(
-				new UtilisateurDto("nom3", "gfusalisse@gmail.com", " adresse3", "motDePasse3", "codePostal3"),"user");
-		Utilisateur user4 = utilisateurService.creerUtilisateur(
-				new UtilisateurDto("nom4", "gusalissfe@gmail.com", " adresse4", "motDePasse4", "codePostal4"),"user");
-		Utilisateur user5 = utilisateurService.creerUtilisateur(
-				new UtilisateurDto("nom5", "gwalfisse@gmail.com", " adresse5", "motDePasse5", "codePostal5"),"user");
-		Utilisateur user6 = utilisateurService.creerUtilisateur(
-				new UtilisateurDto("nom6", "guxavlisse@gmail.com", " adresse6", "motDePasse6", "codePostal6"),"user");
+				new UtilisateurDto("Marcel", "marcel@gmail.com", "14 avenue du chene", "marcel", "65123"),"user");
 		
 		
-		utilisateurService.creerUtilisateur(new UtilisateurDto("front", "front", " adresse7", "front", "codePostal7"),"user");
+	
 		utilisateurService.creerUtilisateur(new UtilisateurDto("batch", "batch", " adresse7", "batch", "codePostal7"),"user");
 		Livre livre1 = livreService
-				.createLivre(new LivreDto("le bossu", "auteur1", "type1", "section1", "emplacement1", 3));
+				.createLivre(new LivreDto("les trois mousquetaires", "Alexandre DUMAS", "type1", "section1", "emplacement1", 3));
 		Livre livre2 = livreService
-				.createLivre(new LivreDto("la merguez", "auteur2", "type2", "section2", "emplacement1", 4));
+				.createLivre(new LivreDto("Bel-ami", "Guy de Maupassant", "type2", "section2", "emplacement1", 4));
 		Livre livre3 = livreService
-				.createLivre(new LivreDto("le bossu de notre dame", "auteur1", "type1", "section1", "emplacement1", 5));
-		Livre livre4 = livreService
-				.createLivre(new LivreDto("nom4", "auteur4", "type1", "section1", "emplacement1", 7));
+				.createLivre(new LivreDto("le bossu de notre dame", "Henry Polac ", "type1", "section1", "emplacement1", 5));
+		
 
-		Pret pret = pretRepository.save(new Pret(new Date(), new Date(), "encours", 1, livre1, user4));
-		Pret pret1 = pretRepository.save(new Pret(new Date(), new Date(), "encours", 1, livre1, user4));
+		Pret pret = pretRepository.save(new Pret(new Date(), new Date(), "encours", 1, livre1, user2));
+		Pret pret1 = pretRepository.save(new Pret(new Date(), new Date(), "encours", 1, livre1, user2));
 		Pret pret2 = pretRepository.save(new Pret(new Date(), new Date(), "encours", 1, livre2, user1));
 		Pret pret3 = pretRepository.save(new Pret(new Date(), new Date(), "encours", 1, livre3, user1));
 		Pret pret5 = pretRepository.save(new Pret(new Date(), new Date(), "depasse", 1, livre1, user1));
