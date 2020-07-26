@@ -1,5 +1,6 @@
 package sid.org.service;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import org.springframework.stereotype.Component;
@@ -21,9 +22,10 @@ public class DateServiceImpl implements DateService{
 	public Date modifierDate(Date date,int jours) throws ResultNotFoundException {
 		
 		
-		 long newDate = date.getTime() + (jours*2*24*1000*60*60)+ (jours*2*24*1000*60*60);
-		 Date after = new Date(newDate);	
-		 
+		  Calendar c = Calendar.getInstance();
+	        c.setTime(date);
+	        c.add(Calendar.DATE, jours);
+	        Date after = c.getTime();
 		return after;
 
 	}
